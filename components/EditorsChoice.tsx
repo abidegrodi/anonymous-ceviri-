@@ -1,8 +1,26 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import Link from "next/link";
+import { getGames } from "@/lib/services/games";
 
-export default function EditorsChoice() {
+const EDITOR_PICK_NAME = "Ghostrunner 2";
+
+interface EditorsChoiceProps {
+  gameId?: number;
+}
+
+export default function EditorsChoice({ gameId: propGameId }: EditorsChoiceProps) {
+  const [gameId, setGameId] = useState<number | undefined>(propGameId);
+
+  useEffect(() => {
+    if (propGameId) { setGameId(propGameId); return; }
+    getGames({ search: EDITOR_PICK_NAME, limit: 1 })
+      .then((res) => {
+        if (res.games.length > 0) setGameId(res.games[0].gameId);
+      })
+      .catch(() => {});
+  }, [propGameId]);
   return (
     <section className="py-8 sm:py-12 px-4 flex justify-center">
       <div
@@ -55,7 +73,7 @@ export default function EditorsChoice() {
 
           {/* Button */}
           <Link
-            href="/oyun/ghostrunner-2"
+            href={gameId ? `/ceviriler/${gameId}` : "/turkce-ceviriler"}
             className="h-10 sm:h-12 px-6 sm:px-8 flex justify-center items-center rounded-full bg-gradient-to-r from-[#C99BFF] to-[#4F57BB] transition hover:opacity-90 active:scale-95"
             style={{
               boxShadow: "0px 0px 20px rgba(255, 255, 255, 0.30), 0px 4px 4px rgba(0, 0, 0, 0.25)"

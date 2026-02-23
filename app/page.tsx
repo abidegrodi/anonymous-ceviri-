@@ -172,7 +172,9 @@ export default function Home() {
               games={newestGames}
             />
 
-            <EditorsChoice />
+            <EditorsChoice
+              gameId={allGames.find((g) => g.name.toLowerCase().includes("ghostrunner 2"))?.gameId}
+            />
 
             {/* Kategorilere göre bölümler */}
             {categorySections.map((section, idx) => (

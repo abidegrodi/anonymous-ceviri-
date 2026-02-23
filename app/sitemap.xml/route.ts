@@ -1,9 +1,11 @@
 const SITE_URL = 'https://www.anonymousceviri.com';
 
 export async function GET() {
+  const today = new Date().toISOString().split('T')[0];
+
   const sitemaps = [
-    { loc: `${SITE_URL}/pages.xml`, lastmod: new Date().toISOString().split('T')[0] },
-    { loc: `${SITE_URL}/games.xml`, lastmod: new Date().toISOString().split('T')[0] },
+    { loc: `${SITE_URL}/pages.xml`, lastmod: today },
+    { loc: `${SITE_URL}/games.xml`, lastmod: today },
   ];
 
   const xml = `<?xml version="1.0" encoding="UTF-8"?>

@@ -13,8 +13,7 @@ import toast from 'react-hot-toast';
 
 declare global {
     interface Window {
-        turnstile: any;
-        turnstileCallback: any;
+        turnstileCallback?: any;
     }
 }
 
@@ -89,7 +88,7 @@ export default function RegisterPage() {
                 "error-callback": () => setTurnstileToken(null),
                 "expired-callback": () => setTurnstileToken(null),
             });
-            setTurnstileWidgetId(id);
+            setTurnstileWidgetId(id ?? null);
         } catch (e) {
             console.error("Turnstile render error:", e);
         }
