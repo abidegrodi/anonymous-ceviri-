@@ -39,7 +39,7 @@ export default function KurulumRehberiPage() {
 
   const tabs = [
     { id: "install", label: "KURULUM REHBERİ", href: `/ceviriler/${gameId}/kurulum`, active: true },
-    { id: "notes", label: "YAMA NOTLARI", href: `/ceviriler/${gameId}`, active: false },
+    { id: "notes", label: "ÇEVİRİ NOTLARI", href: `/ceviriler/${gameId}`, active: false },
     { id: "screenshots", label: "EKRAN GÖRÜNTÜLERİ", href: `/ceviriler/${gameId}`, active: false },
     { id: "discussion", label: "TARTIŞMA", href: `/ceviriler/${gameId}`, active: false },
   ];

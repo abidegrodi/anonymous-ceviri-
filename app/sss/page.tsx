@@ -119,7 +119,7 @@ export default function FAQPage() {
                                 </div>
                                 <input
                                     type="text"
-                                    placeholder="Sorunuzu arayın (örn. kurulum, iade, yama sürümü)..."
+                                    placeholder="Sorunuzu arayın (örn. kurulum, iade, çeviri sürümü)..."
                                     value={searchQuery}
                                     onChange={(e) => setSearchQuery(e.target.value)}
                                     className="w-full h-[60px] bg-white/[0.03] border border-white/10 rounded-xl pl-12 pr-4 text-sm font-bold text-[#6B7280] focus:text-white focus:outline-none focus:border-white/30 backdrop-blur-[2px] transition-all"

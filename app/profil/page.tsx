@@ -521,7 +521,7 @@ function UyelikPlaniTab() {
                     </div>
                     <h3 className="text-white/70 text-lg font-lemon-milk font-bold mb-2">Aktif Üyeliğiniz Bulunmamaktadır</h3>
                     <p className="text-[#6B7280] text-sm max-w-md mx-auto mb-6">
-                        Anonymous Çeviri üyeliği ile tüm Türkçe yamalara erişim sağlayabilirsiniz.
+                        Anonymous Çeviri üyeliği ile tüm Türkçe çevirilere erişim sağlayabilirsiniz.
                     </p>
                     <a
                         href="https://www.anonymousceviri.com/uyelik"

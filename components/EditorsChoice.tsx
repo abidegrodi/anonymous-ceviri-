@@ -67,7 +67,7 @@ export default function EditorsChoice({ gameId: propGameId }: EditorsChoiceProps
           {/* Description */}
           <div className="w-full max-w-[448px] pt-1 sm:pt-2 pb-4 sm:pb-6 flex flex-col justify-center items-start">
             <p className="text-[#D1D5DB] text-sm sm:text-base font-inter font-normal leading-5 sm:leading-6">
-              Siberpunk dünyasında hızın sınırlarını zorla. Türkçe yama ile hikayenin her detayını yakala.
+              Siberpunk dünyasında hızın sınırlarını zorla. Türkçe çeviri ile hikayenin her detayını yakala.
             </p>
           </div>
 

@@ -153,7 +153,7 @@ export default function Footer() {
                 </li>
                 <li>
                   <Link
-                    href="/gizlilik-politikasi"
+                    href="/destek"
                     className="hover:text-[#C99BFF] transition-colors"
                     style={{
                       fontFamily: "Caviar Dreams, sans-serif",
@@ -163,22 +163,7 @@ export default function Footer() {
                       color: "#FAF8FF",
                     }}
                   >
-                    Gizlilik Politikası
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="/satis-sozlesmesi"
-                    className="hover:text-[#C99BFF] transition-colors"
-                    style={{
-                      fontFamily: "Caviar Dreams, sans-serif",
-                      fontSize: "14px",
-                      fontWeight: 400,
-                      lineHeight: "20px",
-                      color: "#FAF8FF",
-                    }}
-                  >
-                    Satış Sözleşmesi
+                    Destek
                   </Link>
                 </li>
               </ul>
@@ -200,9 +185,8 @@ export default function Footer() {
               </h4>
               <div className="flex gap-4">
                 {/* Discord */}
-                <Link
-                  href="https://discord.gg"
-                  className="w-10 h-10 rounded-full flex items-center justify-center transition-all hover:bg-white/10"
+                <span
+                  className="w-10 h-10 rounded-full flex items-center justify-center cursor-default"
                   style={{ background: "rgba(255, 255, 255, 0.05)" }}
                   aria-label="Discord"
                 >
@@ -212,16 +196,15 @@ export default function Footer() {
                       fontSize: "12px",
                       fontWeight: 700,
                       lineHeight: "16px",
-                      color: "rgba(255, 255, 255, 0.90)",
+                      color: "rgba(255, 255, 255, 0.40)",
                     }}
                   >
                     DC
                   </span>
-                </Link>
+                </span>
                 {/* Instagram */}
-                <Link
-                  href="https://instagram.com"
-                  className="w-10 h-10 rounded-full flex items-center justify-center transition-all hover:bg-white/10"
+                <span
+                  className="w-10 h-10 rounded-full flex items-center justify-center cursor-default"
                   style={{ background: "rgba(255, 255, 255, 0.05)" }}
                   aria-label="Instagram"
                 >
@@ -231,16 +214,15 @@ export default function Footer() {
                       fontSize: "12px",
                       fontWeight: 700,
                       lineHeight: "16px",
-                      color: "rgba(255, 255, 255, 0.90)",
+                      color: "rgba(255, 255, 255, 0.40)",
                     }}
                   >
                     IG
                   </span>
-                </Link>
+                </span>
                 {/* Twitter */}
-                <Link
-                  href="https://twitter.com"
-                  className="w-10 h-10 rounded-full flex items-center justify-center transition-all hover:bg-white/10"
+                <span
+                  className="w-10 h-10 rounded-full flex items-center justify-center cursor-default"
                   style={{ background: "rgba(255, 255, 255, 0.05)" }}
                   aria-label="Twitter"
                 >
@@ -250,12 +232,12 @@ export default function Footer() {
                       fontSize: "12px",
                       fontWeight: 700,
                       lineHeight: "16px",
-                      color: "rgba(255, 255, 255, 0.90)",
+                      color: "rgba(255, 255, 255, 0.40)",
                     }}
                   >
                     TW
                   </span>
-                </Link>
+                </span>
               </div>
             </div>
           </div>
