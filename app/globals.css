@@ -1,0 +1,95 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Font Face Declarations */
+@font-face {
+  font-family: 'Trajan Pro';
+  src: local('Trajan Pro'), local('TrajanPro-Regular');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Trajan Pro';
+  src: local('Trajan Pro Bold'), local('TrajanPro-Bold');
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Caviar Dreams';
+  src: local('Caviar Dreams'), local('CaviarDreams');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Caviar Dreams';
+  src: local('Caviar Dreams Bold'), local('CaviarDreams-Bold');
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'LEMON MILK';
+  src: local('LEMON MILK'), local('LEMONMILK-Regular');
+  font-weight: 400;
+  font-style: normal;
+}
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+  
+  /* Profile Page Variables */
+  --Açık-Mor: #C99BFF;
+  --color-magenta-50-10\%: rgba(255, 0, 255, 0.10);
+  --color-azure-65: #9CA3AF;
+  --color-azure-34: #4B5563;
+  --color-grey-7: #121212;
+  --color-grey-15: #272727;
+  --Mor-Işık: rgba(201, 155, 255, 0.10);
+  --color-black-solid: black;
+  --color-magenta-50-5\%: rgba(255, 0, 255, 0.05);
+  --color-violet-65-10\%: rgba(168, 85, 247, 0.10);
+  --color-violet-75: #C084FC;
+  --color-azure-17: #1F2937;
+  --color-yellow-50: #F2B90D;
+  --color-azure-84: #D1D5DB;
+  --color-white--5\%: rgba(255, 255, 255, 0.05);
+  --color-white--10\%: rgba(255, 255, 255, 0.10);
+  --color-spring-green-45: #22C55E;
+  --color-spring-green-45-10\%: rgba(34, 197, 94, 0.10);
+  --color-spring-green-45-20\%: rgba(34, 197, 94, 0.20);
+  --color-yellow-50-10\%: rgba(242, 185, 13, 0.10);
+  --color-yellow-50-20\%: rgba(242, 185, 13, 0.20);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+}
