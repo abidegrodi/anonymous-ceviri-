@@ -78,39 +78,40 @@ export default function Header() {
 
             {/* Desktop Auth Buttons */}
             <div className="hidden lg:flex items-center gap-3">
-              {!isLoading && (
-                isAuthenticated ? (
+              {isAuthenticated ? (
+                <Link
+                  href="/profil"
+                  className="w-[44px] h-[44px] rounded-full flex items-center justify-center hover:opacity-80 transition-opacity"
+                  style={{
+                    background: 'linear-gradient(135deg, rgba(168, 133, 209, 0.15) 0%, rgba(121, 93, 153, 0.25) 100%)',
+                    border: '1px solid rgba(168, 133, 209, 0.4)',
+                  }}
+                >
+                  <Image src="/icons/human.svg" alt="Profil" width={22} height={22} />
+                </Link>
+              ) : (
+                <>
                   <Link
-                    href="/profil"
-                    className="w-[44px] h-[44px] rounded-full flex items-center justify-center hover:opacity-80 transition-opacity"
+                    href="/giris-yap"
+                    className="h-[40px] px-6 rounded-full flex items-center justify-center hover:brightness-110 transition"
                     style={{
-                      background: 'linear-gradient(135deg, rgba(168, 133, 209, 0.15) 0%, rgba(121, 93, 153, 0.25) 100%)',
-                      border: '1px solid rgba(168, 133, 209, 0.4)',
+                      background: 'rgba(168, 133, 209, 0.12)',
+                      border: '1px solid rgba(168, 133, 209, 0.45)',
                     }}
                   >
-                    <Image src="/icons/human.svg" alt="Profil" width={22} height={22} />
+                    <span style={authButtonStyle}>GİRİŞ YAP</span>
                   </Link>
-                ) : (
-                  <>
-                    <Link
-                      href="/giris-yap"
-                      className="h-[40px] px-6 rounded-full flex items-center justify-center hover:opacity-90 transition"
-                      style={{ border: '1px solid rgba(168, 133, 209, 0.5)' }}
-                    >
-                      <span style={authButtonStyle}>GİRİŞ YAP</span>
-                    </Link>
-                    <Link
-                      href="/kayit-ol"
-                      className="h-[40px] px-6 rounded-full flex items-center justify-center hover:opacity-90 transition"
-                      style={{
-                        background: '#A885D133',
-                        border: '1px solid rgba(180, 150, 220, 0.6)',
-                      }}
-                    >
-                      <span style={authButtonStyle}>KAYIT OL</span>
-                    </Link>
-                  </>
-                )
+                  <Link
+                    href="/kayit-ol"
+                    className="h-[40px] px-6 rounded-full flex items-center justify-center hover:brightness-110 transition"
+                    style={{
+                      background: 'rgba(168, 133, 209, 0.12)',
+                      border: '1px solid rgba(168, 133, 209, 0.45)',
+                    }}
+                  >
+                    <span style={authButtonStyle}>KAYIT OL</span>
+                  </Link>
+                </>
               )}
             </div>
 
@@ -182,52 +183,50 @@ export default function Header() {
               Destek
             </Link>
             <div className="flex flex-col sm:flex-row gap-3 pt-4 border-t border-white/10">
-              {!isLoading && (
-                isAuthenticated ? (
+              {isAuthenticated ? (
+                <Link
+                  href="/profil"
+                  onClick={() => setIsMenuOpen(false)}
+                  className="px-6 py-3 rounded-full text-sm text-center hover:opacity-90 transition flex items-center justify-center gap-3"
+                  style={{
+                    background: 'rgba(168, 133, 209, 0.12)',
+                    border: '1px solid rgba(168, 133, 209, 0.45)',
+                  }}
+                >
+                  <Image src="/icons/human.svg" alt="Profil" width={20} height={20} />
+                  <span style={{ color: 'white', fontSize: '14px', fontFamily: 'LEMON MILK', fontWeight: 400 }}>
+                    PROFİLİM
+                  </span>
+                </Link>
+              ) : (
+                <>
                   <Link
-                    href="/profil"
+                    href="/giris-yap"
                     onClick={() => setIsMenuOpen(false)}
-                    className="px-6 py-3 rounded-full text-sm text-center hover:opacity-90 transition flex items-center justify-center gap-3"
+                    className="flex-1 px-6 py-3 rounded-full text-sm text-center hover:brightness-110 transition flex items-center justify-center"
                     style={{
-                      background: 'linear-gradient(135deg, rgba(168, 133, 209, 0.15) 0%, rgba(121, 93, 153, 0.25) 100%)',
-                      border: '1px solid rgba(168, 133, 209, 0.4)',
+                      background: 'rgba(168, 133, 209, 0.12)',
+                      border: '1px solid rgba(168, 133, 209, 0.45)',
                     }}
                   >
-                    <Image src="/icons/human.svg" alt="Profil" width={20} height={20} />
                     <span style={{ color: 'white', fontSize: '14px', fontFamily: 'LEMON MILK', fontWeight: 400 }}>
-                      PROFİLİM
+                      GİRİŞ YAP
                     </span>
                   </Link>
-                ) : (
-                  <>
-                    <Link
-                      href="/giris-yap"
-                      onClick={() => setIsMenuOpen(false)}
-                      className="flex-1 px-6 py-3 rounded-full text-sm text-center hover:opacity-90 transition flex items-center justify-center"
-                      style={{
-                        background: '#A885D133',
-                        border: '1px solid rgba(255, 255, 255, 0.35)',
-                      }}
-                    >
-                      <span style={{ color: 'white', fontSize: '14px', fontFamily: 'LEMON MILK', fontWeight: 400 }}>
-                        GİRİŞ YAP
-                      </span>
-                    </Link>
-                    <Link
-                      href="/kayit-ol"
-                      onClick={() => setIsMenuOpen(false)}
-                      className="flex-1 px-6 py-3 rounded-full text-sm text-center hover:opacity-90 transition flex items-center justify-center"
-                      style={{
-                        background: '#A885D133',
-                        border: '1px solid rgba(255, 255, 255, 0.35)',
-                      }}
-                    >
-                      <span style={{ color: 'white', fontSize: '14px', fontFamily: 'LEMON MILK', fontWeight: 400 }}>
-                        KAYIT OL
-                      </span>
-                    </Link>
-                  </>
-                )
+                  <Link
+                    href="/kayit-ol"
+                    onClick={() => setIsMenuOpen(false)}
+                    className="flex-1 px-6 py-3 rounded-full text-sm text-center hover:brightness-110 transition flex items-center justify-center"
+                    style={{
+                      background: 'rgba(168, 133, 209, 0.12)',
+                      border: '1px solid rgba(168, 133, 209, 0.45)',
+                    }}
+                  >
+                    <span style={{ color: 'white', fontSize: '14px', fontFamily: 'LEMON MILK', fontWeight: 400 }}>
+                      KAYIT OL
+                    </span>
+                  </Link>
+                </>
               )}
             </div>
           </div>
