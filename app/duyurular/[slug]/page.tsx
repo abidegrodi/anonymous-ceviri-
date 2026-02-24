@@ -236,68 +236,17 @@ export default function BlogDetail() {
               }}
             >
               {/* Breadcrumb */}
-              <div className="flex flex-wrap items-center gap-2 mb-8">
-                <Link
-                  href="/"
-                  className="text-[#6B7280] hover:text-[#C99BFF] transition-colors"
-                  style={{
-                    fontFamily: "LEMON MILK, sans-serif",
-                    fontSize: "14px",
-                    lineHeight: "22.75px",
-                  }}
-                >
-                  Anasayfa
+              <div className="flex items-center gap-3 text-sm mb-8 flex-wrap">
+                <Link href="/" className="text-white/50 hover:text-[#C99BFF] transition-colors uppercase" style={{ fontFamily: "Caviar Dreams" }}>
+                  ANA SAYFA
                 </Link>
-                <svg
-                  width="16"
-                  height="20"
-                  viewBox="0 0 16 20"
-                  fill="none"
-                  className="text-[#6B7280]"
-                >
-                  <path
-                    d="M6 6L10 10L6 14"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-                <Link
-                  href="/duyurular"
-                  className="text-[#6B7280] hover:text-[#C99BFF] transition-colors"
-                  style={{
-                    fontFamily: "LEMON MILK, sans-serif",
-                    fontSize: "14px",
-                    lineHeight: "22.75px",
-                  }}
-                >
-                  Duyurular
+                <Image src="/icons/arrowr.svg" alt=">" width={20} height={20} className="opacity-50" />
+                <Link href="/duyurular" className="text-white/50 hover:text-[#C99BFF] transition-colors uppercase" style={{ fontFamily: "Caviar Dreams" }}>
+                  DUYURULAR
                 </Link>
-                <svg
-                  width="16"
-                  height="20"
-                  viewBox="0 0 16 20"
-                  fill="none"
-                  className="text-[#6B7280]"
-                >
-                  <path
-                    d="M6 6L10 10L6 14"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-                <span
-                  className="text-[#C99BFF]"
-                  style={{
-                    fontFamily: "LEMON MILK, sans-serif",
-                    fontSize: "14px",
-                    lineHeight: "22.75px",
-                  }}
-                >
-                  Starfield V1.2
+                <Image src="/icons/arrowr.svg" alt=">" width={20} height={20} className="opacity-50" />
+                <span className="font-medium uppercase" style={{ fontFamily: "Caviar Dreams", background: "linear-gradient(180deg, rgba(255,255,255,0.90) 0%, rgba(121,93,153,0.90) 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>
+                  {post.title}
                 </span>
               </div>
 

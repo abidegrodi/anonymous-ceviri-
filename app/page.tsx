@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo, useCallback } from "react";
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
 import CategoryPills, { type CategoryItem } from "@/components/CategoryPills";
@@ -8,38 +8,19 @@ import GameSection, { type GameCardData } from "@/components/GameSection";
 import EditorsChoice from "@/components/EditorsChoice";
 import Footer from "@/components/Footer";
 import { getGames, type GameListItem } from "@/lib/services/games";
+import { toggleReleaseNotification } from "@/lib/services/notifications";
+import { useAuth } from "@/lib/auth-context";
+import toast from "react-hot-toast";
 
-// API oyun verisini GameCard formatına dönüştür
 function mapGameToCard(game: GameListItem): GameCardData {
   const mainPhoto = game.photos?.find((p) => p.isMain) || game.photos?.[0];
-  const progress = game.completeRate ?? 0;
-
-  // Tag belirleme
-  let tag: GameCardData["tag"] | undefined;
-  if (progress === 100) {
-    const releaseDate = new Date(game.releaseDate);
-    const now = new Date();
-    const daysDiff = (now.getTime() - releaseDate.getTime()) / (1000 * 60 * 60 * 24);
-    if (daysDiff <= 30) {
-      tag = { text: "YENİ", color: "gradient" };
-    }
-  } else if (progress > 0 && progress < 100) {
-    tag = { text: "DEVAM EDİYOR", color: "bg-yellow-500 text-black" };
-  }
-
-  // Kategori adlarını subtitle olarak göster (sadece Oyun Türleri olanları)
-  const genreCategories = game.categories?.filter(
-    (c) => c.categoryType?.name === "Oyun Türleri"
-  );
-  const subtitle = genreCategories?.map((c) => c.name).join(", ") || "";
 
   return {
     title: game.name,
-    subtitle,
-    progress,
-    tag,
+    progress: game.completeRate ?? 0,
     image: mainPhoto?.photoUrl || undefined,
     href: `/ceviriler/${game.gameId}`,
+    gameId: game.gameId,
   };
 }
 
@@ -47,6 +28,17 @@ export default function Home() {
   const [allGames, setAllGames] = useState<GameListItem[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [activeCategory, setActiveCategory] = useState("all");
+  const { isAuthenticated, requireAuth } = useAuth();
+
+  const handleNotify = useCallback(async (gameId: number) => {
+    if (!requireAuth()) return;
+    try {
+      const result = await toggleReleaseNotification(gameId);
+      toast.success(result.subscribed ? 'Bildirim aktif: Çeviri çıktığında haber verilecek.' : 'Bildirim kapatıldı.');
+    } catch {
+      toast.error('İşlem başarısız oldu.');
+    }
+  }, [requireAuth]);
 
   // Oyunları API'den çek
   useEffect(() => {
@@ -144,6 +136,16 @@ export default function Home() {
     return categories.find((c) => c.id === activeCategory)?.name || null;
   }, [activeCategory, categories]);
 
+  // Aynı kategoriye ikinci tıklamada anasayfaya dön
+  const handleCategoryChange = useCallback((nextCategory: string) => {
+    setActiveCategory((prevCategory) => {
+      if (prevCategory === nextCategory) {
+        return "all";
+      }
+      return nextCategory;
+    });
+  }, []);
+
   return (
     <main className="min-h-screen bg-[#0a0a0a]">
       <Header />
@@ -152,7 +154,7 @@ export default function Home() {
         <CategoryPills
           categories={categories}
           activeCategory={activeCategory}
-          onCategoryChange={setActiveCategory}
+          onCategoryChange={handleCategoryChange}
         />
 
         {isLoading ? (
@@ -170,6 +172,7 @@ export default function Home() {
             <GameSection
               title="| En Yeni Türkçe Çeviriler"
               games={newestGames}
+              onNotify={handleNotify}
             />
 
             <EditorsChoice
@@ -183,6 +186,7 @@ export default function Home() {
                 title={section.title}
                 games={section.games}
                 showViewAll={false}
+                onNotify={handleNotify}
               />
             ))}
           </>
@@ -193,6 +197,7 @@ export default function Home() {
               title={`| ${activeCategoryName || 'Seçili Kategori'}`}
               games={filteredByCategory}
               showViewAll={false}
+              onNotify={handleNotify}
             />
           </>
         )}

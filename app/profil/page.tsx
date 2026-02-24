@@ -2,18 +2,20 @@
 
 import React, { useState, useEffect, Suspense } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Header from '@/components/Header';
+import Footer from '@/components/Footer';
 import { useAuth } from '@/lib/auth-context';
 import { updateUsername } from '@/lib/services/profile';
 import toast from 'react-hot-toast';
 
-type SidebarTab = 'genel' | 'indirme' | 'uyelik' | 'ayarlar';
+type TabType = 'genel' | 'indirme' | 'uyelik' | 'ayarlar';
 
 export default function ProfilePage() {
     return (
         <Suspense fallback={
-            <main className="min-h-screen bg-[#0a0a0a] font-sans">
+            <main className="min-h-screen bg-[#12110E]">
                 <Header />
                 <div className="flex items-center justify-center min-h-screen">
                     <div className="w-12 h-12 border-2 border-[#C99BFF] border-t-transparent rounded-full animate-spin" />
@@ -26,13 +28,13 @@ export default function ProfilePage() {
 }
 
 function ProfileContent() {
-    const { user, isAuthenticated, isLoading, logout, refreshUser } = useAuth();
+    const { user, isAuthenticated, isLoading, logout, refreshUser, patchUser } = useAuth();
     const router = useRouter();
     const searchParams = useSearchParams();
     const [showUsernameModal, setShowUsernameModal] = useState(false);
     const [newUsername, setNewUsername] = useState('');
     const [usernameSubmitting, setUsernameSubmitting] = useState(false);
-    const [activeTab, setActiveTab] = useState<SidebarTab>('genel');
+    const [activeTab, setActiveTab] = useState<TabType>('genel');
     const [editMode, setEditMode] = useState(false);
     const [editUsername, setEditUsername] = useState('');
 
@@ -43,73 +45,50 @@ function ProfileContent() {
     }, [isLoading, isAuthenticated, router]);
 
     useEffect(() => {
-        if (searchParams.get('setup') === 'username' || (user && !user.Username)) {
+        if (user && !user.Username) {
             setShowUsernameModal(true);
         }
-    }, [searchParams, user]);
+    }, [user]);
 
     const handleUpdateUsername = async (e: React.FormEvent) => {
         e.preventDefault();
-        if (!newUsername.trim()) {
-            toast.error('Kullanıcı adı boş olamaz.');
-            return;
-        }
-        if (newUsername.length < 2 || newUsername.length > 30) {
-            toast.error('Kullanıcı adı 2-30 karakter arasında olmalıdır.');
-            return;
-        }
+        if (!newUsername.trim()) { toast.error('Kullanıcı adı boş olamaz.'); return; }
+        if (newUsername.length < 2 || newUsername.length > 30) { toast.error('Kullanıcı adı 2-30 karakter arasında olmalıdır.'); return; }
         setUsernameSubmitting(true);
         try {
-            await updateUsername(newUsername.trim());
+            const trimmed = newUsername.trim();
+            await updateUsername(trimmed);
+            patchUser({ Username: trimmed });
             toast.success('Kullanıcı adı güncellendi!');
             setShowUsernameModal(false);
             setNewUsername('');
-            await refreshUser();
-        } catch {
-        } finally {
-            setUsernameSubmitting(false);
-        }
-    };
-
-    const handleStartEdit = () => {
-        setEditUsername(user?.Username || '');
-        setEditMode(true);
-    };
-
-    const handleCancelEdit = () => {
-        setEditMode(false);
-        setEditUsername('');
+            if (searchParams.get('setup') === 'username') {
+                router.replace('/profil');
+            }
+        } catch (err: any) {
+            toast.error(err?.response?.data?.message || 'Kullanıcı adı güncellenemedi.');
+        } finally { setUsernameSubmitting(false); }
     };
 
     const handleSaveEdit = async () => {
-        if (!editUsername.trim()) {
-            toast.error('Kullanıcı adı boş olamaz.');
-            return;
-        }
-        if (editUsername.length < 2 || editUsername.length > 30) {
-            toast.error('Kullanıcı adı 2-30 karakter arasında olmalıdır.');
-            return;
-        }
+        if (!editUsername.trim()) { toast.error('Kullanıcı adı boş olamaz.'); return; }
+        if (editUsername.length < 2 || editUsername.length > 30) { toast.error('Kullanıcı adı 2-30 karakter arasında olmalıdır.'); return; }
         setUsernameSubmitting(true);
         try {
-            await updateUsername(editUsername.trim());
+            const trimmed = editUsername.trim();
+            await updateUsername(trimmed);
+            patchUser({ Username: trimmed });
             toast.success('Kullanıcı adı güncellendi!');
             setEditMode(false);
             setEditUsername('');
-            await refreshUser();
-        } catch {
-        } finally {
-            setUsernameSubmitting(false);
-        }
-    };
-
-    const handleTabClick = (tab: SidebarTab) => {
-        setActiveTab(tab);
+        } catch (err: any) {
+            toast.error(err?.response?.data?.message || 'Kullanıcı adı güncellenemedi.');
+        } finally { setUsernameSubmitting(false); }
     };
 
     if (isLoading) {
         return (
-            <main className="min-h-screen bg-[#0a0a0a] font-sans">
+            <main className="min-h-screen bg-[#12110E]">
                 <Header />
                 <div className="flex items-center justify-center min-h-screen">
                     <div className="w-12 h-12 border-2 border-[#C99BFF] border-t-transparent rounded-full animate-spin" />
@@ -120,60 +99,43 @@ function ProfileContent() {
 
     if (!user) return null;
 
-    const registerDate = user.RegisterDate
-        ? new Date(user.RegisterDate).toLocaleDateString('tr-TR')
-        : '-';
+    const registerDate = user.RegisterDate ? new Date(user.RegisterDate).toLocaleDateString('tr-TR') : '-';
+    const initial = (user.Username || user.Email)?.[0]?.toUpperCase() || '?';
 
-    const sidebarItems: { key: SidebarTab; label: string; icon: string }[] = [
-        { key: 'genel', label: 'Genel Bakış', icon: '/icons/genelbakis.svg' },
-        { key: 'indirme', label: 'İndirme Geçmişi', icon: '/icons/indirmegecmisi.svg' },
-        { key: 'uyelik', label: 'Üyelik Planım', icon: '/icons/uyelikplani.svg' },
-        { key: 'ayarlar', label: 'Ayarlar', icon: '/icons/ayarlar.svg' },
+    const tabs: { id: TabType; label: string; icon: React.ReactNode }[] = [
+        { id: 'genel', label: 'Genel Bakış', icon: <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><rect x="3" y="3" width="7" height="7" rx="1" /><rect x="14" y="3" width="7" height="7" rx="1" /><rect x="3" y="14" width="7" height="7" rx="1" /><rect x="14" y="14" width="7" height="7" rx="1" /></svg> },
+        { id: 'indirme', label: 'İndirmelerim', icon: <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M12 3v12m0 0l-4-4m4 4l4-4" strokeLinecap="round" strokeLinejoin="round" /><path d="M3 17v2a2 2 0 002 2h14a2 2 0 002-2v-2" strokeLinecap="round" /></svg> },
+        { id: 'uyelik', label: 'Üyelik', icon: <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" strokeLinecap="round" strokeLinejoin="round" /></svg> },
+        { id: 'ayarlar', label: 'Ayarlar', icon: <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><circle cx="12" cy="12" r="3" /><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z" /></svg> },
     ];
 
     return (
-        <main className="min-h-screen bg-[#0a0a0a] font-sans">
+        <main className="min-h-screen bg-[#12110E]">
             <Header />
 
             {/* Username Modal */}
             {showUsernameModal && (
                 <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/70 backdrop-blur-sm px-4">
-                    <div className="w-full max-w-[480px] p-6 sm:p-8 rounded-[24px] relative" style={{ background: 'linear-gradient(135deg, rgba(26, 26, 42, 0.95) 0%, rgba(15, 15, 25, 0.98) 100%)', border: '1px solid rgba(255, 255, 255, 0.08)' }}>
-                        <h2 className="text-white text-lg sm:text-xl font-bold mb-2" style={{ fontFamily: 'Inter' }}>
-                            Kullanıcı Adı Belirle
-                        </h2>
-                        <p className="text-[#9CA3AF] text-sm mb-6" style={{ fontFamily: 'Inter' }}>
+                    <div className="w-full max-w-[440px] p-6 sm:p-8 rounded-[20px]" style={{ background: 'linear-gradient(145deg, rgba(30,28,22,0.95) 0%, rgba(18,17,14,0.98) 100%)', border: '1px solid rgba(201,155,255,0.10)' }}>
+                        <h2 className="text-white text-lg font-bold mb-2" style={{ fontFamily: 'LEMON MILK' }}>Kullanıcı Adı Belirle</h2>
+                        <p className="text-white/40 text-sm mb-6" style={{ fontFamily: 'Caviar Dreams' }}>
                             {user.Username ? 'Kullanıcı adınızı güncelleyebilirsiniz.' : 'Yorum yapabilmek için bir kullanıcı adı belirlemeniz gerekmektedir.'}
                         </p>
                         <form onSubmit={handleUpdateUsername} className="flex flex-col gap-4">
-                            <input
-                                type="text"
-                                value={newUsername}
-                                onChange={(e) => setNewUsername(e.target.value)}
-                                placeholder="Kullanıcı adınız (2-30 karakter)"
-                                className="w-full h-[48px] px-4 rounded-[12px] text-white placeholder:text-[#666666] focus:outline-none transition-all border border-[#FAF8FF]/20 bg-white/5"
-                                style={{ fontFamily: 'Inter' }}
-                                minLength={2}
-                                maxLength={30}
-                                required
-                            />
+                            <input type="text" value={newUsername} onChange={(e) => setNewUsername(e.target.value)} placeholder="Kullanıcı adınız (2-30 karakter)"
+                                className="w-full h-[48px] px-4 rounded-xl text-white placeholder:text-white/20 focus:outline-none transition-all bg-white/5 focus:bg-white/8 text-sm"
+                                style={{ fontFamily: 'Caviar Dreams', border: '1px solid rgba(201,155,255,0.15)' }} minLength={2} maxLength={30} required />
                             <div className="flex gap-3">
-                                <button
-                                    type="submit"
-                                    disabled={usernameSubmitting}
-                                    className="flex-1 h-[44px] rounded-[12px] font-bold text-[#1A1A2A] text-[14px] transition-opacity hover:opacity-90 disabled:opacity-50"
-                                    style={{ background: '#C99BFF', fontFamily: 'Inter' }}
-                                >
-                                    {usernameSubmitting ? 'Kaydediliyor...' : 'Kaydet'}
+                                <button type="submit" disabled={usernameSubmitting}
+                                    className="flex-1 h-[44px] rounded-xl font-bold text-[13px] text-[#12110E] hover:brightness-110 transition disabled:opacity-50"
+                                    style={{ background: '#C99BFF', fontFamily: 'LEMON MILK' }}>
+                                    {usernameSubmitting ? 'KAYDEDİLİYOR...' : 'KAYDET'}
                                 </button>
                                 {user.Username && (
-                                    <button
-                                        type="button"
-                                        onClick={() => setShowUsernameModal(false)}
-                                        className="flex-1 h-[44px] rounded-[12px] text-white/60 text-[14px] transition-opacity hover:opacity-70"
-                                        style={{ border: '1px solid rgba(255, 255, 255, 0.1)', fontFamily: 'Inter' }}
-                                    >
-                                        İptal
+                                    <button type="button" onClick={() => setShowUsernameModal(false)}
+                                        className="flex-1 h-[44px] rounded-xl text-white/50 text-[13px] hover:bg-white/5 transition"
+                                        style={{ border: '1px solid rgba(255,255,255,0.08)', fontFamily: 'LEMON MILK' }}>
+                                        İPTAL
                                     </button>
                                 )}
                             </div>
@@ -182,410 +144,243 @@ function ProfileContent() {
                 </div>
             )}
 
-            {/* Mobile Mini Sidebar (icon-only) */}
-            <aside className="lg:hidden fixed left-0 top-[80px] w-[56px] h-[calc(100vh-80px)] flex flex-col justify-between py-4 bg-[#0a0a0a] border-r border-[rgba(168,133,209,0.12)] z-40">
-                <div className="flex flex-col items-center gap-2">
-                    {sidebarItems.map((item) => (
-                        <button
-                            key={item.key}
-                            onClick={() => handleTabClick(item.key)}
-                            className={`relative w-10 h-10 rounded-lg flex items-center justify-center transition-all ${
-                                activeTab === item.key
-                                    ? 'bg-[rgba(201,155,255,0.12)]'
-                                    : 'hover:bg-white/5'
-                            }`}
-                            title={item.label}
-                        >
-                            {activeTab === item.key && (
-                                <div className="absolute left-0 top-1/2 -translate-y-1/2 w-[3px] h-5 bg-[#C99BFF] rounded-r-full" />
-                            )}
-                            <Image src={item.icon} alt={item.label} width={20} height={20} className={activeTab === item.key ? '' : 'opacity-50'} />
-                        </button>
-                    ))}
-                </div>
-                <button
-                    onClick={() => logout()}
-                    className="w-10 h-10 mx-auto rounded-lg flex items-center justify-center hover:bg-[#FF5555]/10 transition-all"
-                    title="Çıkış Yap"
-                >
-                    <Image src="/icons/cikisyap.svg" alt="Çıkış Yap" width={20} height={20} className="opacity-60" />
-                </button>
-            </aside>
+            <div className="relative z-10 pt-[80px]">
+                <div className="max-w-[1100px] mx-auto px-4 md:px-8 py-8">
 
-            {/* Desktop Sidebar (full) */}
-            <aside className="hidden lg:flex fixed left-0 top-[80px] w-[287px] h-[calc(100vh-80px)] flex-col justify-between py-8 px-4 bg-[#0a0a0a] border-r border-[rgba(168,133,209,0.15)] z-40">
-                <div className="space-y-4">
-                    {sidebarItems.map((item) => (
-                        <div
-                            key={item.key}
-                            onClick={() => handleTabClick(item.key)}
-                            className={`flex items-center gap-4 px-4 py-3 rounded-lg cursor-pointer transition-all ${
-                                activeTab === item.key
-                                    ? 'border-l-4 border-[#C99BFF] bg-[rgba(255,0,255,0.10)]'
-                                    : 'hover:bg-white/5 text-[#9CA3AF] hover:text-[#D1D5DB]'
-                            }`}
-                        >
-                            <div className="relative w-6 h-6 flex items-center justify-center">
-                                <Image src={item.icon} alt={item.label} width={24} height={24} className={activeTab === item.key ? '' : 'opacity-70'} />
-                            </div>
-                            <span className={`text-sm font-bold font-lemon-milk uppercase tracking-wide ${
-                                activeTab === item.key ? 'text-[#C99BFF]' : ''
-                            }`}>
-                                {item.label}
-                            </span>
-                        </div>
-                    ))}
-                </div>
-
-                <div
-                    onClick={() => logout()}
-                    className="flex items-center gap-4 px-4 py-3 rounded-lg cursor-pointer hover:bg-white/5 transition-all mt-auto group"
-                >
-                    <div className="relative w-6 h-6 flex items-center justify-center">
-                        <Image src="/icons/cikisyap.svg" alt="Çıkış Yap" width={24} height={24} />
+                    {/* Breadcrumb */}
+                    <div className="flex items-center gap-3 text-sm mb-8">
+                        <Link href="/" className="text-white/50 hover:text-[#C99BFF] transition-colors uppercase" style={{ fontFamily: 'Caviar Dreams' }}>ANA SAYFA</Link>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.25)" strokeWidth="2"><path d="M9 18l6-6-6-6" /></svg>
+                        <span className="font-medium uppercase" style={{ fontFamily: 'Caviar Dreams', background: 'linear-gradient(180deg, rgba(255,255,255,0.90) 0%, rgba(121,93,153,0.90) 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>PROFİL</span>
                     </div>
-                    <span className="text-[#FF5555] text-sm font-bold font-lemon-milk uppercase tracking-wide group-hover:text-[#ff7777]">
-                        ÇIKIŞ YAP
-                    </span>
-                </div>
-            </aside>
 
-            {/* Main content area */}
-            <div className="ml-[56px] lg:ml-[287px] pt-[80px] min-h-screen flex justify-center bg-[#0a0a0a] px-3 sm:px-6 lg:px-8">
-                <div className="relative mt-4 sm:mt-8 lg:mt-12 w-full max-w-[1024px] pb-8">
-
-                    {/* Profile Header Card */}
-                    <div className={`w-full relative bg-[#121212] rounded-xl overflow-hidden border ${editMode ? 'border-[#C99BFF]/40' : 'border-[#272727]'} transition-colors`} style={{ minHeight: '140px' }}>
-                        <div className="absolute w-[256px] h-[256px] right-[-60px] top-[-127px] bg-[rgba(201,155,255,0.10)] rounded-full blur-[32px] hidden sm:block" style={{ boxShadow: '64px 64px 64px' }}></div>
-
-                        <div className="p-4 sm:p-6 flex flex-col sm:flex-row items-center gap-4">
+                    {/* Profile Header */}
+                    <div className="relative p-5 sm:p-8 rounded-[20px] overflow-hidden mb-6" style={{ background: 'linear-gradient(145deg, rgba(30,28,22,0.80) 0%, rgba(20,18,14,0.70) 100%)', border: '1px solid rgba(201,155,255,0.06)', backdropFilter: 'blur(12px)' }}>
+                        <div className="absolute -top-24 -right-16 w-64 h-64 rounded-full" style={{ background: 'rgba(201,155,255,0.05)', filter: 'blur(80px)' }} />
+                        <div className="relative z-10 flex flex-col sm:flex-row items-center gap-5">
                             {/* Avatar */}
-                            <div className="relative shrink-0 group">
-                                <div
-                                    className={`w-16 h-16 sm:w-[88px] sm:h-[88px] md:w-[112px] md:h-[112px] bg-[#1A1A1A] rounded-xl border-2 ${editMode ? 'border-[#C99BFF]/30 cursor-pointer' : 'border-[rgba(255,0,255,0.05)]'} shadow-[0_0_20px_rgba(201,155,255,0.34)] overflow-hidden flex items-center justify-center relative`}
-                                    onClick={() => {
-                                        if (editMode) toast('Profil fotoğrafı özelliği yakında aktif olacak.', { icon: '📷' });
-                                    }}
-                                >
-                                    <div className="w-full h-full bg-gradient-to-br from-[#2a1b3d] to-[#121212] flex items-center justify-center">
-                                        <span className="text-[#C99BFF] text-xl sm:text-2xl md:text-3xl font-bold">
-                                            {(user.Username || user.Email)?.[0]?.toUpperCase() || '?'}
-                                        </span>
-                                    </div>
-                                    {editMode && (
-                                        <div className="absolute inset-0 bg-black/50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                                            <svg className="w-6 h-6 sm:w-8 sm:h-8 text-white/80" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M6.827 6.175A2.31 2.31 0 015.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 00-1.134-.175 2.31 2.31 0 01-1.64-1.055l-.822-1.316a2.192 2.192 0 00-1.736-1.039 48.774 48.774 0 00-5.232 0 2.192 2.192 0 00-1.736 1.039l-.821 1.316z" />
-                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M16.5 12.75a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0z" />
-                                            </svg>
-                                        </div>
-                                    )}
+                            <div className="relative shrink-0">
+                                <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl overflow-hidden flex items-center justify-center" style={{ background: 'linear-gradient(135deg, #2a1b3d 0%, #1a1128 100%)', border: '2px solid rgba(201,155,255,0.15)', boxShadow: '0 0 30px rgba(201,155,255,0.15)' }}>
+                                    <span className="text-[#C99BFF] text-2xl sm:text-3xl font-bold" style={{ fontFamily: 'LEMON MILK' }}>{initial}</span>
                                 </div>
-                                {!editMode && (
-                                    <div className="absolute bottom-[-6px] right-[-6px] w-5 h-5 sm:w-6 sm:h-6 bg-black rounded-full flex items-center justify-center border border-[rgba(255,0,255,0.05)] z-10">
-                                        <Image src="/icons/check.svg" alt="Status" width={12} height={12} />
-                                    </div>
-                                )}
+                                <div className="absolute -bottom-1 -right-1 w-6 h-6 rounded-full flex items-center justify-center" style={{ background: '#0DF269', border: '2px solid #12110E' }}>
+                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#12110E" strokeWidth="3"><path d="M20 6L9 17l-5-5" strokeLinecap="round" strokeLinejoin="round" /></svg>
+                                </div>
                             </div>
 
-                            {/* User Info */}
-                            <div className="flex-1 min-w-0 text-center sm:text-left w-full sm:w-auto">
+                            {/* Info */}
+                            <div className="flex-1 min-w-0 text-center sm:text-left">
                                 {editMode ? (
                                     <div className="flex flex-col gap-2">
-                                        <label className="text-[#9CA3AF] text-[11px] font-lemon-milk uppercase tracking-wider">Kullanıcı Adı</label>
-                                        <input
-                                            type="text"
-                                            value={editUsername}
-                                            onChange={(e) => setEditUsername(e.target.value)}
-                                            placeholder="Kullanıcı adınız (2-30 karakter)"
-                                            className="w-full sm:max-w-[320px] h-[44px] px-4 rounded-lg text-white placeholder:text-[#666666] focus:outline-none transition-all border border-[#C99BFF]/30 bg-white/5 focus:border-[#C99BFF]/60 text-base sm:text-lg font-bold"
-                                            style={{ fontFamily: 'Inter' }}
-                                            minLength={2}
-                                            maxLength={30}
-                                            autoFocus
-                                            onKeyDown={(e) => {
-                                                if (e.key === 'Enter') handleSaveEdit();
-                                                if (e.key === 'Escape') handleCancelEdit();
-                                            }}
-                                        />
+                                        <label className="text-white/30 text-[10px] uppercase tracking-wider" style={{ fontFamily: 'LEMON MILK' }}>Kullanıcı Adı</label>
+                                        <input type="text" value={editUsername} onChange={(e) => setEditUsername(e.target.value)} placeholder="Kullanıcı adınız"
+                                            className="w-full sm:max-w-[300px] h-[44px] px-4 rounded-xl text-white placeholder:text-white/20 focus:outline-none text-base font-bold bg-white/5"
+                                            style={{ fontFamily: 'Caviar Dreams', border: '1px solid rgba(201,155,255,0.25)' }} autoFocus minLength={2} maxLength={30}
+                                            onKeyDown={(e) => { if (e.key === 'Enter') handleSaveEdit(); if (e.key === 'Escape') { setEditMode(false); setEditUsername(''); } }} />
                                     </div>
                                 ) : (
                                     <>
-                                        <div className="flex items-center justify-center sm:justify-start gap-3 flex-wrap">
-                                            <h1 className="text-white/90 text-lg sm:text-2xl md:text-[30px] font-bold font-trajan tracking-wide leading-tight truncate">
-                                                {user.Username || 'Kullanıcı adı belirlenmemiş'}
-                                            </h1>
-                                        </div>
+                                        <h1 className="text-white/95 text-xl sm:text-2xl font-bold truncate" style={{ fontFamily: '"Trajan Pro", serif' }}>
+                                            {user.Username || 'Kullanıcı adı belirlenmemiş'}
+                                        </h1>
                                         <div className="mt-2 flex items-center justify-center sm:justify-start gap-3 flex-wrap">
-                                            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-bold font-lemon-milk uppercase tracking-wider"
-                                                style={{
-                                                    background: 'rgba(168, 133, 209, 0.15)',
-                                                    border: '1px solid rgba(168, 133, 209, 0.3)',
-                                                    color: '#C99BFF',
-                                                }}
-                                            >
-                                                <Image src="/icons/abone.svg" alt="Abone" width={12} height={12} />
+                                            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg text-[10px] font-bold uppercase tracking-wider"
+                                                style={{ background: 'rgba(201,155,255,0.10)', border: '1px solid rgba(201,155,255,0.20)', color: '#C99BFF', fontFamily: 'LEMON MILK' }}>
                                                 ÜYE
                                             </span>
-                                            <span className="text-[#6B7280] text-xs font-lemon-milk">ID: #{user.UserId}</span>
+                                            <span className="text-white/15 text-[10px]" style={{ fontFamily: 'Caviar Dreams' }}>{user.Email}</span>
                                         </div>
                                     </>
                                 )}
                             </div>
 
-                            {/* Edit / Save / Cancel Buttons */}
-                            <div className="shrink-0 flex items-center gap-2 w-full sm:w-auto justify-center sm:justify-end">
+                            {/* Actions */}
+                            <div className="shrink-0 flex items-center gap-2">
                                 {editMode ? (
                                     <>
-                                        <button
-                                            onClick={handleSaveEdit}
-                                            disabled={usernameSubmitting}
-                                            className="flex-1 sm:flex-none px-4 py-2.5 rounded-lg text-[#1A1A2A] text-xs sm:text-sm font-lemon-milk font-bold hover:opacity-90 transition disabled:opacity-50 whitespace-nowrap"
-                                            style={{ background: '#C99BFF' }}
-                                        >
+                                        <button onClick={handleSaveEdit} disabled={usernameSubmitting}
+                                            className="px-5 py-2.5 rounded-xl text-[12px] font-bold text-[#12110E] hover:brightness-110 transition disabled:opacity-50"
+                                            style={{ background: '#C99BFF', fontFamily: 'LEMON MILK' }}>
                                             {usernameSubmitting ? 'KAYDEDİLİYOR...' : 'KAYDET'}
                                         </button>
-                                        <button
-                                            onClick={handleCancelEdit}
-                                            disabled={usernameSubmitting}
-                                            className="flex-1 sm:flex-none px-4 py-2.5 bg-white/5 border border-white/10 rounded-lg text-[#9CA3AF] text-xs sm:text-sm font-lemon-milk hover:bg-white/10 transition whitespace-nowrap"
-                                        >
+                                        <button onClick={() => { setEditMode(false); setEditUsername(''); }} disabled={usernameSubmitting}
+                                            className="px-5 py-2.5 rounded-xl text-white/40 text-[12px] hover:bg-white/5 transition"
+                                            style={{ border: '1px solid rgba(255,255,255,0.08)', fontFamily: 'LEMON MILK' }}>
                                             İPTAL
                                         </button>
                                     </>
                                 ) : (
-                                    <button
-                                        onClick={handleStartEdit}
-                                        className="w-full sm:w-auto px-4 py-2.5 bg-white/5 border border-white/10 rounded-lg text-[#D1D5DB] text-xs sm:text-sm font-lemon-milk hover:bg-white/10 transition whitespace-nowrap"
-                                    >
-                                        PROFİLİ DÜZENLE
+                                    <button onClick={() => { setEditUsername(user.Username || ''); setEditMode(true); }}
+                                        className="px-5 py-2.5 rounded-xl text-white/50 text-[12px] hover:bg-white/8 hover:text-white/70 transition"
+                                        style={{ border: '1px solid rgba(255,255,255,0.08)', fontFamily: 'LEMON MILK' }}>
+                                        DÜZENLE
                                     </button>
                                 )}
                             </div>
                         </div>
                     </div>
 
-                    {/* Tab Content */}
-                    {activeTab === 'genel' && (
-                        <GenelBakisTab registerDate={registerDate} />
-                    )}
-                    {activeTab === 'indirme' && (
-                        <IndirmeGecmisiTab />
-                    )}
-                    {activeTab === 'uyelik' && (
-                        <UyelikPlaniTab />
-                    )}
-                    {activeTab === 'ayarlar' && (
-                        <AyarlarTab
-                            user={user}
-                            onEditUsername={handleStartEdit}
-                            onLogout={logout}
-                        />
-                    )}
-
-                    {/* Footer Text */}
-                    <div className="mt-12 mb-8 text-center text-[#4B5563] text-xs font-lemon-milk">
-                        ANONYMOUS ÇEVİRİ © 2026 - v3.5.0 SYSTEM_READY
+                    {/* Tabs */}
+                    <div className="flex gap-2 mb-6 overflow-x-auto scrollbar-hide pb-1">
+                        {tabs.map((tab) => (
+                            <button key={tab.id} onClick={() => setActiveTab(tab.id)}
+                                className={`flex items-center gap-2 px-4 sm:px-5 py-2.5 rounded-xl shrink-0 transition-all duration-200 ${activeTab === tab.id ? 'bg-white/8' : 'hover:bg-white/4'}`}
+                                style={{ border: activeTab === tab.id ? '1px solid rgba(201,155,255,0.25)' : '1px solid transparent' }}>
+                                <span className={activeTab === tab.id ? 'text-[#C99BFF]' : 'text-white/30'}>{tab.icon}</span>
+                                <span className="text-[11px] uppercase tracking-wider" style={{ fontFamily: 'LEMON MILK', color: activeTab === tab.id ? '#C99BFF' : 'rgba(255,255,255,0.40)' }}>
+                                    {tab.label}
+                                </span>
+                            </button>
+                        ))}
                     </div>
+
+                    {/* Tab Content */}
+                    {activeTab === 'genel' && <GenelTab registerDate={registerDate} />}
+                    {activeTab === 'indirme' && <IndirmeTab />}
+                    {activeTab === 'uyelik' && <UyelikTab />}
+                    {activeTab === 'ayarlar' && <AyarlarTab user={user} onEditUsername={() => { setEditUsername(user.Username || ''); setEditMode(true); }} onLogout={logout} />}
                 </div>
             </div>
+
+            <Footer />
         </main>
     );
 }
 
-/* ========== GENEL BAKIŞ TAB ========== */
-function GenelBakisTab({ registerDate }: { registerDate: string }) {
+/* ========== GENEL BAKIŞ ========== */
+function GenelTab({ registerDate }: { registerDate: string }) {
     return (
-        <>
-            {/* Stats Row */}
-            <div className="mt-6 sm:mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                {/* Card 1 - Toplam İndirme */}
-                <div className="bg-[#121212] border border-[#272727] rounded-xl p-5 flex flex-col justify-between min-h-[160px] sm:min-h-[185px]">
-                    <div className="flex justify-between items-start">
-                        <div className="p-2 bg-[rgba(168,85,247,0.10)] rounded-lg">
-                            <Image src="/icons/toplamindirme2.svg" width={22} height={16} alt="Toplam İndirme" />
-                        </div>
-                        <span className="text-[#FAF8FF] text-[10px] bg-[#1F2937] px-1 py-0.5 rounded border border-[#1F2937]">DAT_01</span>
-                    </div>
-                    <div>
-                        <span className="text-[#9CA3AF] text-xs font-lemon-milk font-medium uppercase tracking-wider block mb-1">Toplam İndirme</span>
-                        <span className="text-white/90 text-2xl sm:text-3xl font-lemon-milk font-bold">-</span>
-                    </div>
-                </div>
-
-                {/* Card 2 - Kayıt Tarihi */}
-                <div className="bg-[#121212] border border-[#272727] rounded-xl p-5 flex flex-col justify-between min-h-[160px] sm:min-h-[185px]">
-                    <div className="flex justify-between items-start">
-                        <div className="p-2 bg-[rgba(168,85,247,0.10)] rounded-lg">
-                            <Image src="/icons/kayittarihi.svg" width={18} height={20} alt="Kayıt Tarihi" />
-                        </div>
-                        <span className="text-[#FAF8FF] text-[10px] bg-[#1F2937] px-1 py-0.5 rounded border border-[#1F2937]">DAT_02</span>
-                    </div>
-                    <div>
-                        <span className="text-[#9CA3AF] text-xs font-lemon-milk font-medium uppercase tracking-wider block mb-1">Kayıt Tarihi</span>
-                        <span className="text-white/90 text-2xl sm:text-3xl font-lemon-milk font-bold">{registerDate}</span>
-                    </div>
-                </div>
-
-                {/* Card 3 - Kalan Süre */}
-                <div className="sm:col-span-2 lg:col-span-1 bg-[#121212] border border-[rgba(242,185,13,0.15)] rounded-xl p-5 flex flex-col justify-between min-h-[160px] sm:min-h-[185px] relative overflow-hidden">
-                    <div className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-[#F2B90D] to-[#F2B90D]/50"></div>
-                    <div className="flex justify-between items-start">
-                        <div className="p-2 bg-[rgba(242,185,13,0.10)] rounded-lg">
-                            <Image src="/icons/kalansure.svg" width={16} height={20} alt="Kalan Süre" />
-                        </div>
-                        <span className="text-[#F2B90D]/50 text-[10px] border border-[rgba(242,185,13,0.15)] px-1.5 py-0.5 rounded">AKT_01</span>
-                    </div>
-                    <div>
-                        <span className="text-[rgba(242,185,13,0.70)] text-xs font-lemon-milk font-medium uppercase tracking-wider block mb-1">Kalan Süre</span>
-                        <div className="flex items-baseline gap-2">
-                            <span className="text-[#F2B90D] text-2xl sm:text-3xl font-lemon-milk font-bold drop-shadow-[0_0_10px_rgba(242,185,13,0.3)]">-</span>
-                            <span className="text-[#F2B90D]/60 text-sm font-lemon-milk">GÜN</span>
-                        </div>
-                    </div>
-                </div>
+        <div className="flex flex-col gap-5">
+            {/* Stats */}
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <StatCard label="Toplam İndirme" value="-" icon={<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#C99BFF" strokeWidth="1.5"><path d="M12 3v12m0 0l-4-4m4 4l4-4" strokeLinecap="round" strokeLinejoin="round" /><path d="M3 17v2a2 2 0 002 2h14a2 2 0 002-2v-2" strokeLinecap="round" /></svg>} />
+                <StatCard label="Kayıt Tarihi" value={registerDate} icon={<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#C99BFF" strokeWidth="1.5"><rect x="3" y="4" width="18" height="18" rx="2" /><path d="M16 2v4M8 2v4M3 10h18" strokeLinecap="round" /></svg>} />
+                <StatCard label="Kalan Süre" value="-" suffix="GÜN" accent icon={<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#F2B90D" strokeWidth="1.5"><circle cx="12" cy="12" r="10" /><path d="M12 6v6l4 2" strokeLinecap="round" strokeLinejoin="round" /></svg>} />
             </div>
 
-            {/* Son İndirmeler Section */}
-            <div className="mt-8">
-                <div className="flex items-center justify-between mb-4">
-                    <div className="flex items-center gap-3">
-                        <Image src="/icons/sonindirmeler.svg" alt="Son İndirmeler" width={20} height={20} />
-                        <h2 className="text-white/90 text-sm font-lemon-milk font-bold uppercase tracking-wide">Son İndirmeler</h2>
-                    </div>
-                    <button className="text-[#C99BFF] text-xs font-lemon-milk hover:opacity-80 transition-opacity uppercase tracking-wide">
-                        Tümünü Gör
-                    </button>
-                </div>
-
-                {/* Table */}
-                <div className="bg-[#121212] border border-[#272727] rounded-xl overflow-hidden">
-                    {/* Table Header */}
-                    <div className="hidden sm:grid grid-cols-[2fr_1fr_1fr_1fr] gap-4 px-5 py-3 border-b border-[#272727]">
-                        <span className="text-[#6B7280] text-[11px] font-lemon-milk uppercase tracking-wider">Oyun Adı</span>
-                        <span className="text-[#6B7280] text-[11px] font-lemon-milk uppercase tracking-wider">Platform</span>
-                        <span className="text-[#6B7280] text-[11px] font-lemon-milk uppercase tracking-wider">Tarih</span>
-                        <span className="text-[#6B7280] text-[11px] font-lemon-milk uppercase tracking-wider text-right">Durum</span>
-                    </div>
-
-                    {/* Empty State */}
-                    <div className="px-5 py-10 text-center">
-                        <p className="text-[#4B5563] text-sm font-lemon-milk">Henüz indirme geçmişiniz bulunmamaktadır.</p>
+            {/* Son İndirmeler */}
+            <div className="rounded-[20px] overflow-hidden" style={{ background: 'rgba(24,22,17,0.65)', border: '1px solid rgba(255,255,255,0.06)' }}>
+                <div className="px-5 sm:px-6 py-4 flex items-center justify-between" style={{ borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
+                    <div className="flex items-center gap-2.5">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C99BFF" strokeWidth="1.5"><path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" strokeLinecap="round" /></svg>
+                        <span className="text-[12px] uppercase tracking-wider" style={{ fontFamily: 'LEMON MILK', color: 'rgba(255,255,255,0.70)' }}>Son İndirmeler</span>
                     </div>
                 </div>
-            </div>
-        </>
-    );
-}
-
-/* ========== İNDİRME GEÇMİŞİ TAB ========== */
-function IndirmeGecmisiTab() {
-    return (
-        <div className="mt-8">
-            <div className="flex items-center gap-3 mb-6">
-                <Image src="/icons/indirmegecmisi.svg" alt="İndirme Geçmişi" width={24} height={24} />
-                <h2 className="text-white/90 text-lg font-lemon-milk font-bold uppercase tracking-wide">İndirme Geçmişi</h2>
-            </div>
-
-            <div className="bg-[#121212] border border-[#272727] rounded-xl overflow-hidden">
-                {/* Table Header */}
-                <div className="hidden sm:grid grid-cols-[2fr_1fr_1fr_1fr] gap-4 px-5 py-3 border-b border-[#272727]">
-                    <span className="text-[#6B7280] text-[11px] font-lemon-milk uppercase tracking-wider">Oyun Adı</span>
-                    <span className="text-[#6B7280] text-[11px] font-lemon-milk uppercase tracking-wider">Platform</span>
-                    <span className="text-[#6B7280] text-[11px] font-lemon-milk uppercase tracking-wider">Tarih</span>
-                    <span className="text-[#6B7280] text-[11px] font-lemon-milk uppercase tracking-wider text-right">Durum</span>
+                <div className="hidden sm:grid grid-cols-[2fr_1fr_1fr_1fr] gap-4 px-5 sm:px-6 py-3" style={{ borderBottom: '1px solid rgba(255,255,255,0.04)' }}>
+                    <span className="text-[10px] uppercase tracking-wider" style={{ fontFamily: 'LEMON MILK', color: 'rgba(255,255,255,0.25)' }}>Oyun Adı</span>
+                    <span className="text-[10px] uppercase tracking-wider" style={{ fontFamily: 'LEMON MILK', color: 'rgba(255,255,255,0.25)' }}>Platform</span>
+                    <span className="text-[10px] uppercase tracking-wider" style={{ fontFamily: 'LEMON MILK', color: 'rgba(255,255,255,0.25)' }}>Tarih</span>
+                    <span className="text-[10px] uppercase tracking-wider text-right" style={{ fontFamily: 'LEMON MILK', color: 'rgba(255,255,255,0.25)' }}>Durum</span>
                 </div>
-
-                {/* Empty State */}
-                <div className="px-5 py-16 text-center">
-                    <p className="text-[#4B5563] text-sm font-lemon-milk">Henüz indirme geçmişiniz bulunmamaktadır.</p>
+                <div className="px-5 sm:px-6 py-12 text-center">
+                    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.08)" strokeWidth="1" className="mx-auto mb-3"><path d="M12 3v12m0 0l-4-4m4 4l4-4" strokeLinecap="round" /><path d="M3 17v2a2 2 0 002 2h14a2 2 0 002-2v-2" strokeLinecap="round" /></svg>
+                    <p className="text-white/20 text-sm" style={{ fontFamily: 'Caviar Dreams' }}>Henüz indirme geçmişiniz bulunmamaktadır.</p>
                 </div>
             </div>
         </div>
     );
 }
 
-/* ========== ÜYELİK PLANI TAB ========== */
-function UyelikPlaniTab() {
+function StatCard({ label, value, suffix, icon, accent }: { label: string; value: string; suffix?: string; icon: React.ReactNode; accent?: boolean }) {
+    const accentColor = accent ? '#F2B90D' : '#C99BFF';
     return (
-        <div className="mt-8">
-            <div className="flex items-center gap-3 mb-6">
-                <Image src="/icons/uyelikplani.svg" alt="Üyelik Planım" width={24} height={24} />
-                <h2 className="text-white/90 text-lg font-lemon-milk font-bold uppercase tracking-wide">Üyelik Planım</h2>
+        <div className="relative p-5 rounded-[16px] overflow-hidden flex flex-col justify-between min-h-[140px]"
+            style={{ background: 'rgba(24,22,17,0.65)', border: accent ? '1px solid rgba(242,185,13,0.12)' : '1px solid rgba(255,255,255,0.06)' }}>
+            {accent && <div className="absolute top-0 left-0 right-0 h-[2px]" style={{ background: `linear-gradient(90deg, ${accentColor} 0%, transparent 100%)` }} />}
+            <div className="w-9 h-9 rounded-xl flex items-center justify-center" style={{ background: `${accentColor}10`, border: `1px solid ${accentColor}20` }}>
+                {icon}
             </div>
-
-            <div className="bg-[#121212] border border-[#272727] rounded-xl p-6 sm:p-8">
-                <div className="text-center py-8">
-                    <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-[rgba(168,85,247,0.10)] flex items-center justify-center">
-                        <Image src="/icons/uyelikplani.svg" alt="Üyelik" width={32} height={32} className="opacity-50" />
-                    </div>
-                    <h3 className="text-white/70 text-lg font-lemon-milk font-bold mb-2">Aktif Üyeliğiniz Bulunmamaktadır</h3>
-                    <p className="text-[#6B7280] text-sm max-w-md mx-auto mb-6">
-                        Anonymous Çeviri üyeliği ile tüm Türkçe çevirilere erişim sağlayabilirsiniz.
-                    </p>
-                    <a
-                        href="https://www.anonymousceviri.com/uyelik"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-bold text-[14px] text-[#1A1A2A] hover:opacity-90 transition-opacity"
-                        style={{
-                            background: 'linear-gradient(135deg, #C8A2E0 0%, #A78BCA 100%)',
-                            fontFamily: 'LEMON MILK',
-                        }}
-                    >
-                        ÜYELİK SATIN AL
-                    </a>
+            <div className="mt-4">
+                <span className="text-[10px] uppercase tracking-wider block mb-1" style={{ fontFamily: 'LEMON MILK', color: accent ? `${accentColor}99` : 'rgba(255,255,255,0.35)' }}>{label}</span>
+                <div className="flex items-baseline gap-1.5">
+                    <span className="text-2xl font-bold" style={{ fontFamily: 'LEMON MILK', color: accent ? accentColor : 'rgba(255,255,255,0.85)' }}>{value}</span>
+                    {suffix && <span className="text-sm" style={{ fontFamily: 'LEMON MILK', color: `${accentColor}60` }}>{suffix}</span>}
                 </div>
             </div>
         </div>
     );
 }
 
-/* ========== AYARLAR TAB ========== */
+/* ========== İNDİRME GEÇMİŞİ ========== */
+function IndirmeTab() {
+    return (
+        <div className="rounded-[20px] overflow-hidden" style={{ background: 'rgba(24,22,17,0.65)', border: '1px solid rgba(255,255,255,0.06)' }}>
+            <div className="px-5 sm:px-6 py-4 flex items-center gap-2.5" style={{ borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C99BFF" strokeWidth="1.5"><path d="M12 3v12m0 0l-4-4m4 4l4-4" strokeLinecap="round" strokeLinejoin="round" /><path d="M3 17v2a2 2 0 002 2h14a2 2 0 002-2v-2" strokeLinecap="round" /></svg>
+                <span className="text-[12px] uppercase tracking-wider" style={{ fontFamily: 'LEMON MILK', color: 'rgba(255,255,255,0.70)' }}>İndirme Geçmişi</span>
+            </div>
+            <div className="hidden sm:grid grid-cols-[2fr_1fr_1fr_1fr] gap-4 px-5 sm:px-6 py-3" style={{ borderBottom: '1px solid rgba(255,255,255,0.04)' }}>
+                <span className="text-[10px] uppercase tracking-wider" style={{ fontFamily: 'LEMON MILK', color: 'rgba(255,255,255,0.25)' }}>Oyun Adı</span>
+                <span className="text-[10px] uppercase tracking-wider" style={{ fontFamily: 'LEMON MILK', color: 'rgba(255,255,255,0.25)' }}>Platform</span>
+                <span className="text-[10px] uppercase tracking-wider" style={{ fontFamily: 'LEMON MILK', color: 'rgba(255,255,255,0.25)' }}>Tarih</span>
+                <span className="text-[10px] uppercase tracking-wider text-right" style={{ fontFamily: 'LEMON MILK', color: 'rgba(255,255,255,0.25)' }}>Durum</span>
+            </div>
+            <div className="px-5 sm:px-6 py-16 text-center">
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.06)" strokeWidth="1" className="mx-auto mb-3"><path d="M12 3v12m0 0l-4-4m4 4l4-4" strokeLinecap="round" /><path d="M3 17v2a2 2 0 002 2h14a2 2 0 002-2v-2" strokeLinecap="round" /></svg>
+                <p className="text-white/20 text-sm" style={{ fontFamily: 'Caviar Dreams' }}>Henüz indirme geçmişiniz bulunmamaktadır.</p>
+            </div>
+        </div>
+    );
+}
+
+/* ========== ÜYELİK ========== */
+function UyelikTab() {
+    return (
+        <div className="rounded-[20px] overflow-hidden" style={{ background: 'rgba(24,22,17,0.65)', border: '1px solid rgba(255,255,255,0.06)' }}>
+            <div className="px-5 sm:px-6 py-4 flex items-center gap-2.5" style={{ borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C99BFF" strokeWidth="1.5"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" strokeLinecap="round" strokeLinejoin="round" /></svg>
+                <span className="text-[12px] uppercase tracking-wider" style={{ fontFamily: 'LEMON MILK', color: 'rgba(255,255,255,0.70)' }}>Üyelik Planım</span>
+            </div>
+            <div className="p-6 sm:p-10 text-center">
+                <div className="w-16 h-16 mx-auto mb-5 rounded-2xl flex items-center justify-center" style={{ background: 'rgba(201,155,255,0.06)', border: '1px solid rgba(201,155,255,0.12)' }}>
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="rgba(201,155,255,0.40)" strokeWidth="1.5"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" strokeLinecap="round" strokeLinejoin="round" /></svg>
+                </div>
+                <h3 className="text-white/60 text-base font-bold mb-2" style={{ fontFamily: 'LEMON MILK', fontSize: '14px' }}>Aktif Üyeliğiniz Bulunmamaktadır</h3>
+                <p className="text-white/25 text-sm max-w-md mx-auto mb-7" style={{ fontFamily: 'Caviar Dreams' }}>
+                    Anonymous Çeviri üyeliği ile tüm Türkçe çevirilere erişim sağlayabilirsiniz.
+                </p>
+                <a href="https://odeme.anonymousceviri.com" target="_blank" rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 px-7 py-3 rounded-xl font-bold text-[13px] text-[#12110E] hover:brightness-110 transition"
+                    style={{ background: 'linear-gradient(135deg, #C99BFF 0%, #9B6DD7 100%)', fontFamily: 'LEMON MILK' }}>
+                    ÜYELİK SATIN AL
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#12110E" strokeWidth="2.5"><path d="M5 12h14m-7-7l7 7-7 7" strokeLinecap="round" strokeLinejoin="round" /></svg>
+                </a>
+            </div>
+        </div>
+    );
+}
+
+/* ========== AYARLAR ========== */
 function AyarlarTab({ user, onEditUsername, onLogout }: { user: any; onEditUsername: () => void; onLogout: () => void }) {
     return (
-        <div className="mt-8">
-            <div className="flex items-center gap-3 mb-6">
-                <Image src="/icons/ayarlar.svg" alt="Ayarlar" width={24} height={24} />
-                <h2 className="text-white/90 text-lg font-lemon-milk font-bold uppercase tracking-wide">Ayarlar</h2>
+        <div className="flex flex-col gap-4">
+            {/* Kullanıcı Adı */}
+            <div className="p-5 rounded-[16px] flex flex-col sm:flex-row sm:items-center justify-between gap-3"
+                style={{ background: 'rgba(24,22,17,0.65)', border: '1px solid rgba(255,255,255,0.06)' }}>
+                <div>
+                    <span className="text-[10px] uppercase tracking-wider block mb-1" style={{ fontFamily: 'LEMON MILK', color: 'rgba(255,255,255,0.30)' }}>Kullanıcı Adı</span>
+                    <span className="text-white/85 text-[15px] font-medium" style={{ fontFamily: 'Caviar Dreams' }}>{user.Username || 'Belirlenmemiş'}</span>
+                </div>
+                <button onClick={onEditUsername}
+                    className="shrink-0 px-4 py-2 rounded-lg text-white/40 text-[11px] hover:bg-white/5 hover:text-white/60 transition"
+                    style={{ border: '1px solid rgba(255,255,255,0.08)', fontFamily: 'LEMON MILK' }}>
+                    DÜZENLE
+                </button>
             </div>
 
-            <div className="space-y-4">
-                {/* Kullanıcı Adı */}
-                <div className="bg-[#121212] border border-[#272727] rounded-xl p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                    <div>
-                        <span className="text-[#9CA3AF] text-xs font-lemon-milk uppercase tracking-wider block mb-1">Kullanıcı Adı</span>
-                        <span className="text-white/90 text-base font-medium">{user.Username || 'Belirlenmemiş'}</span>
-                    </div>
-                    <button
-                        onClick={onEditUsername}
-                        className="shrink-0 px-4 py-2 bg-white/5 border border-white/10 rounded-lg text-[#D1D5DB] text-xs font-lemon-milk hover:bg-white/10 transition"
-                    >
-                        DÜZENLE
-                    </button>
-                </div>
+            {/* E-posta */}
+            <div className="p-5 rounded-[16px]" style={{ background: 'rgba(24,22,17,0.65)', border: '1px solid rgba(255,255,255,0.06)' }}>
+                <span className="text-[10px] uppercase tracking-wider block mb-1" style={{ fontFamily: 'LEMON MILK', color: 'rgba(255,255,255,0.30)' }}>E-Posta Adresi</span>
+                <span className="text-white/85 text-[15px] font-medium" style={{ fontFamily: 'Caviar Dreams' }}>{user.Email}</span>
+            </div>
 
-                {/* E-posta */}
-                <div className="bg-[#121212] border border-[#272727] rounded-xl p-5">
-                    <span className="text-[#9CA3AF] text-xs font-lemon-milk uppercase tracking-wider block mb-1">E-Posta Adresi</span>
-                    <span className="text-white/90 text-base font-medium">{user.Email}</span>
-                </div>
-
-                {/* Kullanıcı ID */}
-                <div className="bg-[#121212] border border-[#272727] rounded-xl p-5">
-                    <span className="text-[#9CA3AF] text-xs font-lemon-milk uppercase tracking-wider block mb-1">Kullanıcı ID</span>
-                    <span className="text-white/90 text-base font-medium">#{user.UserId}</span>
-                </div>
-
-                {/* Çıkış Yap */}
-                <div className="pt-4">
-                    <button
-                        onClick={onLogout}
-                        className="w-full sm:w-auto px-8 py-3 rounded-xl text-[#FF5555] text-sm font-lemon-milk font-bold border border-[#FF5555]/20 hover:bg-[#FF5555]/10 transition"
-                    >
-                        ÇIKIŞ YAP
-                    </button>
-                </div>
+            {/* Çıkış */}
+            <div className="pt-4">
+                <button onClick={onLogout}
+                    className="w-full sm:w-auto px-8 py-3 rounded-xl text-[#FF5555] text-[12px] font-bold hover:bg-[#FF5555]/8 transition"
+                    style={{ border: '1px solid rgba(255,85,85,0.15)', fontFamily: 'LEMON MILK' }}>
+                    ÇIKIŞ YAP
+                </button>
             </div>
         </div>
     );

@@ -16,6 +16,7 @@ const config: Config = {
         'caviar': ['Caviar Dreams', 'sans-serif'],
         'inter': ['var(--font-inter)', 'sans-serif'],
         'manrope': ['var(--font-manrope)', 'sans-serif'],
+        'space-grotesk': ['var(--font-space-grotesk)', 'sans-serif'],
       },
     },
   },

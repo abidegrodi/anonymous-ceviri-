@@ -65,14 +65,7 @@ export interface GamesQueryParams {
 
 // Get games list with filtering, search, pagination
 export async function getGames(params?: GamesQueryParams): Promise<GamesResponse> {
-  const queryParams: any = { ...params };
-
-  // Convert categories array to comma-separated string if needed
-  if (Array.isArray(queryParams.categories)) {
-    queryParams.categories = queryParams.categories.join(',');
-  }
-
-  const response = await api.get('/games', { params: queryParams });
+  const response = await api.get('/games', { params });
   return response.data.data;
 }
 

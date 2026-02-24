@@ -13,7 +13,7 @@ import { getNotificationStatus, toggleReleaseNotification, toggleUpdateNotificat
 import { getStickers, sendSticker, type Sticker } from "@/lib/services/stickers";
 import { useAuth } from "@/lib/auth-context";
 
-type TabType = "about" | "notes" | "comments";
+type TabType = "about" | "install" | "notes" | "changelog" | "comments";
 
 export default function GameDetailPage() {
   const params = useParams();
@@ -239,11 +239,14 @@ export default function GameDetailPage() {
     }
   };
 
-  const tabs = [
-    { id: "about" as TabType, label: "ÇEVİRİ HAKKINDA", isLink: false },
-    { id: "install" as TabType | "install", label: "KURULUM REHBERİ", isLink: true, href: `/ceviriler/${gameId}/kurulum` },
-    { id: "notes" as TabType, label: "ÇEVİRİ NOTLARI", isLink: false },
-    { id: "comments" as TabType, label: "YORUMLAR", isLink: false },
+  const hasSpecialInstall = !!game?.installationInstructions;
+
+  const tabs: { id: TabType; label: string }[] = [
+    { id: "about", label: "ÇEVİRİ HAKKINDA" },
+    ...(hasSpecialInstall ? [{ id: "install" as TabType, label: "KURULUM REHBERİ" }] : []),
+    { id: "notes", label: "ÇEVİRİ NOTLARI" },
+    { id: "changelog", label: "SÜRÜM GEÇMİŞİ" },
+    { id: "comments", label: "YORUMLAR" },
   ];
 
   // Loading state
@@ -318,16 +321,16 @@ export default function GameDetailPage() {
       <div className="relative z-10 pt-[80px]">
         <div className="max-w-[1280px] mx-auto px-4 md:px-8 py-8">
           {/* Breadcrumb */}
-          <div className="flex items-center gap-2 text-sm mb-8 flex-wrap">
-            <Link href="/" className="text-white/50 hover:text-[#C99BFF] transition-colors uppercase" style={{ fontFamily: "Space Grotesk, sans-serif", fontSize: "14px" }}>
-              ANASAYFA
+          <div className="flex items-center gap-3 text-sm mb-8 flex-wrap">
+            <Link href="/" className="text-white/50 hover:text-[#C99BFF] transition-colors uppercase" style={{ fontFamily: "Caviar Dreams" }}>
+              ANA SAYFA
             </Link>
-            <span className="text-white/30">/</span>
-            <Link href="/turkce-ceviriler" className="text-white/50 hover:text-[#C99BFF] transition-colors uppercase" style={{ fontFamily: "Space Grotesk, sans-serif", fontSize: "14px" }}>
-              ÇEVİRİLER
+            <Image src="/icons/arrowr.svg" alt=">" width={20} height={20} className="opacity-50" />
+            <Link href="/turkce-ceviriler" className="text-white/50 hover:text-[#C99BFF] transition-colors uppercase" style={{ fontFamily: "Caviar Dreams" }}>
+              TÜM ÇEVİRİLER
             </Link>
-            <span className="text-white/30">/</span>
-            <span className="uppercase font-medium" style={{ fontFamily: "Space Grotesk, sans-serif", fontSize: "14px", color: "#C99BFF" }}>
+            <Image src="/icons/arrowr.svg" alt=">" width={20} height={20} className="opacity-50" />
+            <span className="font-medium uppercase" style={{ fontFamily: "Caviar Dreams", background: "linear-gradient(180deg, rgba(255,255,255,0.90) 0%, rgba(121,93,153,0.90) 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>
               {game.name.toUpperCase()}
             </span>
           </div>
@@ -338,96 +341,118 @@ export default function GameDetailPage() {
             <div className="flex-1 flex flex-col gap-6" style={{ maxWidth: "800px" }}>
               {/* Game Info Card */}
               <div
-                className="relative p-4 sm:p-8 md:p-12 rounded-[16px] sm:rounded-[32px] overflow-hidden"
+                className="relative p-5 sm:p-8 md:p-10 rounded-[20px] sm:rounded-[28px] overflow-hidden"
                 style={{
-                  background: "rgba(24, 22, 17, 0.65)",
-                  boxShadow: "0px 4px 30px rgba(0, 0, 0, 0.50)",
-                  outline: "1px solid rgba(255, 255, 255, 0.08)",
-                  backdropFilter: "blur(8px)",
+                  background: "linear-gradient(145deg, rgba(30, 28, 22, 0.80) 0%, rgba(20, 18, 14, 0.70) 100%)",
+                  boxShadow: "0px 8px 40px rgba(0, 0, 0, 0.60), inset 0 1px 0 rgba(255,255,255,0.04)",
+                  border: "1px solid rgba(201, 155, 255, 0.06)",
+                  backdropFilter: "blur(12px)",
                 }}
               >
-                <div className="absolute -top-20 -right-10 w-64 h-64 rounded-full" style={{ background: "rgba(255, 94, 0, 0.20)", filter: "blur(50px)" }} />
+                <div className="absolute -top-32 -right-20 w-72 h-72 rounded-full" style={{ background: "rgba(201, 155, 255, 0.06)", filter: "blur(80px)" }} />
+                <div className="absolute -bottom-20 -left-20 w-48 h-48 rounded-full" style={{ background: "rgba(79, 87, 187, 0.08)", filter: "blur(60px)" }} />
 
-                <div className="relative z-10 flex flex-col gap-10">
-                  {/* Categories + Title */}
-                  <div className="flex flex-col md:flex-row justify-between items-start gap-6">
-                    <div className="flex flex-col gap-5 flex-1 min-w-0">
-                      <div className="flex flex-wrap gap-2">
-                        {game.categories?.map((cat, idx) => (
-                          <span key={idx} className="px-3 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider" style={{ background: "rgba(255, 255, 255, 0.10)", outline: "1px solid rgba(255, 255, 255, 0.05)", color: "rgba(255, 255, 255, 0.90)", fontFamily: "Space Grotesk, sans-serif" }}>
-                            {cat.name}
-                          </span>
-                        ))}
-                      </div>
-                      <h1
-                        className="uppercase whitespace-nowrap"
-                        style={{
-                          fontFamily: '"Trajan Pro", serif',
-                          fontSize: "clamp(24px, 3.2vw, 44px)",
-                          fontStyle: "normal",
-                          fontWeight: 400,
-                          lineHeight: "1.15",
-                          letterSpacing: "-1.2px",
-                          color: "rgba(255, 255, 255, 0.90)",
-                          textShadow: "0 0 10px rgba(242, 166, 13, 0.50)",
-                        }}
-                      >
-                        {game.name}
-                      </h1>
-                    </div>
-                    <div className="flex flex-col items-end gap-1 shrink-0 pt-1">
-                      <span className="uppercase text-right" style={{ fontFamily: "LEMON MILK, sans-serif", fontSize: "13px", lineHeight: "18px", letterSpacing: "1.4px", color: "#C99BFF" }}>
-                        Sürüm {game.compatibleVersions || 'Tüm Sürümlerle Uyumludur'}
+                <div className="relative z-10 flex flex-col gap-7">
+                  {/* Categories */}
+                  <div className="flex flex-wrap gap-2">
+                    {game.categories?.map((cat, idx) => (
+                      <span key={idx} className="px-3.5 py-1.5 rounded-lg text-[11px] sm:text-xs font-bold uppercase tracking-wide" style={{ background: "rgba(201, 155, 255, 0.08)", border: "1px solid rgba(201, 155, 255, 0.15)", color: "#C99BFF", fontFamily: "Space Grotesk, sans-serif" }}>
+                        {cat.name}
                       </span>
-                    </div>
+                    ))}
                   </div>
 
-                  {/* Translation Progress */}
-                  <div className="flex flex-col gap-3">
+                  {/* Title + Version */}
+                  <div className="flex flex-col gap-2">
+                    <h1
+                      className="uppercase"
+                      style={{
+                        fontFamily: '"Trajan Pro", serif',
+                        fontSize: "clamp(22px, 3.5vw, 42px)",
+                        fontWeight: 400,
+                        lineHeight: "1.1",
+                        letterSpacing: "-0.5px",
+                        color: "rgba(255, 255, 255, 0.95)",
+                      }}
+                    >
+                      {game.name}
+                    </h1>
+                    <span className="uppercase" style={{ fontFamily: "LEMON MILK, sans-serif", fontSize: "11px", lineHeight: "16px", letterSpacing: "1.2px", color: "rgba(201, 155, 255, 0.60)" }}>
+                      Sürüm {game.compatibleVersions || 'Tüm Sürümlerle Uyumlu'}
+                    </span>
+                  </div>
+
+                  {/* Progress */}
+                  <div className="flex flex-col gap-3 p-4 sm:p-5 rounded-2xl" style={{ background: "rgba(0, 0, 0, 0.25)", border: "1px solid rgba(255,255,255,0.04)" }}>
+                    {game.releaseDate && (
+                      <div className="flex justify-end">
+                        <span className="uppercase text-[10px] tracking-wider" style={{ fontFamily: "LEMON MILK, sans-serif", color: "rgba(255,255,255,0.30)" }}>
+                          Son Güncelleme: {new Date(game.releaseDate).toLocaleDateString('tr-TR', { day: '2-digit', month: '2-digit', year: 'numeric' })}
+                        </span>
+                      </div>
+                    )}
                     <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-3">
-                        <Image src="/icons/ceviridurumu.svg" alt="Çeviri Durumu" width={24} height={28} className="shrink-0" />
-                        <span className="uppercase" style={{ fontFamily: "Trajan Pro, serif", fontSize: "18px", fontWeight: 700, lineHeight: "28px", color: "rgba(255, 255, 255, 0.90)" }}>
+                      <div className="flex items-center gap-2.5">
+                        <Image src="/icons/ceviridurumu.svg" alt="" width={20} height={24} className="shrink-0 opacity-80" />
+                        <span className="uppercase text-[12px] sm:text-[14px]" style={{ fontFamily: "LEMON MILK, sans-serif", fontWeight: 400, letterSpacing: "0.5px", color: "rgba(255, 255, 255, 0.70)" }}>
                           Çeviri Durumu
                         </span>
                       </div>
-                      <span style={{ fontFamily: "LEMON MILK, sans-serif", fontSize: "24px", fontWeight: 700, lineHeight: "32px", color: "#C99BFF" }}>
+                      <span style={{ fontFamily: "LEMON MILK, sans-serif", fontSize: "clamp(18px, 2.5vw, 26px)", fontWeight: 700, color: "#C99BFF" }}>
                         {game.completeRate}%
                       </span>
                     </div>
-                    <div className="w-full h-4 rounded-full p-0.5" style={{ background: "rgba(0, 0, 0, 0.40)", outline: "1px solid rgba(255, 255, 255, 0.10)" }}>
-                      <div className="h-full rounded-full relative overflow-hidden" style={{ width: `${game.completeRate}%`, background: "#4F57BB", boxShadow: "0px 0px 15px rgba(242, 166, 13, 0.60)" }}>
-                        <div className="absolute inset-0" style={{ backgroundImage: `repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.15) 0px, rgba(255, 255, 255, 0.15) 10px, transparent 10px, transparent 20px)` }} />
-                      </div>
+                    <div className="w-full h-3 rounded-full overflow-hidden" style={{ background: "rgba(255, 255, 255, 0.06)" }}>
+                      <div
+                        className="h-full rounded-full"
+                        style={{
+                          width: `${game.completeRate}%`,
+                          background: "linear-gradient(90deg, #4F57BB 0%, #7B5EA7 50%, #C99BFF 100%)",
+                          boxShadow: "0 0 14px rgba(79, 87, 187, 0.50)",
+                        }}
+                      />
+                    </div>
+                    <div className="flex items-center justify-between pt-1">
+                      <span className="uppercase text-[9px] sm:text-[10px] tracking-wider" style={{ fontFamily: "LEMON MILK, sans-serif", color: "rgba(255,255,255,0.35)" }}>
+                        Menü: {game.completeRate}%
+                      </span>
+                      <span className="uppercase text-[9px] sm:text-[10px] tracking-wider" style={{ fontFamily: "LEMON MILK, sans-serif", color: "rgba(255,255,255,0.35)" }}>
+                        Altyazı: {game.completeRate}%
+                      </span>
+                      <span className="uppercase text-[9px] sm:text-[10px] tracking-wider" style={{ fontFamily: "LEMON MILK, sans-serif", color: "rgba(255,255,255,0.35)" }}>
+                        Arayüz: {game.completeRate}%
+                      </span>
                     </div>
                   </div>
 
                   {/* Action Buttons */}
-                  <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 pt-1">
-                    <button className="flex-1 flex items-center justify-center gap-2 sm:gap-3 py-3 sm:py-4 px-4 sm:px-8 rounded-full transition-all hover:opacity-90" style={{ background: "#C99BFF" }}>
-                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" className="shrink-0">
-                        <path d="M12 3V15M12 15L7 10M12 15L17 10" stroke="#FAF8FF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                        <path d="M3 17V19C3 20.1046 3.89543 21 5 21H19C20.1046 21 21 20.1046 21 19V17" stroke="#FAF8FF" strokeWidth="2" strokeLinecap="round" />
+                  <div className="flex flex-col sm:flex-row gap-3">
+                    <button
+                      className="flex-1 flex items-center justify-center gap-3 py-3.5 sm:py-4 px-6 sm:px-8 rounded-2xl transition-all duration-200 hover:brightness-110 hover:shadow-[0_0_30px_rgba(201,155,255,0.25)] active:scale-[0.98]"
+                      style={{ background: "linear-gradient(135deg, #C99BFF 0%, #9B6DD7 100%)" }}
+                    >
+                      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" className="shrink-0">
+                        <path d="M12 3V15M12 15L7 10M12 15L17 10" stroke="#FAF8FF" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+                        <path d="M3 17V19C3 20.1046 3.89543 21 5 21H19C20.1046 21 21 20.1046 21 19V17" stroke="#FAF8FF" strokeWidth="2.5" strokeLinecap="round" />
                       </svg>
-                      <span className="uppercase text-sm sm:text-base md:text-lg" style={{ fontFamily: "LEMON MILK, sans-serif", fontWeight: 700, lineHeight: "28px", letterSpacing: "1.8px", color: "#FAF8FF" }}>
+                      <span className="uppercase text-[13px] sm:text-[15px]" style={{ fontFamily: "LEMON MILK, sans-serif", fontWeight: 700, letterSpacing: "1.2px", color: "#FAF8FF" }}>
                         Türkçe Çeviriyi İndir
                       </span>
                     </button>
 
-                    {/* Notification Buttons */}
                     {isAuthenticated && (
-                      <>
+                      <div className="flex gap-2.5">
                         <button
                           onClick={handleToggleRelease}
                           disabled={notifLoading}
-                          className="flex items-center justify-center p-4 rounded-full transition-all hover:bg-white/10"
+                          className="flex items-center justify-center w-[52px] h-[52px] rounded-2xl transition-all duration-200 hover:scale-105"
                           style={{
-                            background: notifStatus?.release ? "rgba(201, 155, 255, 0.20)" : "rgba(255, 255, 255, 0.05)",
-                            outline: notifStatus?.release ? "1px solid rgba(201, 155, 255, 0.50)" : "1px solid rgba(255, 255, 255, 0.10)",
+                            background: notifStatus?.release ? "rgba(201, 155, 255, 0.15)" : "rgba(255, 255, 255, 0.04)",
+                            border: notifStatus?.release ? "1px solid rgba(201, 155, 255, 0.40)" : "1px solid rgba(255, 255, 255, 0.08)",
                           }}
                           title={notifStatus?.release ? "Yayın bildirimini kapat" : "Yayın bildirimi al"}
                         >
-                          <svg width="24" height="24" viewBox="0 0 24 24" fill={notifStatus?.release ? "#C99BFF" : "none"} stroke={notifStatus?.release ? "#C99BFF" : "#FAF8FF"} strokeWidth="2">
+                          <svg width="22" height="22" viewBox="0 0 24 24" fill={notifStatus?.release ? "#C99BFF" : "none"} stroke={notifStatus?.release ? "#C99BFF" : "rgba(255,255,255,0.5)"} strokeWidth="2">
                             <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />
                             <path d="M13.73 21a2 2 0 0 1-3.46 0" />
                           </svg>
@@ -435,18 +460,18 @@ export default function GameDetailPage() {
                         <button
                           onClick={handleToggleUpdate}
                           disabled={notifLoading}
-                          className="flex items-center justify-center p-4 rounded-full transition-all hover:bg-white/10"
+                          className="flex items-center justify-center w-[52px] h-[52px] rounded-2xl transition-all duration-200 hover:scale-105"
                           style={{
-                            background: notifStatus?.update ? "rgba(201, 155, 255, 0.20)" : "rgba(255, 255, 255, 0.05)",
-                            outline: notifStatus?.update ? "1px solid rgba(201, 155, 255, 0.50)" : "1px solid rgba(255, 255, 255, 0.10)",
+                            background: notifStatus?.update ? "rgba(201, 155, 255, 0.15)" : "rgba(255, 255, 255, 0.04)",
+                            border: notifStatus?.update ? "1px solid rgba(201, 155, 255, 0.40)" : "1px solid rgba(255, 255, 255, 0.08)",
                           }}
                           title={notifStatus?.update ? "Güncelleme bildirimini kapat" : "Güncelleme bildirimi al"}
                         >
-                          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke={notifStatus?.update ? "#C99BFF" : "#FAF8FF"} strokeWidth="2">
+                          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke={notifStatus?.update ? "#C99BFF" : "rgba(255,255,255,0.5)"} strokeWidth="2">
                             <path d="M21 12a9 9 0 0 1-9 9m9-9a9 9 0 0 0-9-9m9 9H3m9 9a9 9 0 0 1-9-9m9 9c1.66 0 3-4.03 3-9s-1.34-9-3-9m0 18c-1.66 0-3-4.03-3-9s1.34-9 3-9m-9 9a9 9 0 0 1 9-9" />
                           </svg>
                         </button>
-                      </>
+                      </div>
                     )}
                   </div>
                 </div>
@@ -456,49 +481,90 @@ export default function GameDetailPage() {
               <div className="pt-4">
                 <div className="flex flex-wrap gap-2 sm:gap-4 pb-4 mb-6 overflow-x-auto scrollbar-hide" style={{ borderBottom: "1px solid rgba(255, 255, 255, 0.10)" }}>
                   {tabs.map((tab) => (
-                    tab.isLink ? (
-                      <Link key={tab.id} href={tab.href || "#"} className="px-3 sm:px-6 py-2 rounded-full transition-all hover:bg-white/5 shrink-0">
-                        <span className="uppercase whitespace-nowrap" style={{ fontFamily: "LEMON MILK, sans-serif", fontSize: "11px", lineHeight: "20px", letterSpacing: "0.35px", color: "rgba(255, 255, 255, 0.60)" }}>
-                          {tab.label}
-                        </span>
-                      </Link>
-                    ) : (
-                      <button
-                        key={tab.id}
-                        onClick={() => setActiveTab(tab.id as TabType)}
-                        className={`px-3 sm:px-6 py-2 rounded-full transition-all shrink-0 ${activeTab === tab.id ? "bg-white/10" : "hover:bg-white/5"}`}
-                        style={{ outline: activeTab === tab.id ? "1px solid rgba(242, 166, 13, 0.50)" : "none" }}
-                      >
-                        <span className="uppercase whitespace-nowrap" style={{ fontFamily: "LEMON MILK, sans-serif", fontSize: "11px", fontWeight: activeTab === tab.id ? 700 : 400, lineHeight: "20px", letterSpacing: "0.35px", color: activeTab === tab.id ? "rgba(255, 255, 255, 0.90)" : "rgba(255, 255, 255, 0.60)" }}>
-                          {tab.label}
-                        </span>
-                      </button>
-                    )
+                    <button
+                      key={tab.id}
+                      onClick={() => setActiveTab(tab.id)}
+                      className={`px-3 sm:px-6 py-2 rounded-full transition-all shrink-0 ${activeTab === tab.id ? "bg-white/10" : "hover:bg-white/5"}`}
+                      style={{ outline: activeTab === tab.id ? "1px solid rgba(242, 166, 13, 0.50)" : "none" }}
+                    >
+                      <span className="uppercase whitespace-nowrap" style={{ fontFamily: "LEMON MILK, sans-serif", fontSize: "11px", fontWeight: activeTab === tab.id ? 700 : 400, lineHeight: "20px", letterSpacing: "0.35px", color: activeTab === tab.id ? "rgba(255, 255, 255, 0.90)" : "rgba(255, 255, 255, 0.60)" }}>
+                        {tab.label}
+                      </span>
+                    </button>
                   ))}
                 </div>
 
                 {/* Tab Content */}
                 {activeTab === 'about' && (
-                  <div className="p-8 rounded-[32px] relative overflow-hidden" style={{ background: "rgba(24, 22, 17, 0.65)", boxShadow: "0px 4px 30px rgba(0, 0, 0, 0.50)", outline: "1px solid rgba(255, 255, 255, 0.08)", backdropFilter: "blur(8px)" }}>
-                    <div className="absolute -left-20 bottom-0 w-32 h-48 rounded-full" style={{ background: "rgba(201, 155, 255, 0.10)", filter: "blur(50px)" }} />
-                    <div className="relative z-10 flex flex-col gap-6">
-                      <div className="flex items-center gap-3 pl-4" style={{ borderLeft: "4px solid #C99BFF" }}>
-                        <Image src="/icons/info.svg" alt="Info" width={24} height={28} className="shrink-0" />
-                        <span className="uppercase" style={{ fontFamily: "LEMON MILK, sans-serif", fontSize: "24px", fontWeight: 400, lineHeight: "32px", letterSpacing: "0.6px", color: "rgba(255, 255, 255, 0.90)" }}>
-                          Çeviri Hakkında
+                  <div className="flex flex-col gap-5">
+                    {/* Description */}
+                    <div className="p-5 sm:p-8 rounded-[24px] sm:rounded-[32px] relative overflow-hidden" style={{ background: "rgba(24, 22, 17, 0.65)", boxShadow: "0px 4px 30px rgba(0, 0, 0, 0.50)", outline: "1px solid rgba(255, 255, 255, 0.08)", backdropFilter: "blur(8px)" }}>
+                      <div className="absolute -left-20 bottom-0 w-32 h-48 rounded-full" style={{ background: "rgba(201, 155, 255, 0.10)", filter: "blur(50px)" }} />
+                      <div className="relative z-10 flex flex-col gap-5">
+                        <div className="flex items-center gap-3 pl-4" style={{ borderLeft: "4px solid #C99BFF" }}>
+                          <Image src="/icons/info.svg" alt="Info" width={24} height={28} className="shrink-0" />
+                          <span className="uppercase" style={{ fontFamily: "LEMON MILK, sans-serif", fontSize: "clamp(18px, 3vw, 24px)", fontWeight: 400, lineHeight: "32px", letterSpacing: "0.6px", color: "rgba(255, 255, 255, 0.90)" }}>
+                            Çeviri Hakkında
+                          </span>
+                        </div>
+                        <p style={{ fontFamily: "Caviar Dreams, sans-serif", fontSize: "15px", fontWeight: 700, lineHeight: "26px", color: "rgba(255, 255, 255, 0.70)" }}>
+                          {game.description || 'Bu çeviri hakkında henüz bir açıklama eklenmemiş.'}
+                        </p>
+                      </div>
+                    </div>
+
+                    {/* Installation Guide Link */}
+                    <Link href="/kurulum-rehberi" className="p-4 sm:p-5 rounded-[20px] flex items-center justify-between group hover:border-[rgba(201,155,255,0.15)] transition-all" style={{ background: "rgba(24,22,17,0.65)", border: "1px solid rgba(255,255,255,0.06)" }}>
+                      <div className="flex items-center gap-3">
+                        <div className="w-9 h-9 rounded-xl flex items-center justify-center" style={{ background: "rgba(201,155,255,0.06)", border: "1px solid rgba(201,155,255,0.12)" }}>
+                          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C99BFF" strokeWidth="1.5"><path d="M12 3v12m0 0l-4-4m4 4l4-4" strokeLinecap="round" strokeLinejoin="round" /><path d="M3 17v2a2 2 0 002 2h14a2 2 0 002-2v-2" strokeLinecap="round" /></svg>
+                        </div>
+                        <div>
+                          <span className="text-white/80 text-[13px] font-medium block" style={{ fontFamily: "LEMON MILK" }}>Kurulum Rehberi</span>
+                          <span className="text-white/30 text-[11px]" style={{ fontFamily: "Caviar Dreams" }}>Genel çeviri kurulum adımları</span>
+                        </div>
+                      </div>
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(201,155,255,0.40)" strokeWidth="2" className="shrink-0 group-hover:stroke-[#C99BFF] transition-colors"><path d="M5 12h14m-7-7l7 7-7 7" strokeLinecap="round" strokeLinejoin="round" /></svg>
+                    </Link>
+                  </div>
+                )}
+
+                {activeTab === 'install' && (
+                  <div className="flex flex-col gap-5">
+                    {/* Special Instructions for this game */}
+                    <div className="p-5 sm:p-8 rounded-[24px] sm:rounded-[32px]" style={{ background: "rgba(24, 22, 17, 0.65)", boxShadow: "0px 4px 30px rgba(0, 0, 0, 0.50)", outline: "1px solid rgba(255, 255, 255, 0.08)", backdropFilter: "blur(8px)" }}>
+                      <div className="flex items-center gap-3 pl-4 mb-5" style={{ borderLeft: "4px solid #C99BFF" }}>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 4L2 20H22L12 4Z" stroke="#C99BFF" strokeWidth="1.5" strokeLinejoin="round" /><path d="M12 10V14" stroke="#C99BFF" strokeWidth="1.5" strokeLinecap="round" /><circle cx="12" cy="17" r="1" fill="#C99BFF" /></svg>
+                        <span className="uppercase" style={{ fontFamily: "LEMON MILK", fontSize: "clamp(14px, 2.5vw, 18px)", fontWeight: 400, lineHeight: "28px", color: "rgba(255, 255, 255, 0.90)" }}>
+                          Özel Kurulum Talimatları
                         </span>
                       </div>
-                      <p style={{ fontFamily: "Caviar Dreams, sans-serif", fontSize: "16px", fontWeight: 700, lineHeight: "26px", color: "rgba(255, 255, 255, 0.70)" }}>
-                        {game.description || 'Bu çeviri hakkında henüz bir açıklama eklenmemiş.'}
+                      <p className="text-[12px] text-white/40 mb-4" style={{ fontFamily: "Caviar Dreams" }}>
+                        Bu oyun standart kurulum adımlarından farklı talimatlar gerektirmektedir:
                       </p>
-                      {game.installationInstructions && (
-                        <div className="p-4 rounded-2xl" style={{ background: "rgba(255, 255, 255, 0.05)", outline: "1px solid rgba(255, 255, 255, 0.10)" }}>
-                          <p style={{ fontFamily: "Caviar Dreams, sans-serif", fontSize: "14px", lineHeight: "22px", color: "rgba(255, 255, 255, 0.60)" }}>
-                            {game.installationInstructions}
-                          </p>
-                        </div>
-                      )}
+                      <div className="text-[13px] sm:text-[14px] leading-[22px] sm:leading-[24px] whitespace-pre-line" style={{ fontFamily: "Caviar Dreams", color: "rgba(255, 255, 255, 0.55)" }}>
+                        {game.installationInstructions?.split(/[-–—]/).filter(Boolean).map((note, i) => (
+                          <div key={i} className="flex gap-2.5 py-1.5" style={{ borderBottom: i < (game.installationInstructions?.split(/[-–—]/).filter(Boolean).length || 1) - 1 ? "1px solid rgba(255,255,255,0.04)" : "none" }}>
+                            <span className="shrink-0 mt-0.5 w-1.5 h-1.5 rounded-full" style={{ background: "#C99BFF", opacity: 0.4 }} />
+                            <span>{note.trim()}</span>
+                          </div>
+                        ))}
+                      </div>
                     </div>
+
+                    {/* Link to general guide */}
+                    <Link href="/kurulum-rehberi" className="p-4 sm:p-5 rounded-[20px] flex items-center justify-between group hover:border-[rgba(201,155,255,0.15)] transition-all" style={{ background: "rgba(24,22,17,0.65)", border: "1px solid rgba(255,255,255,0.06)" }}>
+                      <div className="flex items-center gap-3">
+                        <div className="w-9 h-9 rounded-xl flex items-center justify-center" style={{ background: "rgba(201,155,255,0.06)", border: "1px solid rgba(201,155,255,0.12)" }}>
+                          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C99BFF" strokeWidth="1.5"><path d="M12 3v12m0 0l-4-4m4 4l4-4" strokeLinecap="round" strokeLinejoin="round" /><path d="M3 17v2a2 2 0 002 2h14a2 2 0 002-2v-2" strokeLinecap="round" /></svg>
+                        </div>
+                        <div>
+                          <span className="text-white/80 text-[13px] font-medium block" style={{ fontFamily: "LEMON MILK" }}>Genel Kurulum Rehberi</span>
+                          <span className="text-white/30 text-[11px]" style={{ fontFamily: "Caviar Dreams" }}>Tüm çeviriler için standart kurulum adımları</span>
+                        </div>
+                      </div>
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(201,155,255,0.40)" strokeWidth="2" className="shrink-0 group-hover:stroke-[#C99BFF] transition-colors"><path d="M5 12h14m-7-7l7 7-7 7" strokeLinecap="round" strokeLinejoin="round" /></svg>
+                    </Link>
                   </div>
                 )}
 
@@ -521,6 +587,67 @@ export default function GameDetailPage() {
                         <p className="text-white/50 text-sm" style={{ fontFamily: "Inter" }}>{game.compatibleVersions}</p>
                       </div>
                     )}
+                  </div>
+                )}
+
+                {activeTab === 'changelog' && (
+                  <div className="p-5 sm:p-8 rounded-[24px] sm:rounded-[32px]" style={{ background: "rgba(24, 22, 17, 0.65)", boxShadow: "0px 4px 30px rgba(0, 0, 0, 0.50)", outline: "1px solid rgba(255, 255, 255, 0.08)", backdropFilter: "blur(8px)" }}>
+                    <div className="flex items-center justify-between mb-6">
+                      <div className="flex items-center gap-3 pl-4" style={{ borderLeft: "4px solid #C99BFF" }}>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#C99BFF" strokeWidth="1.5"><path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" strokeLinecap="round" /></svg>
+                        <span className="uppercase" style={{ fontFamily: "LEMON MILK, sans-serif", fontSize: "clamp(14px, 2.5vw, 20px)", fontWeight: 400, lineHeight: "28px", color: "rgba(255, 255, 255, 0.90)" }}>
+                          Sürüm Geçmişi
+                        </span>
+                      </div>
+                      {isAuthenticated && (
+                        <button
+                          onClick={handleToggleUpdate}
+                          disabled={notifLoading}
+                          className="flex items-center gap-2 px-3 py-1.5 rounded-lg text-[10px] uppercase tracking-wider transition-all hover:brightness-110"
+                          style={{
+                            fontFamily: "LEMON MILK",
+                            background: notifStatus?.update ? "rgba(201,155,255,0.15)" : "rgba(255,255,255,0.04)",
+                            border: notifStatus?.update ? "1px solid rgba(201,155,255,0.30)" : "1px solid rgba(255,255,255,0.08)",
+                            color: notifStatus?.update ? "#C99BFF" : "rgba(255,255,255,0.40)",
+                          }}
+                        >
+                          <svg width="14" height="14" viewBox="0 0 24 24" fill={notifStatus?.update ? "#C99BFF" : "none"} stroke={notifStatus?.update ? "#C99BFF" : "currentColor"} strokeWidth="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" /><path d="M13.73 21a2 2 0 0 1-3.46 0" /></svg>
+                          {notifStatus?.update ? "ABONE" : "BİLDİRİM AL"}
+                        </button>
+                      )}
+                    </div>
+
+                    {/* Changelog entries */}
+                    <div className="flex flex-col gap-4">
+                      {game.releaseDate && (
+                        <div className="flex gap-4">
+                          <div className="flex flex-col items-center">
+                            <div className="w-3 h-3 rounded-full" style={{ background: "#C99BFF", boxShadow: "0 0 8px rgba(201,155,255,0.40)" }} />
+                            <div className="flex-1 w-px mt-1" style={{ background: "rgba(201,155,255,0.15)" }} />
+                          </div>
+                          <div className="flex-1 pb-4">
+                            <div className="flex items-center gap-2 mb-1">
+                              <span className="text-[12px] font-bold" style={{ fontFamily: "LEMON MILK", color: "#C99BFF" }}>
+                                {game.compatibleVersions || "v1.0"}
+                              </span>
+                              <span className="px-2 py-0.5 rounded text-[9px] uppercase" style={{ fontFamily: "LEMON MILK", background: "rgba(13,242,105,0.10)", border: "1px solid rgba(13,242,105,0.20)", color: "#0DF269" }}>Güncel</span>
+                            </div>
+                            <span className="text-[11px] text-white/30 block mb-2" style={{ fontFamily: "Caviar Dreams" }}>
+                              {new Date(game.releaseDate).toLocaleDateString('tr-TR', { day: 'numeric', month: 'long', year: 'numeric' })}
+                            </span>
+                            <p className="text-[13px] leading-relaxed" style={{ fontFamily: "Caviar Dreams", color: "rgba(255,255,255,0.55)" }}>
+                              Çeviri yayınlandı. Tamamlanma oranı: %{game.completeRate}
+                            </p>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+
+                    <div className="mt-4 p-4 rounded-xl text-center" style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.04)" }}>
+                      <p className="text-[12px] text-white/25" style={{ fontFamily: "Caviar Dreams" }}>
+                        Güncellemelerden haberdar olmak için bildirim butonuna tıklayın.
+                      </p>
+                    </div>
                   </div>
                 )}
 
@@ -637,20 +764,29 @@ export default function GameDetailPage() {
             {/* Right Column - Sidebar */}
             <div className="w-full lg:w-96 flex flex-col gap-6">
               {/* Game Cover */}
-              <div className="relative rounded-[32px] overflow-hidden" style={{ boxShadow: "0px 25px 50px -12px rgba(0, 0, 0, 0.25)", outline: "1px solid rgba(255, 255, 255, 0.10)" }}>
-                <img
-                  src={mainPhoto?.photoUrl || "https://placehold.co/382x574"}
-                  alt={game.name}
-                  className="w-full aspect-[2/3] object-cover"
-                />
-                <div className="absolute inset-0" style={{ background: "linear-gradient(0deg, rgba(0, 0, 0, 0.80) 0%, rgba(0, 0, 0, 0) 100%)" }} />
-                <div className="absolute bottom-6 left-6 right-6 flex flex-col gap-2">
-                  {game.metacritic && (
-                    <span style={{ fontFamily: "LEMON MILK, sans-serif", fontSize: "16px", fontWeight: 700, lineHeight: "24px", color: "rgba(255, 255, 255, 0.90)" }}>
-                      Metacritic: {game.metacritic}
-                    </span>
-                  )}
+              <div className="relative rounded-[24px] overflow-hidden" style={{ boxShadow: "0px 25px 50px -12px rgba(0, 0, 0, 0.40)", border: "1px solid rgba(255, 255, 255, 0.08)" }}>
+                <div className="relative w-full" style={{ aspectRatio: "720 / 1080" }}>
+                  <Image
+                    src={mainPhoto?.photoUrl || "https://placehold.co/720x1080"}
+                    alt={game.name}
+                    width={720}
+                    height={1080}
+                    className="w-full h-full object-cover"
+                    quality={95}
+                    priority
+                  />
                 </div>
+                <div className="absolute inset-0" style={{ background: "linear-gradient(0deg, rgba(0, 0, 0, 0.70) 0%, rgba(0, 0, 0, 0) 40%)" }} />
+                {game.metacritic != null && game.metacritic > 0 && (
+                  <div className="absolute bottom-5 left-5 right-5">
+                    <div className="flex items-center gap-2">
+                      <span className="px-2.5 py-1 rounded-lg text-[12px] font-bold" style={{ fontFamily: "LEMON MILK", background: "rgba(201,155,255,0.15)", border: "1px solid rgba(201,155,255,0.25)", color: "#C99BFF" }}>
+                        {game.metacritic}
+                      </span>
+                      <span className="text-[11px] text-white/40" style={{ fontFamily: "LEMON MILK" }}>Metacritic</span>
+                    </div>
+                  </div>
+                )}
               </div>
 
               {/* Info Links */}

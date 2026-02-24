@@ -6,24 +6,21 @@ import GameCard from "./GameCard";
 
 export interface GameCardData {
   title: string;
-  subtitle: string;
   progress: number;
-  status?: string;
-  tag?: {
-    text: string;
-    color: string;
-  };
   image?: string;
   href?: string;
+  gameId?: number;
+  isSubscribed?: boolean;
 }
 
 interface GameSectionProps {
   title: string;
   games: GameCardData[];
   showViewAll?: boolean;
+  onNotify?: (gameId: number) => void;
 }
 
-export default function GameSection({ title, games, showViewAll = true }: GameSectionProps) {
+export default function GameSection({ title, games, showViewAll = true, onNotify }: GameSectionProps) {
   const [scrollPosition, setScrollPosition] = useState(0);
 
   const scroll = (direction: "left" | "right") => {
@@ -110,21 +107,17 @@ export default function GameSection({ title, games, showViewAll = true }: GameSe
             <div className="flex gap-2">
               <button
                 onClick={() => scroll("left")}
-                className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-white/10 text-white flex items-center justify-center hover:bg-white/20 transition border border-white/10"
+                className="w-9 h-9 sm:w-11 sm:h-11 rounded-full bg-white/[0.06] flex items-center justify-center hover:bg-white/[0.12] transition-all duration-200 border border-white/[0.08] hover:border-[#C99BFF]/30 hover:shadow-[0_0_16px_rgba(201,155,255,0.1)]"
                 aria-label="Scroll left"
               >
-                <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                </svg>
+                <img src="/icons/vectorleft.svg" alt="" className="w-5 h-5 sm:w-6 sm:h-6" />
               </button>
               <button
                 onClick={() => scroll("right")}
-                className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-white/10 text-white flex items-center justify-center hover:bg-white/20 transition border border-white/10"
+                className="w-9 h-9 sm:w-11 sm:h-11 rounded-full bg-white/[0.06] flex items-center justify-center hover:bg-white/[0.12] transition-all duration-200 border border-white/[0.08] hover:border-[#C99BFF]/30 hover:shadow-[0_0_16px_rgba(201,155,255,0.1)]"
                 aria-label="Scroll right"
               >
-                <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                </svg>
+                <img src="/icons/vectorright.svg" alt="" className="w-5 h-5 sm:w-6 sm:h-6" />
               </button>
             </div>
           )}
@@ -140,7 +133,7 @@ export default function GameSection({ title, games, showViewAll = true }: GameSe
           }}
         >
           {games.map((game, index) => (
-            <GameCard key={index} {...game} />
+            <GameCard key={index} {...game} onNotify={onNotify} />
           ))}
         </div>
       </div>

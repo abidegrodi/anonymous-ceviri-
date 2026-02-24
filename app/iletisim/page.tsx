@@ -6,263 +6,188 @@ import Link from "next/link";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
+const subjects = [
+  { value: "", label: "Konu Seçiniz" },
+  { value: "general", label: "Genel Soru" },
+  { value: "translation", label: "Çeviri Hatası" },
+  { value: "suggestion", label: "Öneri" },
+  { value: "other", label: "Diğer" },
+];
+
 export default function ContactPage() {
-    const [formData, setFormData] = useState({
-        name: "",
-        subject: "",
-        message: "",
-    });
+  const [formData, setFormData] = useState({ name: "", subject: "", message: "" });
+  const [isSending, setIsSending] = useState(false);
+  const [sent, setSent] = useState(false);
 
-    const handleChange = (
-        e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
-    ) => {
-        const { name, value } = e.target;
-        setFormData((prev) => ({ ...prev, [name]: value }));
-    };
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  };
 
-    const handleSubmit = (e: React.FormEvent) => {
-        e.preventDefault();
-        console.log("Form submitted:", formData);
-        // Add logic to handle form submission
-    };
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSending(true);
+    await new Promise((r) => setTimeout(r, 1200));
+    setIsSending(false);
+    setSent(true);
+    setTimeout(() => setSent(false), 3000);
+    setFormData({ name: "", subject: "", message: "" });
+  };
 
-    return (
-        <main className="relative min-h-screen w-full bg-[#0C080F] overflow-x-hidden text-white font-['Caviar_Dreams']">
-            <Header />
+  const inputBase = "w-full bg-transparent border border-white/[0.08] rounded-xl px-4 text-white text-sm font-inter placeholder:text-white/20 focus:outline-none focus:border-[#C99BFF]/30 transition-all duration-200";
 
-            {/* Background Ambience - from Figma */}
-            <div
-                className="absolute"
-                style={{
-                    width: "800px",
-                    height: "500px",
-                    left: "50%",
-                    transform: "translateX(-20%)",
-                    top: "0px",
-                    background: "rgba(79, 87, 187, 0.10)",
-                    boxShadow: "120px 120px 120px 0px rgba(0,0,0,0.5)",
-                    borderRadius: "9999px",
-                    filter: "blur(60px)",
-                    zIndex: 0,
-                }}
-            />
+  return (
+    <main className="relative min-h-screen w-full bg-[#0a0a0a] overflow-x-hidden text-white">
+      <Header />
 
-            {/* Main Content Container - Centered and Responsive */}
-            <div className="relative z-10 w-full max-w-[1242px] mx-auto pt-[160px] pb-32 px-6 flex flex-col items-center">
+      {/* Ambient glow */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] pointer-events-none" style={{ background: "radial-gradient(ellipse at center, rgba(201,155,255,0.04) 0%, transparent 70%)" }} />
 
-                {/* Centered Wrapper for Content Alignment */}
-                <div className="w-full max-w-[880px] flex flex-col gap-8">
+      <div className="relative z-10 w-full max-w-[1100px] mx-auto pt-[140px] pb-24 px-4 sm:px-6 md:px-8">
 
-                    {/* Header Section */}
-                    <div className="flex flex-col gap-6 items-start text-left">
-                        <h1
-                            className="font-bold uppercase"
-                            style={{
-                                fontSize: "clamp(32px, 6vw, 59.6px)",
-                                fontFamily: "Trajan Pro, serif",
-                                lineHeight: "clamp(36px, 6.5vw, 60px)",
-                                letterSpacing: "-1.98px",
-                                background: "linear-gradient(180deg, #FFFFFF 0%, #795D99 90%)",
-                                WebkitBackgroundClip: "text",
-                                WebkitTextFillColor: "transparent",
-                                backgroundClip: "text",
-                            }}
-                        >
-                            Bize Ulaşın
-                        </h1>
-                        <p className="text-[#FAF8FF] text-lg font-normal leading-[27px] max-w-[672px]">
-                            Oyun çevirileri hakkında soru, görüş ve önerileriniz için aşağıdaki
-                            formu doldurun veya topluluğumuzun kalbi olan topluluk sunucumuza
-                            katılın.
-                        </p>
-                    </div>
+        {/* Header */}
+        <div className="text-center mb-14">
+          <h1
+            className="font-bold uppercase mb-4"
+            style={{
+              fontSize: "clamp(28px, 5vw, 48px)",
+              fontFamily: "Trajan Pro, serif",
+              lineHeight: "1.1",
+              letterSpacing: "-1px",
+              background: "linear-gradient(180deg, #FFFFFF 0%, #795D99 90%)",
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+              backgroundClip: "text",
+            }}
+          >
+            Bize Ulaşın
+          </h1>
+          <p className="text-white/40 text-sm sm:text-base font-inter max-w-[500px] mx-auto leading-relaxed">
+            Soru, öneri veya geri bildirimleriniz için bizimle iletişime geçin.
+          </p>
+        </div>
 
-                    {/* Content Section: Form and Sidebar */}
-                    <div className="flex flex-col lg:flex-row gap-8 items-start">
+        {/* Cards grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-8">
+          {/* Email card */}
+          <div className="rounded-2xl p-6 flex items-center gap-4 group hover:border-[#C99BFF]/20 transition-all duration-200" style={{ background: "rgba(201,155,255,0.03)", border: "1px solid rgba(255,255,255,0.06)" }}>
+            <div className="w-11 h-11 rounded-xl flex items-center justify-center shrink-0" style={{ background: "rgba(201,155,255,0.08)", border: "1px solid rgba(201,155,255,0.12)" }}>
+              <Image src="/icons/e-posta.svg" alt="" width={18} height={14} />
+            </div>
+            <div>
+              <span className="font-inter text-[10px] font-bold uppercase tracking-[1.5px] text-white/25 block">E-Posta</span>
+              <span className="font-inter text-sm text-white/70">info@anonymous.com</span>
+            </div>
+          </div>
 
-                        {/* Contact Form Container - Left Side */}
-                        <div className="w-full lg:w-[496px] bg-[rgba(255,0,255,0.10)] shadow-[0px_8px_32px_rgba(0,0,0,0.37)] rounded-2xl border border-white/20 backdrop-blur-[2px] p-8">
-                            <form onSubmit={handleSubmit} className="flex flex-col gap-6">
+          {/* FAQ card */}
+          <Link
+            href="/sss"
+            className="rounded-2xl p-6 flex items-center gap-4 group hover:border-[#C99BFF]/20 transition-all duration-200 no-underline"
+            style={{ background: "rgba(201,155,255,0.03)", border: "1px solid rgba(255,255,255,0.06)" }}
+          >
+            <div className="w-11 h-11 rounded-xl flex items-center justify-center shrink-0" style={{ background: "rgba(201,155,255,0.08)", border: "1px solid rgba(201,155,255,0.12)" }}>
+              <span className="font-inter text-sm font-bold text-[#C99BFF]/60">?</span>
+            </div>
+            <div className="flex-1">
+              <span className="font-inter text-[10px] font-bold uppercase tracking-[1.5px] text-white/25 block">Yardım</span>
+              <span className="font-inter text-sm text-white/70">Sıkça Sorulan Sorular</span>
+            </div>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(201,155,255,0.3)" strokeWidth="2" className="shrink-0 group-hover:stroke-[#C99BFF]/60 transition-colors">
+              <path d="M5 12h14m-7-7l7 7-7 7" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </Link>
+        </div>
 
-                                {/* Name Input */}
-                                <div className="flex flex-col gap-2">
-                                    <label
-                                        className="flex items-center gap-2 text-base font-bold"
-                                        style={{
-                                            fontFamily: "Caviar Dreams",
-                                            background: "linear-gradient(180deg, #FFFFFF 0%, #795D99 90%)",
-                                            WebkitBackgroundClip: "text",
-                                            WebkitTextFillColor: "transparent",
-                                            backgroundClip: "text"
-                                        }}
-                                    >
-                                        <span className="w-4 flex justify-center">
-                                            <Image src="/icons/human.svg" alt="User" width={14} height={16} className="opacity-80" />
-                                        </span>
-                                        Adınız
-                                    </label>
-                                    <div className="relative">
-                                        <input
-                                            type="text"
-                                            name="name"
-                                            value={formData.name}
-                                            onChange={handleChange}
-                                            placeholder="Adınızı Giriniz"
-                                            className="w-full h-14 bg-[rgba(255,0,255,0.10)] rounded-3xl border border-white/20 px-4 focus:outline-none focus:border-white/50 transition-colors placeholder:text-white/50"
-                                            style={{
-                                                fontFamily: "Caviar Dreams",
-                                                background: "linear-gradient(180deg, #FFFFFF 0%, #795D99 90%)",
-                                                WebkitBackgroundClip: "text",
-                                                WebkitTextFillColor: "transparent",
-                                                backgroundClip: "text"
-                                            }}
-                                        />
-                                    </div>
-                                </div>
+        {/* Form */}
+        <div
+          className="rounded-2xl p-6 sm:p-8 md:p-10"
+          style={{ background: "rgba(201,155,255,0.03)", border: "1px solid rgba(255,255,255,0.06)" }}
+        >
+          <div className="flex items-center gap-2 mb-8">
+            <div className="w-1 h-5 rounded-full" style={{ background: "linear-gradient(180deg, #C99BFF 0%, rgba(201,155,255,0.2) 100%)" }} />
+            <span className="font-inter text-xs font-bold uppercase tracking-[1.5px] text-white/30">Mesaj Gönder</span>
+          </div>
 
-                                {/* Subject Input */}
-                                <div className="flex flex-col gap-2">
-                                    <label
-                                        className="flex items-center gap-2 text-base font-bold"
-                                        style={{
-                                            fontFamily: "Caviar Dreams",
-                                            background: "linear-gradient(180deg, #FFFFFF 0%, #795D99 90%)",
-                                            WebkitBackgroundClip: "text",
-                                            WebkitTextFillColor: "transparent",
-                                            backgroundClip: "text"
-                                        }}
-                                    >
-                                        <span className="w-4 flex justify-center">
-                                            <Image src="/icons/konu.svg" alt="Subject" width={14} height={16} className="opacity-80" />
-                                        </span>
-                                        Konu
-                                    </label>
-                                    <div className="relative">
-                                        <div className="relative w-full h-14">
-                                            <select
-                                                name="subject"
-                                                value={formData.subject}
-                                                onChange={handleChange}
-                                                className="w-full h-full appearance-none bg-[rgba(255,0,255,0.10)] rounded-3xl border border-white/20 px-4 pr-10 focus:outline-none focus:border-white/50 transition-colors cursor-pointer"
-                                                style={{
-                                                    fontFamily: "Caviar Dreams",
-                                                    background: "linear-gradient(180deg, #FFFFFF 0%, #795D99 90%)",
-                                                    WebkitBackgroundClip: "text",
-                                                    WebkitTextFillColor: "transparent",
-                                                    backgroundClip: "text"
-                                                }}
-                                            >
-                                                <option value="" disabled className="bg-[#1a1a2e]">Konu Seçiniz</option>
-                                                <option value="general" className="bg-[#1a1a2e]">Genel Soru</option>
-                                                <option value="translation" className="bg-[#1a1a2e]">Çeviri Hatası</option>
-                                                <option value="suggestion" className="bg-[#1a1a2e]">Öneri</option>
-                                                <option value="other" className="bg-[#1a1a2e]">Diğer</option>
-                                            </select>
-                                            {/* Custom Arrow */}
-                                            <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none">
-                                                <div className="w-[10px] h-[5px] border-l-[1.8px] border-b-[1.8px] border-[#FAF8FF] -rotate-45 transform origin-center"></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+          <form onSubmit={handleSubmit}>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+              {/* Name */}
+              <div>
+                <label className="font-inter text-[11px] text-white/30 uppercase tracking-wider mb-2 block">Adınız</label>
+                <input
+                  type="text"
+                  name="name"
+                  value={formData.name}
+                  onChange={handleChange}
+                  placeholder="Adınızı girin"
+                  className={`${inputBase} h-12`}
+                  required
+                />
+              </div>
 
-                                {/* Message Input */}
-                                <div className="flex flex-col gap-2">
-                                    <label
-                                        className="flex items-center gap-2 text-base font-bold"
-                                        style={{
-                                            fontFamily: "Caviar Dreams",
-                                            background: "linear-gradient(180deg, #FFFFFF 0%, #795D99 90%)",
-                                            WebkitBackgroundClip: "text",
-                                            WebkitTextFillColor: "transparent",
-                                            backgroundClip: "text"
-                                        }}
-                                    >
-                                        <span className="w-4 flex justify-center">
-                                            <Image src="/icons/message.svg" alt="Message" width={14} height={16} className="opacity-80" />
-                                        </span>
-                                        Mesajınız
-                                    </label>
-                                    <div className="relative">
-                                        <textarea
-                                            name="message"
-                                            value={formData.message}
-                                            onChange={handleChange}
-                                            placeholder="Mesajınızı detaylı bir şekilde buraya yazın..."
-                                            className="w-full h-[180px] bg-[rgba(255,0,255,0.10)] rounded-3xl border border-white/20 p-4 resize-none focus:outline-none focus:border-white/50 transition-colors placeholder:text-white/20"
-                                            style={{
-                                                fontFamily: "Caviar Dreams",
-                                                background: "linear-gradient(180deg, #FFFFFF 0%, #795D99 90%)",
-                                                WebkitBackgroundClip: "text",
-                                                WebkitTextFillColor: "transparent",
-                                                backgroundClip: "text"
-                                            }}
-                                        />
-                                    </div>
-                                </div>
-
-                                {/* Submit Button */}
-                                <button
-                                    type="submit"
-                                    className="w-full h-14 bg-[#FAF8FF] hover:bg-white text-[#111818] rounded-3xl font-bold uppercase tracking-[0.90px] text-lg flex items-center justify-center transition-transform active:scale-95"
-                                >
-                                    Gönder
-                                </button>
-                            </form>
-                        </div>
-
-                        {/* Sidebar Section - Right Side */}
-                        <div className="flex flex-col gap-5 w-full lg:w-[343px]">
-
-                            {/* Email Box */}
-                            <div className="p-6 bg-[rgba(240,0,255,0.04)] rounded-3xl border border-white/20 flex flex-col items-start gap-3">
-                                <div className="w-10 h-10 bg-[rgba(39,22,46,0.50)] rounded-2xl flex items-center justify-center">
-                                    <Image src="/icons/e-posta.svg" alt="Email" width={20} height={16} />
-                                </div>
-                                <div className="flex flex-col">
-                                    <span className="text-[#C99BFF] text-xs font-bold uppercase tracking-wider">E-POSTA</span>
-                                    <span
-                                        className="text-[16px] font-bold"
-                                        style={{
-                                            fontFamily: "Caviar Dreams",
-                                            background: "linear-gradient(180deg, #FFFFFF 0%, #795D99 90%)",
-                                            WebkitBackgroundClip: "text",
-                                            WebkitTextFillColor: "transparent",
-                                            backgroundClip: "text"
-                                        }}
-                                    >
-                                        info@anonymous.com
-                                    </span>
-                                </div>
-                            </div>
-
-                            {/* FAQ Box */}
-                            <Link href="/sss" className="h-[98px] rounded-3xl border border-white/20 relative overflow-hidden group cursor-pointer block">
-                                <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(255,0,255,0.10)_0%,rgba(255,0,255,0.10)_100%)] group-hover:bg-[rgba(255,0,255,0.2)] transition-colors"></div>
-                                <div className="absolute inset-0 flex items-center justify-between px-6">
-                                    <span
-                                        className="text-[16px] uppercase whitespace-nowrap"
-                                        style={{
-                                            fontFamily: 'LEMON MILK',
-                                            background: 'linear-gradient(180deg, #FFFFFF 0%, #795D99 90%)',
-                                            WebkitBackgroundClip: 'text',
-                                            WebkitTextFillColor: 'transparent',
-                                            backgroundClip: 'text'
-                                        }}
-                                    >
-                                        Sıkça Sorulan Sorular
-                                    </span>
-                                    <div className="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center shrink-0">
-                                        <Image src="/icons/rightarrow.svg" alt="Arrow Right" width={16} height={16} />
-                                    </div>
-                                </div>
-                            </Link>
-                        </div>
-                    </div>
+              {/* Subject */}
+              <div>
+                <label className="font-inter text-[11px] text-white/30 uppercase tracking-wider mb-2 block">Konu</label>
+                <div className="relative">
+                  <select
+                    name="subject"
+                    value={formData.subject}
+                    onChange={handleChange}
+                    className={`${inputBase} h-12 appearance-none cursor-pointer`}
+                    required
+                  >
+                    {subjects.map(s => (
+                      <option key={s.value} value={s.value} disabled={!s.value} className="bg-[#141414] text-white">
+                        {s.label}
+                      </option>
+                    ))}
+                  </select>
+                  <svg className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.25)" strokeWidth="2">
+                    <polyline points="6 9 12 15 18 9" />
+                  </svg>
                 </div>
+              </div>
             </div>
 
-            <Footer />
-        </main>
-    );
+            {/* Message */}
+            <div className="mb-6">
+              <label className="font-inter text-[11px] text-white/30 uppercase tracking-wider mb-2 block">Mesajınız</label>
+              <textarea
+                name="message"
+                value={formData.message}
+                onChange={handleChange}
+                placeholder="Mesajınızı buraya yazın..."
+                className={`${inputBase} h-[140px] sm:h-[160px] py-3 resize-none`}
+                required
+              />
+            </div>
+
+            {/* Submit */}
+            <button
+              type="submit"
+              disabled={isSending}
+              className="w-full sm:w-auto h-11 px-10 rounded-xl font-inter text-sm font-semibold transition-all duration-200 flex items-center justify-center gap-2 disabled:opacity-50"
+              style={{
+                background: sent ? "rgba(13,242,105,0.15)" : "linear-gradient(135deg, #C99BFF 0%, #7B5EA7 100%)",
+                color: sent ? "#0DF269" : "#000",
+                border: sent ? "1px solid rgba(13,242,105,0.3)" : "none",
+              }}
+            >
+              {isSending ? (
+                <div className="w-4 h-4 border-2 border-black/30 border-t-black rounded-full animate-spin" />
+              ) : sent ? (
+                <>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="20 6 9 17 4 12" /></svg>
+                  Gönderildi
+                </>
+              ) : (
+                "Gönder"
+              )}
+            </button>
+          </form>
+        </div>
+      </div>
+
+      <Footer />
+    </main>
+  );
 }

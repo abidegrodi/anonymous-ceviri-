@@ -1,12 +1,12 @@
 "use client";
 
-import { useState, useEffect, useRef } from 'react';
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
+import { useState, useEffect } from 'react';
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from 'next/navigation';
 import { v4 as uuidv4 } from 'uuid';
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 import { useAuth } from '@/lib/auth-context';
 import { getSitekey, isTurnstileSkipped } from '@/lib/services/auth';
 import toast from 'react-hot-toast';
@@ -26,41 +26,28 @@ export default function RegisterPage() {
     const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
     const [captchaSiteKey, setCaptchaSiteKey] = useState('');
     const [isSubmitting, setIsSubmitting] = useState(false);
-
     const [turnstileScriptLoaded, setTurnstileScriptLoaded] = useState(false);
     const [turnstileWidgetId, setTurnstileWidgetId] = useState<string | null>(null);
 
     const skipTurnstile = isTurnstileSkipped();
-
     const { register, isAuthenticated } = useAuth();
     const router = useRouter();
 
     useEffect(() => {
-        if (isAuthenticated) {
-            router.push('/');
-        }
+        if (isAuthenticated) router.push('/');
     }, [isAuthenticated, router]);
 
     useEffect(() => {
         if (skipTurnstile) return;
-        getSitekey()
-            .then((key) => {
-                console.log('DEBUG: Fetched Site Key:', key);
-                setCaptchaSiteKey(key);
-            })
-            .catch((err) => {
-                console.error('DEBUG: Failed to fetch site key:', err);
-            });
+        getSitekey().then(setCaptchaSiteKey).catch(() => {});
     }, [skipTurnstile]);
 
     useEffect(() => {
         if (skipTurnstile) return;
-
         if (document.querySelector('script[src^="https://challenges.cloudflare.com/turnstile/v0/api.js"]')) {
             setTurnstileScriptLoaded(true);
             return;
         }
-
         const s = document.createElement("script");
         s.src = "https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit";
         s.async = true;
@@ -73,381 +60,237 @@ export default function RegisterPage() {
     useEffect(() => {
         const w = window as Window;
         const container = document.querySelector("#register-turnstile-container");
-
-        if (!captchaSiteKey || !turnstileScriptLoaded || !container) return;
-        if (!w.turnstile) return;
-        if (turnstileWidgetId) return;
-
+        if (!captchaSiteKey || !turnstileScriptLoaded || !container || !w.turnstile || turnstileWidgetId) return;
         try {
             const id = w.turnstile.render("#register-turnstile-container", {
-                sitekey: captchaSiteKey,
-                theme: 'dark',
-                size: "normal",
-                action: "register",
+                sitekey: captchaSiteKey, theme: 'dark', size: "normal", action: "register",
                 callback: (token: string) => setTurnstileToken(token),
                 "error-callback": () => setTurnstileToken(null),
                 "expired-callback": () => setTurnstileToken(null),
             });
             setTurnstileWidgetId(id ?? null);
-        } catch (e) {
-            console.error("Turnstile render error:", e);
-        }
-
+        } catch (e) { console.error("Turnstile render error:", e); }
         return () => {
-            if (turnstileWidgetId && w.turnstile) {
-                try {
-                    w.turnstile.remove(turnstileWidgetId);
-                } catch (e) {
-                    // ignore
-                }
-            }
+            if (turnstileWidgetId && w.turnstile) { try { w.turnstile.remove(turnstileWidgetId); } catch {} }
         };
     }, [captchaSiteKey, turnstileScriptLoaded, turnstileWidgetId]);
 
     const handleRegister = async (e: React.FormEvent) => {
         e.preventDefault();
-
-        if (!email || !password || !passwordConfirm || !age) {
-            toast.error('Tüm alanları doldurunuz.');
-            return;
-        }
-
-        if (password !== passwordConfirm) {
-            toast.error('Parolalar eşleşmiyor.');
-            return;
-        }
-
-        if (password.length < 6) {
-            toast.error('Parola en az 6 karakter olmalıdır.');
-            return;
-        }
-
-        if (!isAgreedContract) {
-            toast.error('Kullanım sözleşmesini kabul etmeniz gerekmektedir.');
-            return;
-        }
-
+        if (!email || !password || !passwordConfirm || !age) { toast.error('Tüm alanları doldurunuz.'); return; }
+        if (password !== passwordConfirm) { toast.error('Parolalar eşleşmiyor.'); return; }
+        if (password.length < 6) { toast.error('Parola en az 6 karakter olmalıdır.'); return; }
         const ageNum = parseInt(age);
-        if (isNaN(ageNum) || ageNum < 0 || ageNum > 100) {
-            toast.error('Geçerli bir yaş giriniz (0-100).');
-            return;
-        }
-
+        if (isNaN(ageNum) || ageNum < 0 || ageNum > 100) { toast.error('Geçerli bir yaş giriniz.'); return; }
         setIsSubmitting(true);
         try {
-            const result = await register({
-                email,
-                password,
-                userUnique: uuidv4(),
-                isAgreedContract: true,
-                age: ageNum,
-                turnstileToken: turnstileToken || undefined,
-            });
-
-            if (result.success) {
-                toast.success(result.message);
-                router.push('/giris-yap');
-            }
+            const result = await register({ email, password, userUnique: uuidv4(), isAgreedContract: true, age: ageNum, turnstileToken: turnstileToken || undefined });
+            if (result.success) { toast.success(result.message); router.push('/hosgeldiniz'); }
         } catch {
-            if (window.turnstile && turnstileWidgetId) {
-                window.turnstile.reset(turnstileWidgetId);
-                setTurnstileToken(null);
-            }
-        } finally {
-            setIsSubmitting(false);
-        }
+            if (window.turnstile && turnstileWidgetId) { window.turnstile.reset(turnstileWidgetId); setTurnstileToken(null); }
+        } finally { setIsSubmitting(false); }
     };
 
     return (
-        <main className="min-h-screen bg-[#0C080F] flex flex-col">
+        <main className="relative min-h-screen w-full bg-[#0a0a0a] overflow-x-hidden text-white">
             <Header />
 
-            {/* Main Content */}
-            <div
-                className="flex-1 flex justify-center items-start lg:items-center px-4 sm:px-6 lg:px-8"
-                style={{
-                    paddingTop: 'clamp(100px, 15vw, 180px)',
-                    paddingBottom: 'clamp(40px, 8vw, 130.50px)',
-                }}
-            >
-                <div className="w-full max-w-[1152px] flex flex-col lg:flex-row justify-center items-start gap-8 lg:gap-[64px]">
+            {/* Hero ambient */}
+            <div className="absolute top-0 left-0 w-full h-[500px] pointer-events-none overflow-hidden">
+                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[500px]" style={{ background: "radial-gradient(ellipse at 50% 0%, rgba(201,155,255,0.08) 0%, transparent 60%)" }} />
+                <div className="absolute top-[100px] left-[20%] w-[300px] h-[300px]" style={{ background: "radial-gradient(circle, rgba(120,80,200,0.05) 0%, transparent 60%)" }} />
+                <div className="absolute top-[50px] right-[15%] w-[250px] h-[250px]" style={{ background: "radial-gradient(circle, rgba(201,155,255,0.04) 0%, transparent 60%)" }} />
+            </div>
 
-                    {/* Left Column */}
-                    <div className="w-full lg:w-[442px] flex flex-col justify-start items-start gap-8 lg:gap-[40px]" style={{ boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)' }}>
+            <div className="relative z-10 w-full max-w-[1100px] mx-auto pt-[130px] sm:pt-[150px] pb-20 px-4 sm:px-6 md:px-8">
 
-                        {/* Title Section */}
-                        <div className="self-stretch pb-4 lg:pb-[30px] flex flex-col justify-start items-start">
-                            <div className="self-stretch flex flex-col gap-[15px]">
-                                <div className="self-stretch flex flex-col justify-center">
-                                    <h1
-                                        className="leading-tight"
-                                        style={{
-                                            fontFamily: 'Inter',
-                                            fontWeight: 800,
-                                            fontSize: 'clamp(28px, 4vw, 36px)',
-                                            lineHeight: 'clamp(32px, 4.5vw, 36px)',
-                                            background: 'linear-gradient(180deg, #FFFFFF 0%, #795D99 90%)',
-                                            WebkitBackgroundClip: 'text',
-                                            WebkitTextFillColor: 'transparent',
-                                            backgroundClip: 'text'
-                                        }}
-                                    >
-                                        Hesabınızı<br />Oluşturun
-                                    </h1>
-                                </div>
-                                <div className="self-stretch pt-2 flex flex-col justify-start items-start">
-                                    <p
-                                        className="text-[#9CA3AF] text-[14px] sm:text-[16px] font-normal leading-[22px] sm:leading-[24px]"
-                                        style={{ fontFamily: 'Inter' }}
-                                    >
-                                        Anonymous Çeviri dünyasının ayrıcalıklarına katılmaya sadece bir adım kaldı.
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
+                {/* Hero title */}
+                <div className="text-center mb-12 sm:mb-16">
+                    <h1
+                        className="font-bold uppercase mb-4"
+                        style={{
+                            fontFamily: 'Trajan Pro, serif',
+                            fontSize: 'clamp(28px, 5vw, 52px)',
+                            lineHeight: '1.1',
+                            letterSpacing: '-1px',
+                            background: 'linear-gradient(180deg, #FFFFFF 0%, #C99BFF 60%, #795D99 100%)',
+                            WebkitBackgroundClip: 'text',
+                            WebkitTextFillColor: 'transparent',
+                            backgroundClip: 'text',
+                        }}
+                    >
+                        Topluluğa Katıl
+                    </h1>
+                    <p className="text-white/30 text-[15px] sm:text-[16px] max-w-[420px] mx-auto leading-relaxed" style={{ fontFamily: 'Caviar Dreams' }}>
+                        Anonymous Çeviri dünyasının ayrıcalıklarına katılmaya sadece bir adım kaldı.
+                    </p>
+                </div>
 
-                        {/* Subscription Card */}
-                        <div className="self-stretch relative flex flex-col justify-start items-start group">
-                            {/* Blur/Glow Effect Behind */}
-                            <div
-                                className="absolute -left-1 -top-1 w-[calc(100%+8px)] h-[calc(100%+8px)] rounded-[32px] opacity-75 blur-[4px]"
-                                style={{
-                                    background: 'linear-gradient(90deg, rgba(79, 87, 187, 0.15) 0%, rgba(79, 87, 187, 0.10) 100%)',
-                                }}
-                            />
+                {/* Two column layout */}
+                <div className="flex flex-col lg:flex-row gap-6 lg:gap-8 items-start">
 
-                            {/* Card Content */}
-                            <div
-                                className="self-stretch relative p-6 sm:p-[32px] bg-black/60 rounded-[24px] overflow-hidden flex flex-col justify-start items-start gap-[24px]"
-                                style={{
-                                    outline: '1px solid rgba(255, 255, 255, 0.10)',
-                                    outlineOffset: '-1px'
-                                }}
-                            >
-                                {/* Header of Card */}
-                                <div className="w-full flex flex-col sm:flex-row justify-between items-start gap-2 sm:gap-0">
-                                    <div className="flex flex-col gap-[4px]">
-                                        <span className="text-white/90 text-xl sm:text-[24px] font-bold leading-[32px] font-manrope">
-                                            Aylık Üyelik
-                                        </span>
-                                        <span className="text-[#9CA3AF] text-[14px] font-normal leading-[20px] font-manrope">
-                                            1 Ay Süreli Erişim
-                                        </span>
-                                    </div>
-                                    <div className="flex flex-col gap-[5.5px] pb-[2.50px] sm:text-right">
-                                        <span className="text-white/90 text-xl sm:text-[24px] font-bold leading-[32px] font-manrope">
-                                            ₺150.00
-                                        </span>
-                                        <span className="text-[#FAF8FF] text-[12px] font-medium leading-[16px] font-manrope">
-                                            Her ay yenilenir.
-                                        </span>
-                                    </div>
-                                </div>
-
-                                {/* Divider */}
-                                <div className="w-full h-[1px] border-t border-white/10 relative" />
-
-                                {/* Features List */}
-                                <div className="w-full flex flex-col gap-[16px]">
-                                    {[
-                                        { title: 'Hızlı İndirme', desc: 'Bekleme süresi olmadan anında erişim.' },
-                                        { title: 'Limitsiz Çeviri Erişimi', desc: 'Yüzlerce oyuna özel Türkçe çeviriler.' },
-                                        { title: 'Topluluk Üyeliği', desc: 'Toplulukta ayrıcalıklı statü kazanın.' },
-                                        { title: 'Erken Erişim', desc: 'Yeni çevirilere 1 hafta önceden erişim.' },
-                                    ].map((feature, idx) => (
-                                        <div key={idx} className="self-stretch flex justify-start items-start gap-[12px]">
-                                            <div className="w-[20px] h-[22px] pt-[2px] flex flex-col justify-start items-start shrink-0">
-                                                <div className="w-[20px] h-[20px] rounded-full flex justify-center items-center bg-[rgba(13,242,105,0.10)] shadow-[0px_0px_10px_rgba(13,242,105,0.40)]">
-                                                    <div className="relative w-[14.02px] h-[16px]">
-                                                        <div className="absolute left-[2.48px] top-[4.65px] w-[9.06px] h-[6.68px] bg-[#0DF269]" style={{ clipPath: 'polygon(14% 44%, 0 65%, 50% 100%, 100% 0, 80% 0, 43% 62%)' }}></div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div className="flex flex-col gap-[5.50px] pb-[2.50px]">
-                                                <span className="text-[#E5E7EB] text-[14px] font-bold leading-[20px] font-manrope">
-                                                    {feature.title}
-                                                </span>
-                                                <span className="text-[#FAF8FF] text-[12px] font-normal leading-[16px] font-manrope">
-                                                    {feature.desc}
-                                                </span>
-                                            </div>
-                                        </div>
-                                    ))}
-                                </div>
-
-                                {/* Glow Effect Top Right */}
-                                <div
-                                    className="absolute right-0 top-[-63px] w-[128px] h-[128px] rounded-full blur-[32px]"
-                                    style={{
-                                        background: 'rgba(13, 242, 105, 0.05)',
-                                    }}
-                                />
-                            </div>
-                        </div>
-                    </div>
-
-                    {/* Right Column - Register Form */}
-                    <div className="w-full lg:flex-1 lg:max-w-[645px] flex flex-col justify-start items-start gap-[24px]">
-
-                        {/* Form Container */}
+                    {/* Left - Form */}
+                    <div className="w-full lg:flex-1 lg:max-w-none">
                         <form
                             onSubmit={handleRegister}
-                            className="self-stretch p-6 sm:p-[40px] relative bg-[rgba(255,0,255,0.10)] rounded-[24px] sm:rounded-[32px] overflow-hidden flex flex-col justify-start items-start gap-[24px] backdrop-blur-[6px]"
+                            className="rounded-2xl p-6 sm:p-8 relative overflow-hidden"
                             style={{
-                                boxShadow: '0px 25px 50px -12px rgba(0, 0, 0, 0.25)',
-                                outline: '1px solid rgba(255, 255, 255, 0.08)',
-                                outlineOffset: '-1px'
+                                background: 'linear-gradient(135deg, rgba(201,155,255,0.04) 0%, rgba(10,10,10,0.9) 50%, rgba(120,80,200,0.03) 100%)',
+                                border: '1px solid rgba(201,155,255,0.1)',
+                                boxShadow: '0 20px 60px rgba(0,0,0,0.3)',
                             }}
                         >
-                            {/* Top Gradient Line */}
-                            <div
-                                className="absolute left-[1px] top-[1px] right-[1px] h-[4px]"
-                                style={{
-                                    background: 'linear-gradient(90deg, #C99BFF 0%, rgba(201, 155, 255, 0) 0%, #C99BFF 50%, rgba(201, 155, 255, 0) 100%)',
-                                    opacity: 0.5
-                                }}
-                            />
+                            <div className="absolute top-0 left-0 right-0 h-[1px]" style={{ background: "linear-gradient(90deg, transparent 0%, rgba(201,155,255,0.3) 50%, transparent 100%)" }} />
 
-                            {/* Form Fields */}
-                            <div className="w-full flex flex-col gap-5">
-                                {/* Email Input */}
-                                <div className="w-full">
-                                    <div className="w-full h-[48px] sm:h-[54px] bg-[rgba(19,31,24,0.50)] rounded-[16px] overflow-hidden" style={{ outline: '1px solid rgba(255, 255, 255, 0.10)', outlineOffset: '-1px' }}>
+                            <div className="flex items-center gap-2 mb-7">
+                                <div className="w-1 h-5 rounded-full" style={{ background: "linear-gradient(180deg, #C99BFF 0%, rgba(201,155,255,0.2) 100%)" }} />
+                                <span className="text-[13px] font-bold uppercase tracking-[1.5px] text-white/30" style={{ fontFamily: 'Caviar Dreams' }}>Hesap Bilgileri</span>
+                            </div>
+
+                            <div className="flex flex-col gap-5">
+                                {/* Email */}
+                                <div>
+                                    <label className="text-white/50 text-[12px] font-bold uppercase tracking-wider mb-2 block" style={{ fontFamily: 'Caviar Dreams' }}>E-Posta Adresi</label>
+                                    <input
+                                        type="email" value={email} onChange={(e) => setEmail(e.target.value)}
+                                        placeholder="ornek@email.com"
+                                        className="w-full h-12 sm:h-[52px] rounded-xl px-4 text-[14px] text-white placeholder:text-white/15 bg-transparent border border-white/[0.06] focus:border-[#C99BFF]/25 focus:shadow-[0_0_16px_rgba(201,155,255,0.06)] focus:outline-none transition-all"
+                                        style={{ fontFamily: 'Caviar Dreams' }} required
+                                    />
+                                </div>
+
+                                {/* Password row */}
+                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                    <div>
+                                        <label className="text-white/50 text-[12px] font-bold uppercase tracking-wider mb-2 block" style={{ fontFamily: 'Caviar Dreams' }}>Parola</label>
                                         <input
-                                            type="email"
-                                            value={email}
-                                            onChange={(e) => setEmail(e.target.value)}
-                                            placeholder="E-Posta Adresi"
-                                            className="w-full h-full bg-transparent px-[17px] text-[#FAF8FF] text-[14px] sm:text-[16px] font-normal tracking-[0.40px] placeholder-[#FAF8FF]/50 focus:outline-none"
-                                            style={{ fontFamily: 'Inter' }}
-                                            required
+                                            type="password" value={password} onChange={(e) => setPassword(e.target.value)}
+                                            placeholder="Min. 6 karakter"
+                                            className="w-full h-12 sm:h-[52px] rounded-xl px-4 text-[14px] text-white placeholder:text-white/15 bg-transparent border border-white/[0.06] focus:border-[#C99BFF]/25 focus:shadow-[0_0_16px_rgba(201,155,255,0.06)] focus:outline-none transition-all"
+                                            style={{ fontFamily: 'Caviar Dreams' }} required
+                                        />
+                                    </div>
+                                    <div>
+                                        <label className="text-white/50 text-[12px] font-bold uppercase tracking-wider mb-2 block" style={{ fontFamily: 'Caviar Dreams' }}>Parola Tekrarı</label>
+                                        <input
+                                            type="password" value={passwordConfirm} onChange={(e) => setPasswordConfirm(e.target.value)}
+                                            placeholder="Tekrar girin"
+                                            className="w-full h-12 sm:h-[52px] rounded-xl px-4 text-[14px] text-white placeholder:text-white/15 bg-transparent border border-white/[0.06] focus:border-[#C99BFF]/25 focus:shadow-[0_0_16px_rgba(201,155,255,0.06)] focus:outline-none transition-all"
+                                            style={{ fontFamily: 'Caviar Dreams' }} required
                                         />
                                     </div>
                                 </div>
 
-                                {/* Password Input */}
-                                <div className="w-full">
-                                    <div className="w-full h-[48px] sm:h-[54px] bg-[rgba(19,31,24,0.50)] rounded-[16px] overflow-hidden" style={{ outline: '1px solid rgba(255, 255, 255, 0.10)', outlineOffset: '-1px' }}>
-                                        <input
-                                            type="password"
-                                            value={password}
-                                            onChange={(e) => setPassword(e.target.value)}
-                                            placeholder="Parola"
-                                            className="w-full h-full bg-transparent px-[17px] text-[#FAF8FF] text-[14px] sm:text-[16px] font-normal tracking-[1.60px] placeholder-[#FAF8FF]/50 focus:outline-none"
-                                            style={{ fontFamily: 'Inter' }}
-                                            required
-                                        />
-                                    </div>
+                                {/* Age */}
+                                <div>
+                                    <label className="text-white/50 text-[12px] font-bold uppercase tracking-wider mb-2 block" style={{ fontFamily: 'Caviar Dreams' }}>Yaş</label>
+                                    <input
+                                        type="number" value={age} onChange={(e) => setAge(e.target.value)}
+                                        placeholder="Yaşınızı girin" min="0" max="100"
+                                        className="w-full h-12 sm:h-[52px] rounded-xl px-4 text-[14px] text-white placeholder:text-white/15 bg-transparent border border-white/[0.06] focus:border-[#C99BFF]/25 focus:shadow-[0_0_16px_rgba(201,155,255,0.06)] focus:outline-none transition-all"
+                                        style={{ fontFamily: 'Caviar Dreams' }} required
+                                    />
                                 </div>
 
-                                {/* Password Confirm Input */}
-                                <div className="w-full">
-                                    <div className="w-full h-[48px] sm:h-[54px] bg-[rgba(19,31,24,0.50)] rounded-[16px] overflow-hidden" style={{ outline: '1px solid rgba(255, 255, 255, 0.10)', outlineOffset: '-1px' }}>
-                                        <input
-                                            type="password"
-                                            value={passwordConfirm}
-                                            onChange={(e) => setPasswordConfirm(e.target.value)}
-                                            placeholder="Parola Tekrarı"
-                                            className="w-full h-full bg-transparent px-[17px] text-[#FAF8FF] text-[14px] sm:text-[16px] font-normal tracking-[1.60px] placeholder-[#FAF8FF]/50 focus:outline-none"
-                                            style={{ fontFamily: 'Inter' }}
-                                            required
-                                        />
-                                    </div>
-                                </div>
 
-                                {/* Age Input */}
-                                <div className="w-full">
-                                    <div className="w-full h-[48px] sm:h-[54px] bg-[rgba(19,31,24,0.50)] rounded-[16px] overflow-hidden" style={{ outline: '1px solid rgba(255, 255, 255, 0.10)', outlineOffset: '-1px' }}>
-                                        <input
-                                            type="number"
-                                            value={age}
-                                            onChange={(e) => setAge(e.target.value)}
-                                            placeholder="Yaş"
-                                            min="0"
-                                            max="100"
-                                            className="w-full h-full bg-transparent px-[17px] text-[#FAF8FF] text-[14px] sm:text-[16px] font-normal tracking-[0.40px] placeholder-[#FAF8FF]/50 focus:outline-none"
-                                            style={{ fontFamily: 'Inter' }}
-                                            required
-                                        />
-                                    </div>
-                                </div>
-
-                                {/* Contract Agreement */}
-                                <label className="flex items-start gap-3 cursor-pointer">
-                                    <div
-                                        className={`w-5 h-5 rounded border-2 flex items-center justify-center mt-0.5 transition-all shrink-0 ${isAgreedContract ? 'border-[#C99BFF] bg-[#C99BFF]' : 'border-white/30'
-                                            }`}
-                                        onClick={() => setIsAgreedContract(!isAgreedContract)}
-                                    >
-                                        {isAgreedContract && (
-                                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
-                                                <polyline points="20 6 9 17 4 12" />
-                                            </svg>
-                                        )}
-                                    </div>
-                                    <span className="text-[#9CA3AF] text-[13px] leading-[18px]" style={{ fontFamily: 'Inter' }}>
-                                        <Link href="#" className="text-[#C99BFF] hover:underline">Kullanım sözleşmesini</Link> okudum ve kabul ediyorum.
-                                    </span>
-                                </label>
-
-                                {/* Turnstile CAPTCHA */}
+                                {/* Turnstile */}
                                 {!skipTurnstile && (
-                                    <div className="flex justify-center w-full min-h-[65px]">
+                                    <div className="flex justify-center w-full min-h-[65px] overflow-x-auto">
                                         <div id="register-turnstile-container"></div>
                                     </div>
                                 )}
 
-                                {/* Submit Button */}
+                                {/* Submit */}
                                 <button
-                                    type="submit"
-                                    disabled={isSubmitting}
-                                    className="w-full p-[14px] sm:p-[16px] rounded-[24px] overflow-hidden flex justify-center items-center shadow-[0px_0px_20px_-5px_white] hover:opacity-90 transition disabled:opacity-50 relative"
+                                    type="submit" disabled={isSubmitting}
+                                    className="w-full h-12 sm:h-[50px] rounded-xl font-bold text-[15px] flex items-center justify-center gap-2 disabled:opacity-50 transition-all duration-200 hover:shadow-[0_4px_24px_rgba(201,155,255,0.2)] active:scale-[0.98]"
                                     style={{
-                                        background: 'linear-gradient(90deg, white 0%, #795D99 73%)',
+                                        fontFamily: 'Caviar Dreams',
+                                        background: 'linear-gradient(135deg, #C99BFF 0%, #7B5EA7 100%)',
+                                        color: '#0a0a0a',
+                                        boxShadow: '0 2px 16px rgba(201,155,255,0.15)',
                                     }}
                                 >
-                                    <span className="text-center text-white text-[16px] sm:text-[20px] font-bold leading-[24px]" style={{ fontFamily: 'LEMON MILK' }}>
-                                        {isSubmitting ? 'KAYIT YAPILIYOR...' : 'KAYIT OL'}
-                                    </span>
+                                    {isSubmitting ? <div className="w-5 h-5 border-2 border-black/20 border-t-black/60 rounded-full animate-spin" /> : 'KAYIT OL'}
                                 </button>
+
+                                {/* Login link */}
+                                <p className="text-center text-white/20 text-[13px] pt-1" style={{ fontFamily: 'Caviar Dreams' }}>
+                                    Zaten hesabınız var mı?{' '}
+                                    <Link href="/giris-yap" className="text-[#C99BFF]/50 hover:text-[#C99BFF] transition-colors no-underline font-bold">Giriş Yap</Link>
+                                </p>
                             </div>
                         </form>
+                    </div>
 
-                        {/* Info Box */}
+                    {/* Right - Benefits */}
+                    <div className="w-full lg:w-[380px] shrink-0 flex flex-col gap-4">
+
+                        {/* Subscription card */}
                         <div
-                            className="self-stretch p-4 bg-[rgba(255,0,255,0.05)] rounded-[16px] flex justify-start items-start gap-4"
+                            className="rounded-2xl p-6 sm:p-7 relative overflow-hidden"
                             style={{
-                                outline: '1px solid rgba(255, 255, 255, 0.05)',
-                                outlineOffset: '-1px'
+                                background: 'linear-gradient(135deg, rgba(13,242,105,0.04) 0%, rgba(10,10,10,0.9) 100%)',
+                                border: '1px solid rgba(13,242,105,0.12)',
+                                boxShadow: '0 20px 60px rgba(0,0,0,0.2)',
                             }}
                         >
-                            <div className="w-6 h-6 shrink-0 relative">
-                                <div className="w-5 h-5 rounded-full flex items-center justify-center bg-[#C99BFF]">
-                                    <span className="text-black font-bold text-xs">i</span>
+                            <div className="absolute top-0 left-0 right-0 h-[2px]" style={{ background: "linear-gradient(90deg, transparent 0%, rgba(13,242,105,0.4) 50%, transparent 100%)" }} />
+                            <div className="absolute -top-16 -right-16 w-40 h-40 rounded-full pointer-events-none" style={{ background: "radial-gradient(circle, rgba(13,242,105,0.06) 0%, transparent 70%)" }} />
+
+                            <div className="flex items-center justify-between mb-6">
+                                <div>
+                                    <span className="text-[11px] font-bold uppercase tracking-[1.5px] block mb-1" style={{ fontFamily: 'Caviar Dreams', color: 'rgba(13,242,105,0.5)' }}>Aylık Üyelik</span>
+                                    <div className="flex items-baseline gap-1">
+                                        <span className="text-[28px] font-bold text-white/90" style={{ fontFamily: 'Caviar Dreams' }}>₺150</span>
+                                        <span className="text-[13px] text-white/25" style={{ fontFamily: 'Caviar Dreams' }}>/ay</span>
+                                    </div>
+                                </div>
+                                <div className="px-3 py-1.5 rounded-lg" style={{ background: 'rgba(13,242,105,0.08)', border: '1px solid rgba(13,242,105,0.15)' }}>
+                                    <span className="text-[10px] font-bold tracking-wider" style={{ fontFamily: 'Caviar Dreams', color: '#0DF269' }}>ÖZEL FİYAT</span>
                                 </div>
                             </div>
-                            <div className="flex-1 flex flex-col gap-1">
-                                <span className="text-white/90 text-[14px] font-bold leading-[20px] font-manrope">
-                                    E-posta Doğrulaması
-                                </span>
-                                <span
-                                    className="text-[#9CA3AF] text-[12px] font-normal leading-[16px]"
-                                    style={{ fontFamily: 'Inter' }}
-                                >
-                                    Kayıt olduktan sonra e-posta adresinize bir doğrulama bağlantısı gönderilecektir. Giriş yapabilmek için e-postanızı doğrulamanız gerekmektedir.
+
+                            <div className="w-full h-[1px] mb-5" style={{ background: "linear-gradient(90deg, rgba(13,242,105,0.1) 0%, transparent 100%)" }} />
+
+                            <div className="flex flex-col gap-4">
+                                {[
+                                    { title: 'Hızlı İndirme', desc: 'Bekleme süresi olmadan anında erişim.' },
+                                    { title: 'Limitsiz Çeviri Erişimi', desc: 'Yüzlerce oyuna özel Türkçe çeviriler.' },
+                                    { title: 'Topluluk Üyeliği', desc: 'Toplulukta ayrıcalıklı statü kazanın.' },
+                                    { title: 'Erken Erişim', desc: 'Yeni çevirilere 1 hafta önceden erişim.' },
+                                ].map((f, i) => (
+                                    <div key={i} className="flex items-start gap-3">
+                                        <div className="w-5 h-5 rounded-full flex items-center justify-center shrink-0 mt-0.5" style={{ background: 'rgba(13,242,105,0.1)', boxShadow: '0 0 10px rgba(13,242,105,0.15)' }}>
+                                            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#0DF269" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                                                <polyline points="20 6 9 17 4 12" />
+                                            </svg>
+                                        </div>
+                                        <div>
+                                            <span className="text-white/60 text-[14px] font-bold block" style={{ fontFamily: 'Caviar Dreams' }}>{f.title}</span>
+                                            <span className="text-white/20 text-[12px]" style={{ fontFamily: 'Caviar Dreams' }}>{f.desc}</span>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+
+                        {/* Info box */}
+                        <div
+                            className="rounded-2xl p-5 flex items-start gap-3"
+                            style={{ background: 'rgba(201,155,255,0.03)', border: '1px solid rgba(201,155,255,0.08)' }}
+                        >
+                            <div className="w-5 h-5 rounded-full flex items-center justify-center shrink-0 mt-0.5" style={{ background: 'rgba(201,155,255,0.1)' }}>
+                                <span className="text-[9px] font-bold text-[#C99BFF]">i</span>
+                            </div>
+                            <div>
+                                <span className="text-white/50 text-[13px] font-bold block mb-0.5" style={{ fontFamily: 'Caviar Dreams' }}>E-posta Doğrulaması</span>
+                                <span className="text-white/20 text-[12px] leading-relaxed" style={{ fontFamily: 'Caviar Dreams' }}>
+                                    Kayıt sonrası e-posta adresinize doğrulama bağlantısı gönderilecektir. Giriş için doğrulama zorunludur.
                                 </span>
                             </div>
                         </div>
 
-                        {/* Already have account link */}
-                        <div className="self-stretch text-center">
-                            <span className="text-[#9CA3AF] text-[14px]" style={{ fontFamily: 'Inter' }}>
-                                Zaten bir hesabınız var mı?{' '}
-                                <Link href="/giris-yap" className="text-[#C99BFF] hover:underline font-medium">
-                                    Giriş Yap
-                                </Link>
-                            </span>
-                        </div>
                     </div>
                 </div>
             </div>

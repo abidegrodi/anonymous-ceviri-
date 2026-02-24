@@ -128,17 +128,23 @@ export default function CategoryPills({ categories, activeCategory, onCategoryCh
   const scroll = (direction: "left" | "right") => {
     const el = scrollRef.current;
     if (!el) return;
-    const amount = 300;
-    el.scrollBy({
-      left: direction === "left" ? -amount : amount,
-      behavior: "smooth",
-    });
+    el.scrollBy({ left: direction === "left" ? -280 : 280, behavior: "smooth" });
   };
 
   const getIconSrc = (id: string) => {
     const mapped = iconFileMap[id] || iconFileMap[slugify(id)] || id;
     return `/icons/${mapped}.svg`;
   };
+
+  const fadeMask = (() => {
+    if (canScrollLeft && canScrollRight)
+      return "linear-gradient(90deg, transparent 0%, black 60px, black calc(100% - 60px), transparent 100%)";
+    if (canScrollLeft)
+      return "linear-gradient(90deg, transparent 0%, black 60px)";
+    if (canScrollRight)
+      return "linear-gradient(270deg, transparent 0%, black 60px)";
+    return "none";
+  })();
 
   return (
     <section
@@ -153,27 +159,38 @@ export default function CategoryPills({ categories, activeCategory, onCategoryCh
         paddingRight: "clamp(12px, 5vw, 344px)",
       }}
     >
-      <div className="relative flex items-center mx-auto w-full pl-0 sm:pl-4 md:pl-[56px]" style={{ maxWidth: "1280px" }}>
-        {/* Sol ok */}
+      <div className="relative flex items-center mx-auto w-full" style={{ maxWidth: "1280px" }}>
+        {/* Sol ok - scroll alanının üstünde, solda */}
         <button
           onClick={() => scroll("left")}
-          className="shrink-0 w-8 h-8 flex items-center justify-center rounded-full transition-all mr-2"
+          className="absolute left-0 z-20 shrink-0 w-9 h-9 flex items-center justify-center rounded-full transition-all duration-300"
           style={{
-            opacity: canScrollLeft ? 1 : 0.2,
+            opacity: canScrollLeft ? 1 : 0,
             pointerEvents: canScrollLeft ? "auto" : "none",
-            background: "rgba(255,255,255,0.05)",
-            border: "1px solid rgba(255,255,255,0.08)",
+            background: "rgba(5, 5, 5, 0.85)",
+            border: "1px solid rgba(201, 155, 255, 0.2)",
+            boxShadow: canScrollLeft ? "0 0 16px rgba(0,0,0,0.6), 0 0 8px rgba(201,155,255,0.08)" : "none",
           }}
           aria-label="Sola kaydır"
         >
           <Image src="/icons/arrowl.svg" alt="" width={14} height={14} />
         </button>
 
-        {/* Kaydırılabilir pill'ler */}
+        {/* Kaydırılabilir pill'ler - mask ile kenarlarda fade */}
         <div
           ref={scrollRef}
-          className="flex items-center gap-3 overflow-x-auto scrollbar-hide"
-          style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+          className="flex items-center gap-3 overflow-x-auto scrollbar-hide w-full px-1"
+          style={{
+            scrollbarWidth: "none",
+            msOverflowStyle: "none",
+            maskImage: fadeMask,
+            WebkitMaskImage: fadeMask,
+          }}
+          onWheel={(e) => {
+            if (scrollRef.current && Math.abs(e.deltaX) < Math.abs(e.deltaY)) {
+              scrollRef.current.scrollLeft += e.deltaY;
+            }
+          }}
         >
           {allCategories.map((category) => {
             const isActive = activeCategory === category.id;
@@ -246,15 +263,16 @@ export default function CategoryPills({ categories, activeCategory, onCategoryCh
           })}
         </div>
 
-        {/* Sağ ok */}
+        {/* Sağ ok - scroll alanının üstünde, sağda */}
         <button
           onClick={() => scroll("right")}
-          className="shrink-0 w-8 h-8 flex items-center justify-center rounded-full transition-all ml-2"
+          className="absolute right-0 z-20 shrink-0 w-9 h-9 flex items-center justify-center rounded-full transition-all duration-300"
           style={{
-            opacity: canScrollRight ? 1 : 0.2,
+            opacity: canScrollRight ? 1 : 0,
             pointerEvents: canScrollRight ? "auto" : "none",
-            background: "rgba(255,255,255,0.05)",
-            border: "1px solid rgba(255,255,255,0.08)",
+            background: "rgba(5, 5, 5, 0.85)",
+            border: "1px solid rgba(201, 155, 255, 0.2)",
+            boxShadow: canScrollRight ? "0 0 16px rgba(0,0,0,0.6), 0 0 8px rgba(201,155,255,0.08)" : "none",
           }}
           aria-label="Sağa kaydır"
         >

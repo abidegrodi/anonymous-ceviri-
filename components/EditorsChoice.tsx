@@ -24,7 +24,11 @@ export default function EditorsChoice({ gameId: propGameId }: EditorsChoiceProps
   return (
     <section className="py-8 sm:py-12 px-4 flex justify-center">
       <div
-        className="relative w-full max-w-[1189px] min-h-[220px] sm:min-h-[260px] md:h-[300px] overflow-hidden rounded-[16px] sm:rounded-[24px] flex items-center"
+        className="relative w-full max-w-[1189px] min-h-[220px] sm:min-h-[260px] md:h-[300px] overflow-hidden rounded-[16px] sm:rounded-[24px] flex items-center border border-white/[0.06]"
+        style={{
+          boxShadow:
+            "0 0 80px rgba(201, 155, 255, 0.15), 0 0 160px rgba(79, 87, 187, 0.08), 0 4px 60px rgba(121, 93, 153, 0.12), 0 8px 32px rgba(0, 0, 0, 0.5)",
+        }}
       >
         {/* Background Image */}
         <img
@@ -37,6 +41,14 @@ export default function EditorsChoice({ gameId: propGameId }: EditorsChoiceProps
         <div
           className="absolute left-0 top-0 w-full h-full mix-blend-overlay"
           style={{ background: "rgba(255, 0, 255, 0.20)" }}
+        ></div>
+
+        {/* Purple edge glow */}
+        <div
+          className="absolute inset-0 pointer-events-none rounded-[16px] sm:rounded-[24px]"
+          style={{
+            boxShadow: "inset 0 0 40px rgba(201, 155, 255, 0.06), inset 0 1px 0 rgba(201, 155, 255, 0.1)",
+          }}
         ></div>
 
         {/* Gradient Overlay */}

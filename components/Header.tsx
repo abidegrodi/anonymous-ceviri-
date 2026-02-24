@@ -71,6 +71,9 @@ export default function Header() {
               <Link href="/iletisim" className="hover:opacity-80 transition-opacity" style={navLinkStyle}>
                 İletişim
               </Link>
+              <Link href="/destek" className="hover:opacity-80 transition-opacity" style={navLinkStyle}>
+                Destek
+              </Link>
             </div>
 
             {/* Desktop Auth Buttons */}
@@ -104,7 +107,7 @@ export default function Header() {
                         border: '1px solid rgba(180, 150, 220, 0.6)',
                       }}
                     >
-                      <span style={authButtonStyle}>ÜYE OL</span>
+                      <span style={authButtonStyle}>KAYIT OL</span>
                     </Link>
                   </>
                 )
@@ -170,6 +173,14 @@ export default function Header() {
             >
               İletişim
             </Link>
+            <Link
+              href="/destek"
+              onClick={() => setIsMenuOpen(false)}
+              className="block text-lg font-bold hover:opacity-80 transition-opacity py-2"
+              style={{ fontFamily: 'Caviar Dreams', background: 'linear-gradient(180deg, #FFFFFF 0%, #795D99 90%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}
+            >
+              Destek
+            </Link>
             <div className="flex flex-col sm:flex-row gap-3 pt-4 border-t border-white/10">
               {!isLoading && (
                 isAuthenticated ? (
@@ -212,7 +223,7 @@ export default function Header() {
                       }}
                     >
                       <span style={{ color: 'white', fontSize: '14px', fontFamily: 'LEMON MILK', fontWeight: 400 }}>
-                        ÜYE OL
+                        KAYIT OL
                       </span>
                     </Link>
                   </>

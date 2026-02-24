@@ -6,7 +6,6 @@ import api from './api';
 
 // Types
 export interface User {
-  UserId: number;
   Email: string;
   Username: string | null;
   RegisterDate: string;
@@ -22,6 +21,7 @@ interface AuthContextType {
   forgotPassword: (email: string) => Promise<{ success: boolean; message: string }>;
   resendVerification: (email: string) => Promise<{ success: boolean; message: string }>;
   refreshUser: () => Promise<void>;
+  patchUser: (fields: Partial<User>) => void;
   requireAuth: () => boolean;
   requireUsername: () => boolean;
 }
@@ -51,7 +51,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       // _silent: true → interceptor 401 hatasında toast/redirect göstermez
       const response = await api.get('/auth/me', { _silent: true } as any);
       if (response.data.status && response.data.data) {
-        setUser(response.data.data);
+        const { UserId, userId, ...safeUser } = response.data.data as any;
+        setUser(safeUser);
       }
     } catch {
       setUser(null);
@@ -145,6 +146,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     return true;
   }, [isAuthenticated, router]);
 
+  const patchUser = useCallback((fields: Partial<User>) => {
+    setUser(prev => prev ? { ...prev, ...fields } : prev);
+  }, []);
+
   // Check if user has a username set
   const requireUsername = useCallback((): boolean => {
     if (!user) {
@@ -170,6 +175,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         forgotPassword,
         resendVerification,
         refreshUser,
+        patchUser,
         requireAuth,
         requireUsername,
       }}

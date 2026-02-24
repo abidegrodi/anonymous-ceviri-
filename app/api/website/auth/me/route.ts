@@ -79,7 +79,19 @@ export async function GET(request: NextRequest) {
         }
         console.log(`[DEBUG /auth/me] ============================\n`);
 
-        const nextResponse = new NextResponse(responseBody, {
+        let responseBodyForClient = responseBody;
+        try {
+          const parsed = JSON.parse(responseBody);
+          if (parsed?.data && typeof parsed.data === 'object' && !Array.isArray(parsed.data)) {
+            delete parsed.data.UserId;
+            delete parsed.data.userId;
+          }
+          responseBodyForClient = JSON.stringify(parsed);
+        } catch {
+          // Non-JSON response, forward as-is.
+        }
+
+        const nextResponse = new NextResponse(responseBodyForClient, {
           status: res.statusCode || 500,
           headers: {
             'Content-Type': res.headers['content-type'] || 'application/json',
