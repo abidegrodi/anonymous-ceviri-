@@ -109,13 +109,28 @@ export default function KurulumRehberiPage() {
                 <div className="absolute -top-20 -right-10 w-64 h-64 rounded-full" style={{ background: "rgba(255, 94, 0, 0.20)", filter: "blur(50px)" }} />
                 <div className="relative z-10 flex flex-col gap-10">
                   <div className="flex flex-col md:flex-row justify-between items-start gap-6">
-                    <div className="flex flex-col gap-5 flex-1">
+                    <div className="flex flex-col gap-5 flex-1 min-w-0">
                       <div className="flex flex-wrap gap-2">
                         {game.categories?.map((cat, idx) => (
                           <span key={idx} className="px-3 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider" style={{ background: "rgba(255, 255, 255, 0.10)", outline: "1px solid rgba(255, 255, 255, 0.05)", color: "rgba(255, 255, 255, 0.90)", fontFamily: "Space Grotesk, sans-serif" }}>{cat.name}</span>
                         ))}
                       </div>
-                      <h1 className="uppercase" style={{ fontFamily: "Trajan Pro, serif", fontSize: "clamp(32px, 6vw, 64px)", fontWeight: 700, lineHeight: "1.1", color: "rgba(255, 255, 255, 0.90)", textShadow: "0px 0px 10px rgba(242, 166, 13, 0.50)" }}>{game.name}</h1>
+                      <h1
+                        className="uppercase whitespace-nowrap"
+                        style={{
+                          textShadow: "0 0 10px rgba(242, 166, 13, 0.50)",
+                          fontFamily: '"Trajan Pro", serif',
+                          fontSize: "clamp(24px, 3.2vw, 44px)",
+                          fontStyle: "normal",
+                          fontWeight: 400,
+                          lineHeight: "1.15",
+                          letterSpacing: "-1.2px",
+                          textTransform: "uppercase",
+                          color: "rgba(255, 255, 255, 0.90)",
+                        }}
+                      >
+                        {game.name}
+                      </h1>
                     </div>
                     <div className="flex flex-col items-end gap-1 shrink-0 pt-1">
                       <span className="uppercase text-right" style={{ fontFamily: "LEMON MILK, sans-serif", fontSize: "13px", lineHeight: "18px", letterSpacing: "1.4px", color: "#C99BFF" }}>Sürüm {game.compatibleVersions || 'Tüm Sürümlerle Uyumludur'}</span>
@@ -589,30 +604,6 @@ export default function KurulumRehberiPage() {
                 </div>
               </div>
 
-              {/* Translation Team Card */}
-              <div className="p-6 rounded-[32px]" style={{ background: "rgba(24, 22, 17, 0.65)", boxShadow: "0px 4px 30px rgba(0, 0, 0, 0.50)", outline: "1px solid rgba(255, 255, 255, 0.08)", backdropFilter: "blur(8px)" }}>
-                <div className="flex items-center gap-2 mb-4">
-                  <Image src="/icons/ceviriekibi.svg" alt="Çeviri Ekibi" width={24} height={28} className="shrink-0" />
-                  <span className="uppercase" style={{ fontFamily: "LEMON MILK, sans-serif", fontSize: "18px", fontWeight: 400, lineHeight: "28px", color: "rgba(255, 255, 255, 0.90)" }}>
-                    Çeviri Ekibi
-                  </span>
-                </div>
-                <div className="flex flex-wrap gap-2">
-                  {[
-                    { name: "Uğur K.", color: "from-orange-500 to-orange-600" },
-                    { name: "Mehmet A.", color: "from-blue-500 to-indigo-600" },
-                    { name: "Caner D.", color: "from-green-500 to-green-600" },
-                  ].map((member, idx) => (
-                    <div key={idx} className="flex items-center gap-2 px-3 py-1.5 rounded-full" style={{ background: "rgba(255, 255, 255, 0.05)", outline: "1px solid rgba(255, 255, 255, 0.05)" }}>
-                      <div className={`w-6 h-6 rounded-full bg-gradient-to-br ${member.color}`} />
-                      <span style={{ fontFamily: "LEMON MILK, sans-serif", fontSize: "12px", fontWeight: 500, lineHeight: "16px", color: "rgba(255, 255, 255, 0.90)" }}>{member.name}</span>
-                    </div>
-                  ))}
-                  <div className="flex items-center px-3 py-1.5 rounded-full" style={{ background: "rgba(255, 255, 255, 0.05)", outline: "1px solid rgba(255, 255, 255, 0.05)" }}>
-                    <span style={{ fontFamily: "LEMON MILK, sans-serif", fontSize: "12px", fontWeight: 500, lineHeight: "16px", color: "rgba(255, 255, 255, 0.50)" }}>+5 kişi</span>
-                  </div>
-                </div>
-              </div>
             </div>
           </div>
         </div>

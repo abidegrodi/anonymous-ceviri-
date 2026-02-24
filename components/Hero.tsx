@@ -79,39 +79,26 @@ export default function Hero() {
             </div>
           </div>
 
-          {/* Main Heading */}
-          <div className="flex flex-col items-start w-full">
-            <h1
-              className="font-manrope font-bold uppercase"
-              style={{
-                fontSize: 'clamp(28px, 5vw, 71.4px)',
-                lineHeight: 'clamp(32px, 5.5vw, 72px)',
-                letterSpacing: 'clamp(-1.5px, -0.5vw, -3.6px)',
-              }}
-            >
-              <span className="text-white/90">HİKAYEYİ </span>
-              <span className="bg-gradient-to-r from-white to-[#C99BFF] bg-clip-text text-transparent">
-                KENDİ
-              </span>
-              <br />
-              <span className="bg-gradient-to-r from-white to-[#C99BFF] bg-clip-text text-transparent">
-                DİLİNDE
-              </span>
-              <span className="text-white/90"> YAŞA</span>
-            </h1>
+          <div className="w-full max-w-[637px]">
+            <Image
+              src="/hero-title-figma.png"
+              alt="Hikayeyi kendi dilinde yasa"
+              width={637}
+              height={259}
+              priority
+              className="w-full h-auto"
+            />
           </div>
 
-          {/* Description */}
-          <div className="w-full max-w-[512px]">
-            <p
-              className="text-[#dbdde0] font-inter font-normal"
-              style={{
-                fontSize: 'clamp(14px, 2vw, 20px)',
-                lineHeight: 'clamp(22px, 3vw, 28px)',
-              }}
-            >
-              En sevdiğin oyunlar, %100 Türkçe yerelleştirme ve profesyonel çeviri kalitesiyle artık daha anlaşılır.
-            </p>
+          <div className="w-full max-w-[529px]">
+            <Image
+              src="/hero-desc-figma.png"
+              alt="Aciklama metni"
+              width={529}
+              height={80}
+              priority
+              className="w-full h-auto"
+            />
           </div>
 
           {/* CTA Buttons */}

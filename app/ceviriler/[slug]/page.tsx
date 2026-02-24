@@ -351,7 +351,7 @@ export default function GameDetailPage() {
                 <div className="relative z-10 flex flex-col gap-10">
                   {/* Categories + Title */}
                   <div className="flex flex-col md:flex-row justify-between items-start gap-6">
-                    <div className="flex flex-col gap-5 flex-1">
+                    <div className="flex flex-col gap-5 flex-1 min-w-0">
                       <div className="flex flex-wrap gap-2">
                         {game.categories?.map((cat, idx) => (
                           <span key={idx} className="px-3 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider" style={{ background: "rgba(255, 255, 255, 0.10)", outline: "1px solid rgba(255, 255, 255, 0.05)", color: "rgba(255, 255, 255, 0.90)", fontFamily: "Space Grotesk, sans-serif" }}>
@@ -359,7 +359,19 @@ export default function GameDetailPage() {
                           </span>
                         ))}
                       </div>
-                      <h1 className="uppercase" style={{ fontFamily: "Trajan Pro, serif", fontSize: "clamp(32px, 6vw, 64px)", fontWeight: 700, lineHeight: "1.1", color: "rgba(255, 255, 255, 0.90)", textShadow: "0px 0px 10px rgba(242, 166, 13, 0.50)" }}>
+                      <h1
+                        className="uppercase whitespace-nowrap"
+                        style={{
+                          fontFamily: '"Trajan Pro", serif',
+                          fontSize: "clamp(24px, 3.2vw, 44px)",
+                          fontStyle: "normal",
+                          fontWeight: 400,
+                          lineHeight: "1.15",
+                          letterSpacing: "-1.2px",
+                          color: "rgba(255, 255, 255, 0.90)",
+                          textShadow: "0 0 10px rgba(242, 166, 13, 0.50)",
+                        }}
+                      >
                         {game.name}
                       </h1>
                     </div>
