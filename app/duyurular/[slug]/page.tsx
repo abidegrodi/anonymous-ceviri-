@@ -1,12 +1,14 @@
 "use client";
 
 import { useParams } from "next/navigation";
+import { useState, useEffect } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Link from "next/link";
 import Image from "next/image";
+import { fetchDuyuruBySlug, fetchDuyurular, mapStrapiDuyuruToBlogPost, mapStrapiDuyuruToAnnouncement } from "@/lib/strapi";
 
-// Blog verisi tipi
+// Blog verisi tipi (detay sayfası)
 interface BlogPost {
   slug: string;
   title: string;
@@ -25,88 +27,66 @@ interface BlogPost {
   note: string;
 }
 
-// Örnek blog verileri
-const blogPosts: Record<string, BlogPost> = {
-  "starfield-turkce-yama-v1-2": {
-    slug: "starfield-turkce-yama-v1-2",
-    title: "Starfield Türkçe Çeviri",
-    titleHighlight: "Güncellemesi Yayınlandı",
-    category: "Güncelleme",
-    date: "14 Ekim 2023",
-    author: "Admin",
-    version: "v1.2.0",
-    readTime: "3 Dakika",
-    platforms: ["pc", "xbox"],
-    heroImage: "/assets/blogicsayfahero.png",
-    content:
-      "Starfield için beklenen Türkçe çeviri güncellemesi sonunda yayında! Bu güncelleme ile birlikte diyaloglardaki çeviri hataları giderildi, terminoloji sözlüğü genişletildi ve arayüz terimleri oyunun atmosferine daha uygun hale getirildi.",
-    changes: [
-      "Ana hikaye görevlerindeki 500+ satır diyalog hatası düzeltildi.",
-      "Envanter ve crafting menüsündeki font sorunları çözüldü.",
-      "Gezegen isimleri ve özel terimler için Cyber-Sözlük entegrasyonu yapıldı.",
-    ],
-    videoThumbnail: "https://placehold.co/700x393",
-    screenshots: [
-      "https://placehold.co/341x191",
-      "https://placehold.co/341x191",
-    ],
-    note: "Bu çeviri sadece Steam versiyonu ile uyumludur. Game Pass versiyonu için çalışmalarımız devam etmektedir.",
-  },
-  "baldurs-gate-3-ceviri-tamamlandi": {
-    slug: "baldurs-gate-3-ceviri-tamamlandi",
-    title: "Baldur's Gate 3",
-    titleHighlight: "%100 Çeviri Tamamlandı",
-    category: "Yeni Çeviri",
-    date: "12 Ekim 2023",
-    author: "Admin",
-    version: "v1.0.0",
-    readTime: "5 Dakika",
-    platforms: ["pc"],
-    heroImage: "/assets/blogicsayfahero.png",
-    content:
-      "Baldur's Gate 3 için tam Türkçe çeviri nihayet tamamlandı! Tüm diyaloglar, menüler ve oyun içi metinler Türkçeye çevrildi.",
-    changes: [
-      "Tüm ana hikaye diyalogları çevrildi.",
-      "Yan görevler ve NPC diyalogları tamamlandı.",
-      "Envanter ve karakter ekranları Türkçeleştirildi.",
-    ],
-    videoThumbnail: "https://placehold.co/700x393",
-    screenshots: [
-      "https://placehold.co/341x191",
-      "https://placehold.co/341x191",
-    ],
-    note: "Steam ve GOG versiyonları ile uyumludur.",
-  },
-};
-
-// Diğer duyurular
-const otherAnnouncements = [
-  {
-    slug: "baldurs-gate-3-ceviri-tamamlandi",
-    title: "Baldur's Gate 3 - %100 Çeviri Tamamlandı",
-    date: "2 gün önce",
-    image: "https://placehold.co/80x56",
-  },
-  {
-    slug: "cyberpunk-2077-dlc-yama-hazirligi",
-    title: "Cyberpunk 2077 DLC Çeviri Hazırlığı",
-    date: "5 gün önce",
-    image: "https://placehold.co/80x56",
-  },
-  {
-    slug: "elden-ring-turkce-yama-v2",
-    title: "Elden Ring Türkçe Çeviri v2.0",
-    date: "1 hafta önce",
-    image: "https://placehold.co/80x56",
-  },
-];
-
 export default function BlogDetail() {
   const params = useParams();
   const slug = params.slug as string;
+  const [post, setPost] = useState<BlogPost | null>(null);
+  const [otherAnnouncements, setOtherAnnouncements] = useState<Array<{ slug: string; title: string; date: string; image: string }>>([]);
+  const [loading, setLoading] = useState(true);
+  const [notFound, setNotFound] = useState(false);
 
-  // Blog verisini al
-  const post = blogPosts[slug] || blogPosts["starfield-turkce-yama-v1-2"];
+  useEffect(() => {
+    if (!slug) return;
+    let cancelled = false;
+    setLoading(true);
+    setNotFound(false);
+    Promise.all([
+      fetchDuyuruBySlug(slug),
+      fetchDuyurular(),
+    ])
+      .then(([duyuru, list]) => {
+        if (cancelled) return;
+        if (duyuru) {
+          setPost(mapStrapiDuyuruToBlogPost(duyuru));
+          const baseUrl = process.env.NEXT_PUBLIC_STRAPI_URL || "http://localhost:1337";
+          const others = list
+            .filter((d) => d.slug !== slug)
+            .slice(0, 3)
+            .map((d) => {
+              const a = mapStrapiDuyuruToAnnouncement(d);
+              return { slug: a.slug, title: a.title + (a.subtitle ? " - " + a.subtitle : ""), date: a.date, image: a.image };
+            });
+          setOtherAnnouncements(others);
+        } else {
+          setNotFound(true);
+        }
+      })
+      .catch(() => {
+        if (!cancelled) setNotFound(true);
+      })
+      .finally(() => {
+        if (!cancelled) setLoading(false);
+      });
+    return () => { cancelled = true; };
+  }, [slug]);
+
+  if (loading || !post) {
+    return (
+      <main className="min-h-screen bg-[#0C080F]">
+        <Header />
+        <div className="pt-[100px] pb-16 px-4 text-center">
+          {loading && <p className="text-white/60" style={{ fontFamily: "Caviar Dreams" }}>Yükleniyor…</p>}
+          {!loading && notFound && (
+            <>
+              <p className="text-white/60 mb-4" style={{ fontFamily: "Caviar Dreams" }}>Bu duyuru bulunamadı.</p>
+              <Link href="/duyurular" className="text-[#C99BFF] hover:underline" style={{ fontFamily: "Caviar Dreams" }}>← Duyurulara dön</Link>
+            </>
+          )}
+        </div>
+        <Footer />
+      </main>
+    );
+  }
 
   return (
     <main className="min-h-screen bg-[#0C080F]">

@@ -4,7 +4,8 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Link from "next/link";
 import Image from "next/image";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { fetchDuyurular, mapStrapiDuyuruToAnnouncement } from "@/lib/strapi";
 
 interface Announcement {
   id: number;
@@ -20,73 +21,6 @@ interface Announcement {
     color: string;
   };
 }
-
-const announcementsData: Announcement[] = [
-  {
-    id: 1,
-    slug: "starfield-turkce-yama-v1-2",
-    title: "Starfield Türkçe Çeviri",
-    subtitle: "Güncellemesi Yayınlandı",
-    category: "Güncelleme",
-    date: "14 Ekim 2023",
-    readTime: "3 Dakika",
-    image: "https://placehold.co/400x250",
-    tag: { text: "GÜNCELLEME", color: "purple" },
-  },
-  {
-    id: 2,
-    slug: "baldurs-gate-3-ceviri-tamamlandi",
-    title: "Baldur's Gate 3",
-    subtitle: "%100 Çeviri Tamamlandı",
-    category: "Yeni Çeviri",
-    date: "12 Ekim 2023",
-    readTime: "5 Dakika",
-    image: "https://placehold.co/400x250",
-    tag: { text: "YENİ", color: "green" },
-  },
-  {
-    id: 3,
-    slug: "cyberpunk-2077-dlc-yama-hazirligi",
-    title: "Cyberpunk 2077 DLC",
-    subtitle: "Çeviri Hazırlığı Başladı",
-    category: "Duyuru",
-    date: "10 Ekim 2023",
-    readTime: "4 Dakika",
-    image: "https://placehold.co/400x250",
-  },
-  {
-    id: 4,
-    slug: "elden-ring-turkce-yama-v2",
-    title: "Elden Ring",
-    subtitle: "Türkçe Çeviri v2.0",
-    category: "Güncelleme",
-    date: "8 Ekim 2023",
-    readTime: "3 Dakika",
-    image: "https://placehold.co/400x250",
-    tag: { text: "GÜNCELLEME", color: "purple" },
-  },
-  {
-    id: 5,
-    slug: "god-of-war-ragnarok-beta",
-    title: "God of War Ragnarok",
-    subtitle: "Beta Sürümü Yayınlandı",
-    category: "Beta",
-    date: "5 Ekim 2023",
-    readTime: "6 Dakika",
-    image: "https://placehold.co/400x250",
-    tag: { text: "BETA", color: "yellow" },
-  },
-  {
-    id: 6,
-    slug: "hogwarts-legacy-yama-duyurusu",
-    title: "Hogwarts Legacy",
-    subtitle: "Türkçe Çeviri Duyurusu",
-    category: "Duyuru",
-    date: "1 Ekim 2023",
-    readTime: "4 Dakika",
-    image: "https://placehold.co/400x250",
-  },
-];
 
 type FilterType = "all" | "Güncelleme" | "Yeni Çeviri" | "Duyuru" | "Beta";
 
@@ -108,6 +42,28 @@ function getTagColors(color: string) {
 
 export default function Duyurular() {
   const [activeFilter, setActiveFilter] = useState<FilterType>("all");
+  const [announcementsData, setAnnouncementsData] = useState<Announcement[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    let cancelled = false;
+    setLoading(true);
+    setError(null);
+    fetchDuyurular()
+      .then((data) => {
+        if (!cancelled) {
+          setAnnouncementsData(data.map(mapStrapiDuyuruToAnnouncement));
+        }
+      })
+      .catch(() => {
+        if (!cancelled) setError("Duyurular yüklenemedi. Strapi panelinin çalıştığından emin olun (http://localhost:1337).");
+      })
+      .finally(() => {
+        if (!cancelled) setLoading(false);
+      });
+    return () => { cancelled = true; };
+  }, []);
 
   const filtered = activeFilter === "all"
     ? announcementsData
@@ -142,7 +98,20 @@ export default function Duyurular() {
           </p>
         </div>
 
+        {/* Loading / Error */}
+        {loading && (
+          <div className="rounded-[24px] mb-8 p-12 text-center" style={{ border: "1px solid rgba(255,255,255,0.08)", background: "rgba(18,17,14,0.95)" }}>
+            <p className="text-white/60" style={{ fontFamily: "Caviar Dreams" }}>Duyurular yükleniyor…</p>
+          </div>
+        )}
+        {error && (
+          <div className="rounded-[24px] mb-8 p-6" style={{ border: "1px solid rgba(239,68,68,0.3)", background: "rgba(239,68,68,0.05)" }}>
+            <p className="text-red-400 text-sm" style={{ fontFamily: "Caviar Dreams" }}>{error}</p>
+          </div>
+        )}
+
         {/* Featured Announcement */}
+        {!loading && featured && (
         <Link href={`/duyurular/${featured.slug}`}>
           <div className="relative rounded-[24px] overflow-hidden mb-8 group cursor-pointer" style={{ border: "1px solid rgba(255,255,255,0.08)" }}>
             <div className="flex flex-col md:flex-row">
@@ -177,8 +146,10 @@ export default function Duyurular() {
             </div>
           </div>
         </Link>
+        )}
 
         {/* Filters */}
+        {!loading && (
         <div className="flex items-center gap-2 mb-6 overflow-x-auto scrollbar-hide pb-2">
           {filters.map((f) => (
             <button
@@ -196,8 +167,12 @@ export default function Duyurular() {
             </button>
           ))}
         </div>
+        )}
 
         {/* Announcements List */}
+        {!loading && filtered.length === 0 && !error && (
+          <p className="text-white/50 py-8 text-center" style={{ fontFamily: "Caviar Dreams" }}>Henüz duyuru yok.</p>
+        )}
         <div className="flex flex-col gap-3">
           {filtered.map((announcement) => {
             const tagColors = announcement.tag ? getTagColors(announcement.tag.color) : null;
