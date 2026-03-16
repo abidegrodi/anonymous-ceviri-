@@ -17,7 +17,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
             border: '1px solid rgba(255, 255, 255, 0.1)',
             borderRadius: '12px',
             fontSize: '14px',
-            fontFamily: 'Inter, sans-serif',
+            fontFamily: 'Caviar Dreams, sans-serif',
           },
           success: {
             iconTheme: {

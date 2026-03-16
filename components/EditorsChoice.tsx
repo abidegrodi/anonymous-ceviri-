@@ -64,21 +64,21 @@ export default function EditorsChoice({ gameId: propGameId }: EditorsChoiceProps
 
           {/* Editor's Choice Label */}
           <div className="flex flex-col justify-center items-start">
-            <span className="text-[#EEEEEE] text-xs sm:text-sm font-inter font-bold uppercase tracking-[1.40px] leading-5">
+            <span className="text-[#EEEEEE] text-xs sm:text-sm font-caviar font-bold uppercase tracking-[1.40px] leading-5">
               Editörün Seçimi
             </span>
           </div>
 
           {/* Game Title */}
           <div className="flex flex-col justify-center items-start">
-            <h2 className="text-[rgba(255,255,255,0.90)] text-2xl sm:text-[36px] md:text-[48px] font-manrope font-bold uppercase leading-tight sm:leading-[40px] md:leading-[48px]">
+            <h2 className="text-[rgba(255,255,255,0.90)] text-2xl sm:text-[36px] md:text-[48px] font-trajan font-bold uppercase leading-tight sm:leading-[40px] md:leading-[48px]">
               Ghostrunner 2
             </h2>
           </div>
 
           {/* Description */}
           <div className="w-full max-w-[448px] pt-1 sm:pt-2 pb-4 sm:pb-6 flex flex-col justify-center items-start">
-            <p className="text-[#D1D5DB] text-sm sm:text-base font-inter font-normal leading-5 sm:leading-6">
+            <p className="text-[#D1D5DB] text-sm sm:text-base font-caviar font-normal leading-5 sm:leading-6">
               Siberpunk dünyasında hızın sınırlarını zorla. Türkçe çeviri ile hikayenin her detayını yakala.
             </p>
           </div>
@@ -91,7 +91,7 @@ export default function EditorsChoice({ gameId: propGameId }: EditorsChoiceProps
               boxShadow: "0px 0px 20px rgba(255, 255, 255, 0.30), 0px 4px 4px rgba(0, 0, 0, 0.25)"
             }}
           >
-            <span className="text-black text-center text-sm sm:text-base font-inter font-bold leading-6">
+            <span className="text-black text-center text-sm sm:text-base font-caviar font-bold leading-6">
               İncelemeye Git
             </span>
           </Link>

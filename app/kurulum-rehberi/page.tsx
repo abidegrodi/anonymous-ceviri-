@@ -94,14 +94,14 @@ export default function KurulumRehberiPage() {
 
           {/* Platform Selector */}
           <div className="mb-8">
-            <span className="text-[10px] uppercase tracking-wider block mb-3" style={{ fontFamily: "LEMON MILK", color: "rgba(255,255,255,0.30)" }}>Platform Seçin</span>
+            <span className="text-[10px] uppercase tracking-wider block mb-3" style={{ fontFamily: "Caviar Dreams", color: "rgba(255,255,255,0.30)" }}>Platform Seçin</span>
             <div className="flex gap-2">
               {platforms.map((p) => (
                 <button key={p.id} onClick={() => setActivePlatform(p.id)}
                   className={`flex items-center gap-2 px-4 py-2.5 rounded-xl transition-all ${activePlatform === p.id ? "text-[#C99BFF]" : "text-white/30 hover:text-white/50"}`}
                   style={{ background: activePlatform === p.id ? "rgba(201,155,255,0.08)" : "rgba(255,255,255,0.03)", border: activePlatform === p.id ? "1px solid rgba(201,155,255,0.25)" : "1px solid rgba(255,255,255,0.05)" }}>
                   {p.icon}
-                  <span className="text-[11px] uppercase tracking-wider" style={{ fontFamily: "LEMON MILK" }}>{p.label}</span>
+                  <span className="text-[11px] uppercase tracking-wider" style={{ fontFamily: "Caviar Dreams" }}>{p.label}</span>
                 </button>
               ))}
             </div>
@@ -113,10 +113,10 @@ export default function KurulumRehberiPage() {
               <div key={i} className="relative p-5 sm:p-6 rounded-[20px] overflow-hidden" style={{ background: "rgba(24,22,17,0.65)", border: "1px solid rgba(255,255,255,0.06)" }}>
                 <div className="flex gap-4 sm:gap-5">
                   <div className="shrink-0 w-10 h-10 sm:w-12 sm:h-12 rounded-xl flex items-center justify-center" style={{ background: "rgba(201,155,255,0.06)", border: "1px solid rgba(201,155,255,0.12)" }}>
-                    <span className="text-[14px] sm:text-[16px] font-bold" style={{ fontFamily: "LEMON MILK", color: "#C99BFF" }}>{step.number}</span>
+                    <span className="text-[14px] sm:text-[16px] font-bold" style={{ fontFamily: "Caviar Dreams", color: "#C99BFF" }}>{step.number}</span>
                   </div>
                   <div className="flex-1 min-w-0">
-                    <h3 className="text-white/90 text-[14px] sm:text-[16px] font-bold mb-1.5" style={{ fontFamily: "LEMON MILK" }}>{step.title}</h3>
+                    <h3 className="text-white/90 text-[14px] sm:text-[16px] font-bold mb-1.5" style={{ fontFamily: "Caviar Dreams" }}>{step.title}</h3>
                     <p className="text-[13px] sm:text-[14px] leading-relaxed" style={{ fontFamily: "Caviar Dreams", color: "rgba(255,255,255,0.55)" }}>{step.description}</p>
                     {step.tip && (
                       <div className="mt-3 p-3 rounded-xl flex items-start gap-2.5" style={{ background: "rgba(201,155,255,0.05)", border: "1px solid rgba(201,155,255,0.10)" }}>
@@ -133,7 +133,7 @@ export default function KurulumRehberiPage() {
 
           {/* FAQ */}
           <div className="mb-10">
-            <h2 className="text-[14px] uppercase tracking-wider mb-5" style={{ fontFamily: "LEMON MILK", color: "rgba(255,255,255,0.70)" }}>Sık Sorulan Sorular</h2>
+            <h2 className="text-[14px] uppercase tracking-wider mb-5" style={{ fontFamily: "Caviar Dreams", color: "rgba(255,255,255,0.70)" }}>Sık Sorulan Sorular</h2>
             <div className="flex flex-col gap-2">
               {faqs.map((faq, i) => (
                 <div key={i} className="rounded-[16px] overflow-hidden" style={{ background: "rgba(24,22,17,0.65)", border: "1px solid rgba(255,255,255,0.06)" }}>
@@ -154,7 +154,7 @@ export default function KurulumRehberiPage() {
           {/* CTA */}
           <div className="text-center p-6 rounded-[20px]" style={{ background: "rgba(201,155,255,0.04)", border: "1px solid rgba(201,155,255,0.10)" }}>
             <p className="text-[13px] mb-4" style={{ fontFamily: "Caviar Dreams", color: "rgba(255,255,255,0.50)" }}>Sorun mu yaşıyorsunuz?</p>
-            <Link href="/destek" className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-[12px] text-[#C99BFF] hover:bg-white/5 transition" style={{ fontFamily: "LEMON MILK", border: "1px solid rgba(201,155,255,0.20)" }}>
+            <Link href="/destek" className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-[12px] text-[#C99BFF] hover:bg-white/5 transition" style={{ fontFamily: "Caviar Dreams", border: "1px solid rgba(201,155,255,0.20)" }}>
               DESTEK MERKEZİ
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 12h14m-7-7l7 7-7 7" strokeLinecap="round" strokeLinejoin="round" /></svg>
             </Link>

@@ -161,7 +161,7 @@ export default function Home() {
           <div className="flex items-center justify-center py-20">
             <div className="flex flex-col items-center gap-4">
               <div className="w-12 h-12 border-2 border-[#C99BFF] border-t-transparent rounded-full animate-spin" />
-              <span className="text-white/50 text-sm" style={{ fontFamily: "Inter" }}>
+              <span className="text-white/50 text-sm" style={{ fontFamily: "Caviar Dreams" }}>
                 Oyunlar yükleniyor...
               </span>
             </div>
@@ -205,7 +205,7 @@ export default function Home() {
         {/* Oyun yoksa */}
         {!isLoading && allGames.length === 0 && (
           <div className="flex items-center justify-center py-20">
-            <p className="text-white/30 text-sm" style={{ fontFamily: "Inter" }}>
+            <p className="text-white/30 text-sm" style={{ fontFamily: "Caviar Dreams" }}>
               Henüz yayınlanmış oyun bulunmuyor.
             </p>
           </div>

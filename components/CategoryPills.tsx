@@ -223,11 +223,11 @@ export default function CategoryPills({ categories, activeCategory, onCategoryCh
                     />
                   )}
                 </span>
-                <span className="font-manrope">{category.name}</span>
+                <span className="font-caviar">{category.name}</span>
               </>
             );
 
-            const baseButtonStyle = "flex items-center shrink-0 whitespace-nowrap h-[42px] px-6 rounded-full gap-2 text-sm font-manrope transition-all";
+            const baseButtonStyle = "flex items-center shrink-0 whitespace-nowrap h-[42px] px-6 rounded-full gap-2 text-sm font-caviar transition-all";
             const activeStyle = "bg-[rgba(20,20,20,0.60)] text-white/90 font-bold";
             const inactiveStyle = "bg-[rgba(20,20,20,0.60)] text-[#9CA3AF] font-medium border border-[#ffffff0d]";
 

@@ -110,17 +110,17 @@ export default function GameCard({ title, progress, image, href, gameId, onNotif
                     </linearGradient>
                   </defs>
                 </svg>
-                <span className="absolute inset-0 flex items-center justify-center font-inter font-bold text-[9px] text-white/90">
+                <span className="absolute inset-0 flex items-center justify-center font-caviar font-bold text-[9px] text-white/90">
                   %{clampedProgress}
                 </span>
               </div>
 
               {/* Status text */}
               <div className="flex flex-col min-w-0">
-                <span className="font-inter font-medium text-[11px] leading-tight text-white/90 truncate">
+                <span className="font-caviar font-medium text-[11px] leading-tight text-white/90 truncate">
                   {isComplete ? "Tamamlandı" : "Devam Ediyor"}
                 </span>
-                <span className="font-inter text-[9px] leading-tight text-white/40 mt-0.5">
+                <span className="font-caviar text-[9px] leading-tight text-white/40 mt-0.5">
                   Çeviri Durumu
                 </span>
               </div>
@@ -131,7 +131,7 @@ export default function GameCard({ title, progress, image, href, gameId, onNotif
 
       {/* Title */}
       <div className="mt-3 px-1 text-center">
-        <h3 className="font-inter font-semibold text-sm leading-[1.3] text-white/90 group-hover:text-[#C99BFF] transition-colors duration-300 line-clamp-2">
+        <h3 className="font-trajan font-semibold text-sm leading-[1.3] text-white/90 group-hover:text-[#C99BFF] transition-colors duration-300 line-clamp-2">
           {title}
         </h3>
       </div>

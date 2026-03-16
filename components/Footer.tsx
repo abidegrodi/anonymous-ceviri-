@@ -3,11 +3,11 @@ import Image from "next/image";
 
 const links = [
   { href: "/", label: "Ana Sayfa" },
-  { href: "/turkce-ceviriler", label: "Türkçe Yamalar" },
+  { href: "/turkce-ceviriler", label: "Türkçe Çeviriler" },
   { href: "/duyurular", label: "Duyurular" },
   { href: "/iletisim", label: "İletişim" },
   { href: "/sss", label: "FAQ" },
-  { href: "/destek", label: "Destek" },
+  { href: "https://destek.anonymousceviri.com/", label: "Destek", target: "_blank", rel: "noopener noreferrer" },
 ];
 
 const socials = [
@@ -72,7 +72,7 @@ export default function Footer() {
               className="hidden sm:block w-[1px] h-8 shrink-0"
               style={{ background: "rgba(123, 94, 167, 0.2)" }}
             />
-            <p className="hidden sm:block font-inter text-[12px] leading-[18px] text-white/25 max-w-[240px]">
+            <p className="hidden sm:block font-caviar text-[12px] leading-[18px] text-white/25 max-w-[240px]">
               Türkiye&apos;nin en kapsamlı oyun çeviri platformu.
             </p>
           </div>
@@ -85,7 +85,7 @@ export default function Footer() {
                 <Link
                   key={link.href}
                   href={link.href}
-                  className="font-inter text-[12px] text-white/30 hover:text-[#C99BFF] transition-colors duration-200"
+                  className="font-caviar text-[12px] text-white/30 hover:text-[#C99BFF] transition-colors duration-200"
                 >
                   {link.label}
                 </Link>
@@ -125,10 +125,10 @@ export default function Footer() {
           className="py-5 flex flex-col sm:flex-row justify-between items-center gap-2"
           style={{ borderTop: "1px solid rgba(123, 94, 167, 0.08)" }}
         >
-          <p className="font-inter text-[11px] text-white/15">
+          <p className="font-caviar text-[11px] text-white/15">
             © 2026 Anonymous Çeviri. Tüm hakları saklıdır.
           </p>
-          <p className="font-inter text-[11px] text-white/10">
+          <p className="font-caviar text-[11px] text-white/10">
             made with love in izmir by &quot;grodi.co&quot;
           </p>
         </div>

@@ -257,7 +257,7 @@ export default function GameDetailPage() {
         <div className="flex items-center justify-center min-h-screen">
           <div className="flex flex-col items-center gap-4">
             <div className="w-12 h-12 border-2 border-[#C99BFF] border-t-transparent rounded-full animate-spin" />
-            <span className="text-white/50 text-sm" style={{ fontFamily: "Inter" }}>Oyun bilgileri yükleniyor...</span>
+            <span className="text-white/50 text-sm" style={{ fontFamily: "Caviar Dreams" }}>Oyun bilgileri yükleniyor...</span>
           </div>
         </div>
       </main>
@@ -356,7 +356,7 @@ export default function GameDetailPage() {
                   {/* Categories */}
                   <div className="flex flex-wrap gap-2">
                     {game.categories?.map((cat, idx) => (
-                      <span key={idx} className="px-3.5 py-1.5 rounded-lg text-[11px] sm:text-xs font-bold uppercase tracking-wide" style={{ background: "rgba(201, 155, 255, 0.08)", border: "1px solid rgba(201, 155, 255, 0.15)", color: "#C99BFF", fontFamily: "Space Grotesk, sans-serif" }}>
+                      <span key={idx} className="px-3.5 py-1.5 rounded-lg text-[11px] sm:text-xs font-bold uppercase tracking-wide" style={{ background: "rgba(201, 155, 255, 0.08)", border: "1px solid rgba(201, 155, 255, 0.15)", color: "#C99BFF", fontFamily: "Caviar Dreams, sans-serif" }}>
                         {cat.name}
                       </span>
                     ))}
@@ -377,7 +377,7 @@ export default function GameDetailPage() {
                     >
                       {game.name}
                     </h1>
-                    <span className="uppercase" style={{ fontFamily: "LEMON MILK, sans-serif", fontSize: "11px", lineHeight: "16px", letterSpacing: "1.2px", color: "rgba(201, 155, 255, 0.60)" }}>
+                    <span className="uppercase" style={{ fontFamily: "Caviar Dreams, sans-serif", fontSize: "11px", lineHeight: "16px", letterSpacing: "1.2px", color: "rgba(201, 155, 255, 0.60)" }}>
                       Sürüm {game.compatibleVersions || 'Tüm Sürümlerle Uyumlu'}
                     </span>
                   </div>
@@ -386,7 +386,7 @@ export default function GameDetailPage() {
                   <div className="flex flex-col gap-3 p-4 sm:p-5 rounded-2xl" style={{ background: "rgba(0, 0, 0, 0.25)", border: "1px solid rgba(255,255,255,0.04)" }}>
                     {game.releaseDate && (
                       <div className="flex justify-end">
-                        <span className="uppercase text-[10px] tracking-wider" style={{ fontFamily: "LEMON MILK, sans-serif", color: "rgba(255,255,255,0.30)" }}>
+                        <span className="uppercase text-[10px] tracking-wider" style={{ fontFamily: "Caviar Dreams, sans-serif", color: "rgba(255,255,255,0.30)" }}>
                           Son Güncelleme: {new Date(game.releaseDate).toLocaleDateString('tr-TR', { day: '2-digit', month: '2-digit', year: 'numeric' })}
                         </span>
                       </div>
@@ -394,11 +394,11 @@ export default function GameDetailPage() {
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-2.5">
                         <Image src="/icons/ceviridurumu.svg" alt="" width={20} height={24} className="shrink-0 opacity-80" />
-                        <span className="uppercase text-[12px] sm:text-[14px]" style={{ fontFamily: "LEMON MILK, sans-serif", fontWeight: 400, letterSpacing: "0.5px", color: "rgba(255, 255, 255, 0.70)" }}>
+                        <span className="uppercase text-[12px] sm:text-[14px]" style={{ fontFamily: "Caviar Dreams, sans-serif", fontWeight: 400, letterSpacing: "0.5px", color: "rgba(255, 255, 255, 0.70)" }}>
                           Çeviri Durumu
                         </span>
                       </div>
-                      <span style={{ fontFamily: "LEMON MILK, sans-serif", fontSize: "clamp(18px, 2.5vw, 26px)", fontWeight: 700, color: "#C99BFF" }}>
+                      <span style={{ fontFamily: "Caviar Dreams, sans-serif", fontSize: "clamp(18px, 2.5vw, 26px)", fontWeight: 700, color: "#C99BFF" }}>
                         {game.completeRate}%
                       </span>
                     </div>
@@ -413,13 +413,13 @@ export default function GameDetailPage() {
                       />
                     </div>
                     <div className="flex items-center justify-between pt-1">
-                      <span className="uppercase text-[9px] sm:text-[10px] tracking-wider" style={{ fontFamily: "LEMON MILK, sans-serif", color: "rgba(255,255,255,0.35)" }}>
+                      <span className="uppercase text-[9px] sm:text-[10px] tracking-wider" style={{ fontFamily: "Caviar Dreams, sans-serif", color: "rgba(255,255,255,0.35)" }}>
                         Menü: {game.completeRate}%
                       </span>
-                      <span className="uppercase text-[9px] sm:text-[10px] tracking-wider" style={{ fontFamily: "LEMON MILK, sans-serif", color: "rgba(255,255,255,0.35)" }}>
+                      <span className="uppercase text-[9px] sm:text-[10px] tracking-wider" style={{ fontFamily: "Caviar Dreams, sans-serif", color: "rgba(255,255,255,0.35)" }}>
                         Altyazı: {game.completeRate}%
                       </span>
-                      <span className="uppercase text-[9px] sm:text-[10px] tracking-wider" style={{ fontFamily: "LEMON MILK, sans-serif", color: "rgba(255,255,255,0.35)" }}>
+                      <span className="uppercase text-[9px] sm:text-[10px] tracking-wider" style={{ fontFamily: "Caviar Dreams, sans-serif", color: "rgba(255,255,255,0.35)" }}>
                         Arayüz: {game.completeRate}%
                       </span>
                     </div>
@@ -435,7 +435,7 @@ export default function GameDetailPage() {
                         <path d="M12 3V15M12 15L7 10M12 15L17 10" stroke="#FAF8FF" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
                         <path d="M3 17V19C3 20.1046 3.89543 21 5 21H19C20.1046 21 21 20.1046 21 19V17" stroke="#FAF8FF" strokeWidth="2.5" strokeLinecap="round" />
                       </svg>
-                      <span className="uppercase text-[13px] sm:text-[15px]" style={{ fontFamily: "LEMON MILK, sans-serif", fontWeight: 700, letterSpacing: "1.2px", color: "#FAF8FF" }}>
+                      <span className="uppercase text-[13px] sm:text-[15px]" style={{ fontFamily: "Caviar Dreams, sans-serif", fontWeight: 700, letterSpacing: "1.2px", color: "#FAF8FF" }}>
                         Türkçe Çeviriyi İndir
                       </span>
                     </button>
@@ -487,7 +487,7 @@ export default function GameDetailPage() {
                       className={`px-3 sm:px-6 py-2 rounded-full transition-all shrink-0 ${activeTab === tab.id ? "bg-white/10" : "hover:bg-white/5"}`}
                       style={{ outline: activeTab === tab.id ? "1px solid rgba(242, 166, 13, 0.50)" : "none" }}
                     >
-                      <span className="uppercase whitespace-nowrap" style={{ fontFamily: "LEMON MILK, sans-serif", fontSize: "11px", fontWeight: activeTab === tab.id ? 700 : 400, lineHeight: "20px", letterSpacing: "0.35px", color: activeTab === tab.id ? "rgba(255, 255, 255, 0.90)" : "rgba(255, 255, 255, 0.60)" }}>
+                      <span className="uppercase whitespace-nowrap" style={{ fontFamily: "Caviar Dreams, sans-serif", fontSize: "11px", fontWeight: activeTab === tab.id ? 700 : 400, lineHeight: "20px", letterSpacing: "0.35px", color: activeTab === tab.id ? "rgba(255, 255, 255, 0.90)" : "rgba(255, 255, 255, 0.60)" }}>
                         {tab.label}
                       </span>
                     </button>
@@ -503,7 +503,7 @@ export default function GameDetailPage() {
                       <div className="relative z-10 flex flex-col gap-5">
                         <div className="flex items-center gap-3 pl-4" style={{ borderLeft: "4px solid #C99BFF" }}>
                           <Image src="/icons/info.svg" alt="Info" width={24} height={28} className="shrink-0" />
-                          <span className="uppercase" style={{ fontFamily: "LEMON MILK, sans-serif", fontSize: "clamp(18px, 3vw, 24px)", fontWeight: 400, lineHeight: "32px", letterSpacing: "0.6px", color: "rgba(255, 255, 255, 0.90)" }}>
+                          <span className="uppercase" style={{ fontFamily: "Caviar Dreams, sans-serif", fontSize: "clamp(18px, 3vw, 24px)", fontWeight: 400, lineHeight: "32px", letterSpacing: "0.6px", color: "rgba(255, 255, 255, 0.90)" }}>
                             Çeviri Hakkında
                           </span>
                         </div>
@@ -520,7 +520,7 @@ export default function GameDetailPage() {
                           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C99BFF" strokeWidth="1.5"><path d="M12 3v12m0 0l-4-4m4 4l4-4" strokeLinecap="round" strokeLinejoin="round" /><path d="M3 17v2a2 2 0 002 2h14a2 2 0 002-2v-2" strokeLinecap="round" /></svg>
                         </div>
                         <div>
-                          <span className="text-white/80 text-[13px] font-medium block" style={{ fontFamily: "LEMON MILK" }}>Kurulum Rehberi</span>
+                          <span className="text-white/80 text-[13px] font-medium block" style={{ fontFamily: "Caviar Dreams" }}>Kurulum Rehberi</span>
                           <span className="text-white/30 text-[11px]" style={{ fontFamily: "Caviar Dreams" }}>Genel çeviri kurulum adımları</span>
                         </div>
                       </div>
@@ -535,7 +535,7 @@ export default function GameDetailPage() {
                     <div className="p-5 sm:p-8 rounded-[24px] sm:rounded-[32px]" style={{ background: "rgba(24, 22, 17, 0.65)", boxShadow: "0px 4px 30px rgba(0, 0, 0, 0.50)", outline: "1px solid rgba(255, 255, 255, 0.08)", backdropFilter: "blur(8px)" }}>
                       <div className="flex items-center gap-3 pl-4 mb-5" style={{ borderLeft: "4px solid #C99BFF" }}>
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 4L2 20H22L12 4Z" stroke="#C99BFF" strokeWidth="1.5" strokeLinejoin="round" /><path d="M12 10V14" stroke="#C99BFF" strokeWidth="1.5" strokeLinecap="round" /><circle cx="12" cy="17" r="1" fill="#C99BFF" /></svg>
-                        <span className="uppercase" style={{ fontFamily: "LEMON MILK", fontSize: "clamp(14px, 2.5vw, 18px)", fontWeight: 400, lineHeight: "28px", color: "rgba(255, 255, 255, 0.90)" }}>
+                        <span className="uppercase" style={{ fontFamily: "Caviar Dreams", fontSize: "clamp(14px, 2.5vw, 18px)", fontWeight: 400, lineHeight: "28px", color: "rgba(255, 255, 255, 0.90)" }}>
                           Özel Kurulum Talimatları
                         </span>
                       </div>
@@ -559,7 +559,7 @@ export default function GameDetailPage() {
                           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C99BFF" strokeWidth="1.5"><path d="M12 3v12m0 0l-4-4m4 4l4-4" strokeLinecap="round" strokeLinejoin="round" /><path d="M3 17v2a2 2 0 002 2h14a2 2 0 002-2v-2" strokeLinecap="round" /></svg>
                         </div>
                         <div>
-                          <span className="text-white/80 text-[13px] font-medium block" style={{ fontFamily: "LEMON MILK" }}>Genel Kurulum Rehberi</span>
+                          <span className="text-white/80 text-[13px] font-medium block" style={{ fontFamily: "Caviar Dreams" }}>Genel Kurulum Rehberi</span>
                           <span className="text-white/30 text-[11px]" style={{ fontFamily: "Caviar Dreams" }}>Tüm çeviriler için standart kurulum adımları</span>
                         </div>
                       </div>
@@ -571,20 +571,20 @@ export default function GameDetailPage() {
                 {activeTab === 'notes' && (
                   <div className="p-8 rounded-[32px]" style={{ background: "rgba(24, 22, 17, 0.65)", boxShadow: "0px 4px 30px rgba(0, 0, 0, 0.50)", outline: "1px solid rgba(255, 255, 255, 0.08)", backdropFilter: "blur(8px)" }}>
                     <div className="flex items-center gap-3 pl-4 mb-6" style={{ borderLeft: "4px solid #C99BFF" }}>
-                      <span className="uppercase" style={{ fontFamily: "LEMON MILK, sans-serif", fontSize: "20px", fontWeight: 400, lineHeight: "28px", color: "rgba(255, 255, 255, 0.90)" }}>
+                      <span className="uppercase" style={{ fontFamily: "Caviar Dreams, sans-serif", fontSize: "20px", fontWeight: 400, lineHeight: "28px", color: "rgba(255, 255, 255, 0.90)" }}>
                         Çeviri Notları
                       </span>
                     </div>
                     {game.dlcs && (
                       <div className="mb-4">
-                        <h4 className="text-white/70 text-sm font-bold mb-2" style={{ fontFamily: "Inter" }}>DLC&apos;ler:</h4>
-                        <p className="text-white/50 text-sm" style={{ fontFamily: "Inter" }}>{game.dlcs}</p>
+                        <h4 className="text-white/70 text-sm font-bold mb-2" style={{ fontFamily: "Caviar Dreams" }}>DLC&apos;ler:</h4>
+                        <p className="text-white/50 text-sm" style={{ fontFamily: "Caviar Dreams" }}>{game.dlcs}</p>
                       </div>
                     )}
                     {game.compatibleVersions && (
                       <div>
-                        <h4 className="text-white/70 text-sm font-bold mb-2" style={{ fontFamily: "Inter" }}>Uyumlu Sürümler:</h4>
-                        <p className="text-white/50 text-sm" style={{ fontFamily: "Inter" }}>{game.compatibleVersions}</p>
+                        <h4 className="text-white/70 text-sm font-bold mb-2" style={{ fontFamily: "Caviar Dreams" }}>Uyumlu Sürümler:</h4>
+                        <p className="text-white/50 text-sm" style={{ fontFamily: "Caviar Dreams" }}>{game.compatibleVersions}</p>
                       </div>
                     )}
                   </div>
@@ -595,7 +595,7 @@ export default function GameDetailPage() {
                     <div className="flex items-center justify-between mb-6">
                       <div className="flex items-center gap-3 pl-4" style={{ borderLeft: "4px solid #C99BFF" }}>
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#C99BFF" strokeWidth="1.5"><path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" strokeLinecap="round" /></svg>
-                        <span className="uppercase" style={{ fontFamily: "LEMON MILK, sans-serif", fontSize: "clamp(14px, 2.5vw, 20px)", fontWeight: 400, lineHeight: "28px", color: "rgba(255, 255, 255, 0.90)" }}>
+                        <span className="uppercase" style={{ fontFamily: "Caviar Dreams, sans-serif", fontSize: "clamp(14px, 2.5vw, 20px)", fontWeight: 400, lineHeight: "28px", color: "rgba(255, 255, 255, 0.90)" }}>
                           Sürüm Geçmişi
                         </span>
                       </div>
@@ -605,7 +605,7 @@ export default function GameDetailPage() {
                           disabled={notifLoading}
                           className="flex items-center gap-2 px-3 py-1.5 rounded-lg text-[10px] uppercase tracking-wider transition-all hover:brightness-110"
                           style={{
-                            fontFamily: "LEMON MILK",
+                            fontFamily: "Caviar Dreams",
                             background: notifStatus?.update ? "rgba(201,155,255,0.15)" : "rgba(255,255,255,0.04)",
                             border: notifStatus?.update ? "1px solid rgba(201,155,255,0.30)" : "1px solid rgba(255,255,255,0.08)",
                             color: notifStatus?.update ? "#C99BFF" : "rgba(255,255,255,0.40)",
@@ -627,10 +627,10 @@ export default function GameDetailPage() {
                           </div>
                           <div className="flex-1 pb-4">
                             <div className="flex items-center gap-2 mb-1">
-                              <span className="text-[12px] font-bold" style={{ fontFamily: "LEMON MILK", color: "#C99BFF" }}>
+                              <span className="text-[12px] font-bold" style={{ fontFamily: "Caviar Dreams", color: "#C99BFF" }}>
                                 {game.compatibleVersions || "v1.0"}
                               </span>
-                              <span className="px-2 py-0.5 rounded text-[9px] uppercase" style={{ fontFamily: "LEMON MILK", background: "rgba(13,242,105,0.10)", border: "1px solid rgba(13,242,105,0.20)", color: "#0DF269" }}>Güncel</span>
+                              <span className="px-2 py-0.5 rounded text-[9px] uppercase" style={{ fontFamily: "Caviar Dreams", background: "rgba(13,242,105,0.10)", border: "1px solid rgba(13,242,105,0.20)", color: "#0DF269" }}>Güncel</span>
                             </div>
                             <span className="text-[11px] text-white/30 block mb-2" style={{ fontFamily: "Caviar Dreams" }}>
                               {new Date(game.releaseDate).toLocaleDateString('tr-TR', { day: 'numeric', month: 'long', year: 'numeric' })}
@@ -655,7 +655,7 @@ export default function GameDetailPage() {
                   <div className="flex flex-col gap-6">
                     {/* Comment Form */}
                     <div className="p-6 rounded-[32px]" style={{ background: "rgba(24, 22, 17, 0.65)", outline: "1px solid rgba(255, 255, 255, 0.08)", backdropFilter: "blur(8px)" }}>
-                      <h3 className="text-white/90 text-sm font-bold mb-4 uppercase" style={{ fontFamily: "LEMON MILK, sans-serif", letterSpacing: "0.5px" }}>
+                      <h3 className="text-white/90 text-sm font-bold mb-4 uppercase" style={{ fontFamily: "Caviar Dreams, sans-serif", letterSpacing: "0.5px" }}>
                         Yorum Yaz
                       </h3>
                       <textarea
@@ -663,7 +663,7 @@ export default function GameDetailPage() {
                         onChange={(e) => setNewComment(e.target.value)}
                         placeholder={isAuthenticated ? "Yorumunuzu yazın..." : "Yorum yazmak için giriş yapın..."}
                         className="w-full h-24 bg-white/5 rounded-xl p-4 text-white placeholder:text-white/30 focus:outline-none resize-none text-sm"
-                        style={{ fontFamily: "Inter", border: "1px solid rgba(255, 255, 255, 0.08)" }}
+                        style={{ fontFamily: "Caviar Dreams", border: "1px solid rgba(255, 255, 255, 0.08)" }}
                         maxLength={2000}
                       />
                       <div className="flex justify-between items-center mt-3">
@@ -672,7 +672,7 @@ export default function GameDetailPage() {
                           onClick={handleCreateComment}
                           disabled={commentSubmitting || !newComment.trim()}
                           className="px-6 py-2 rounded-full text-sm font-bold transition-all hover:opacity-90 disabled:opacity-40"
-                          style={{ background: "#C99BFF", color: "#1a1a2e", fontFamily: "Inter" }}
+                          style={{ background: "#C99BFF", color: "#1a1a2e", fontFamily: "Caviar Dreams" }}
                         >
                           {commentSubmitting ? 'Gönderiliyor...' : 'Gönder'}
                         </button>
@@ -686,7 +686,7 @@ export default function GameDetailPage() {
                           key={sort}
                           onClick={() => { setCommentsSortBy(sort); setCommentsPage(1); }}
                           className={`px-4 py-1.5 rounded-full text-xs font-bold transition-all ${commentsSortBy === sort ? 'bg-white/10' : 'hover:bg-white/5'}`}
-                          style={{ outline: commentsSortBy === sort ? "1px solid rgba(201, 155, 255, 0.50)" : "1px solid rgba(255, 255, 255, 0.08)", fontFamily: "Inter", color: commentsSortBy === sort ? "#C99BFF" : "rgba(255, 255, 255, 0.50)" }}
+                          style={{ outline: commentsSortBy === sort ? "1px solid rgba(201, 155, 255, 0.50)" : "1px solid rgba(255, 255, 255, 0.08)", fontFamily: "Caviar Dreams", color: commentsSortBy === sort ? "#C99BFF" : "rgba(255, 255, 255, 0.50)" }}
                         >
                           {sort === 'newest' ? 'En Yeni' : sort === 'oldest' ? 'En Eski' : 'Popüler'}
                         </button>
@@ -730,7 +730,7 @@ export default function GameDetailPage() {
                       </div>
                     ) : (
                       <div className="text-center py-10">
-                        <p className="text-white/30 text-sm" style={{ fontFamily: "Inter" }}>Henüz yorum yapılmamış. İlk yorumu siz yapın!</p>
+                        <p className="text-white/30 text-sm" style={{ fontFamily: "Caviar Dreams" }}>Henüz yorum yapılmamış. İlk yorumu siz yapın!</p>
                       </div>
                     )}
 
@@ -780,10 +780,10 @@ export default function GameDetailPage() {
                 {game.metacritic != null && game.metacritic > 0 && (
                   <div className="absolute bottom-5 left-5 right-5">
                     <div className="flex items-center gap-2">
-                      <span className="px-2.5 py-1 rounded-lg text-[12px] font-bold" style={{ fontFamily: "LEMON MILK", background: "rgba(201,155,255,0.15)", border: "1px solid rgba(201,155,255,0.25)", color: "#C99BFF" }}>
+                      <span className="px-2.5 py-1 rounded-lg text-[12px] font-bold" style={{ fontFamily: "Caviar Dreams", background: "rgba(201,155,255,0.15)", border: "1px solid rgba(201,155,255,0.25)", color: "#C99BFF" }}>
                         {game.metacritic}
                       </span>
-                      <span className="text-[11px] text-white/40" style={{ fontFamily: "LEMON MILK" }}>Metacritic</span>
+                      <span className="text-[11px] text-white/40" style={{ fontFamily: "Caviar Dreams" }}>Metacritic</span>
                     </div>
                   </div>
                 )}
@@ -793,13 +793,13 @@ export default function GameDetailPage() {
               {game.websiteURL && (
                 <a href={game.websiteURL} target="_blank" rel="noopener noreferrer" className="p-4 rounded-2xl flex items-center gap-3 transition-all hover:bg-white/10" style={{ background: "rgba(24, 22, 17, 0.65)", outline: "1px solid rgba(255, 255, 255, 0.08)" }}>
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#C99BFF" strokeWidth="2"><circle cx="12" cy="12" r="10" /><path d="M2 12h20" /><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" /></svg>
-                  <span className="text-white/70 text-sm" style={{ fontFamily: "Inter" }}>Resmi Web Sitesi</span>
+                  <span className="text-white/70 text-sm" style={{ fontFamily: "Caviar Dreams" }}>Resmi Web Sitesi</span>
                 </a>
               )}
               {game.videoURL && (
                 <a href={game.videoURL} target="_blank" rel="noopener noreferrer" className="p-4 rounded-2xl flex items-center gap-3 transition-all hover:bg-white/10" style={{ background: "rgba(24, 22, 17, 0.65)", outline: "1px solid rgba(255, 255, 255, 0.08)" }}>
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#C99BFF" strokeWidth="2"><polygon points="5 3 19 12 5 21 5 3" /></svg>
-                  <span className="text-white/70 text-sm" style={{ fontFamily: "Inter" }}>Tanıtım Videosu</span>
+                  <span className="text-white/70 text-sm" style={{ fontFamily: "Caviar Dreams" }}>Tanıtım Videosu</span>
                 </a>
               )}
             </div>
@@ -878,8 +878,8 @@ function CommentItem({
             <div className="w-7 h-7 rounded-full bg-gradient-to-br from-[#C99BFF] to-[#4F57BB] flex items-center justify-center">
               <span className="text-white text-xs font-bold">{comment.username?.[0]?.toUpperCase() || '?'}</span>
             </div>
-            <span className="text-white/90 text-sm font-bold" style={{ fontFamily: "Inter" }}>{comment.username}</span>
-            <span className="text-white/30 text-xs" style={{ fontFamily: "Inter" }}>
+            <span className="text-white/90 text-sm font-bold" style={{ fontFamily: "Caviar Dreams" }}>{comment.username}</span>
+            <span className="text-white/30 text-xs" style={{ fontFamily: "Caviar Dreams" }}>
               {new Date(comment.createdAt).toLocaleDateString('tr-TR')}
             </span>
             {comment.isEdited && <span className="text-white/20 text-xs">(düzenlendi)</span>}
@@ -899,7 +899,7 @@ function CommentItem({
               value={editContent}
               onChange={(e) => onEditContentChange(e.target.value)}
               className="w-full h-20 bg-white/5 rounded-xl p-3 text-white text-sm focus:outline-none resize-none"
-              style={{ fontFamily: "Inter", border: "1px solid rgba(255, 255, 255, 0.08)" }}
+              style={{ fontFamily: "Caviar Dreams", border: "1px solid rgba(255, 255, 255, 0.08)" }}
               maxLength={2000}
             />
             <div className="flex gap-2 mt-2">
@@ -912,7 +912,7 @@ function CommentItem({
             </div>
           </div>
         ) : (
-          <p className="text-white/70 text-sm mb-3" style={{ fontFamily: "Inter", lineHeight: "20px" }}>
+          <p className="text-white/70 text-sm mb-3" style={{ fontFamily: "Caviar Dreams", lineHeight: "20px" }}>
             {comment.content}
           </p>
         )}
@@ -972,7 +972,7 @@ function CommentItem({
               onChange={(e) => onReplyContentChange(e.target.value)}
               placeholder="Yanıtınızı yazın..."
               className="w-full h-16 bg-white/5 rounded-xl p-3 text-white text-sm placeholder:text-white/30 focus:outline-none resize-none"
-              style={{ fontFamily: "Inter", border: "1px solid rgba(255, 255, 255, 0.08)" }}
+              style={{ fontFamily: "Caviar Dreams", border: "1px solid rgba(255, 255, 255, 0.08)" }}
               maxLength={2000}
             />
             <div className="flex gap-2 mt-2">

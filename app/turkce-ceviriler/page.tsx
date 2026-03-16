@@ -130,7 +130,7 @@ export default function TurkceYamalar() {
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Oyun adı ile ara..."
-              className="w-full h-11 pl-11 pr-4 rounded-xl bg-white/[0.04] border border-white/[0.08] text-white text-sm font-inter placeholder:text-white/25 focus:outline-none focus:border-[#C99BFF]/30 transition-colors"
+              className="w-full h-11 pl-11 pr-4 rounded-xl bg-white/[0.04] border border-white/[0.08] text-white text-sm font-caviar placeholder:text-white/25 focus:outline-none focus:border-[#C99BFF]/30 transition-colors"
             />
             {searchQuery && (
               <button onClick={() => setSearchQuery("")} className="absolute right-3 top-1/2 -translate-y-1/2 text-white/30 hover:text-white text-xs transition-colors">✕</button>
@@ -149,7 +149,7 @@ export default function TurkceYamalar() {
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke={filtersOpen ? "#C99BFF" : "rgba(255,255,255,0.4)"} strokeWidth="2">
               <path d="M4 6h16M7 12h10M10 18h4" strokeLinecap="round" />
             </svg>
-            <span className="font-inter text-xs font-medium" style={{ color: filtersOpen ? "#C99BFF" : "rgba(255,255,255,0.5)" }}>
+            <span className="font-caviar text-xs font-medium" style={{ color: filtersOpen ? "#C99BFF" : "rgba(255,255,255,0.5)" }}>
               Filtreler
             </span>
             {activeFilterCount > 0 && (
@@ -164,7 +164,7 @@ export default function TurkceYamalar() {
         {activeFilterCount > 0 && !filtersOpen && (
           <div className="mb-4 flex items-center gap-2 flex-wrap">
             {selectedStatus && (
-              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-inter font-medium text-[#C99BFF] bg-[#C99BFF]/10 border border-[#C99BFF]/20">
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-caviar font-medium text-[#C99BFF] bg-[#C99BFF]/10 border border-[#C99BFF]/20">
                 {selectedStatus === 'completed' ? 'Tamamlandı' : 'Devam Ediyor'}
                 <button onClick={() => setSelectedStatus("")} className="text-[#C99BFF]/60 hover:text-white transition-colors">✕</button>
               </span>
@@ -172,13 +172,13 @@ export default function TurkceYamalar() {
             {selectedGenres.map(id => {
               const cat = availableCategories.find(c => c.id === id);
               return cat ? (
-                <span key={id} className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-inter font-medium text-[#C99BFF] bg-[#C99BFF]/10 border border-[#C99BFF]/20">
+                <span key={id} className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-caviar font-medium text-[#C99BFF] bg-[#C99BFF]/10 border border-[#C99BFF]/20">
                   {cat.name}
                   <button onClick={() => toggleGenre(id)} className="text-[#C99BFF]/60 hover:text-white transition-colors">✕</button>
                 </span>
               ) : null;
             })}
-            <button onClick={clearAll} className="text-[10px] font-inter text-white/30 hover:text-white transition-colors ml-1">Tümünü temizle</button>
+            <button onClick={clearAll} className="text-[10px] font-caviar text-white/30 hover:text-white transition-colors ml-1">Tümünü temizle</button>
           </div>
         )}
 
@@ -197,7 +197,7 @@ export default function TurkceYamalar() {
           >
             {/* Status */}
             <div>
-              <span className="font-inter text-[10px] font-bold uppercase tracking-[1.5px] text-white/20 mb-3 block">Çeviri Durumu</span>
+              <span className="font-caviar text-[10px] font-bold uppercase tracking-[1.5px] text-white/20 mb-3 block">Çeviri Durumu</span>
               <div className="flex flex-wrap gap-2">
                 {[
                   { label: "Tümü", value: "" },
@@ -207,7 +207,7 @@ export default function TurkceYamalar() {
                   <button
                     key={s.value}
                     onClick={() => setSelectedStatus(prev => prev === s.value ? "" : s.value)}
-                    className="h-8 px-4 rounded-lg text-[12px] font-inter font-medium transition-all duration-200"
+                    className="h-8 px-4 rounded-lg text-[12px] font-caviar font-medium transition-all duration-200"
                     style={{
                       background: selectedStatus === s.value ? "rgba(201,155,255,0.15)" : "rgba(255,255,255,0.03)",
                       border: selectedStatus === s.value ? "1px solid rgba(201,155,255,0.3)" : "1px solid rgba(255,255,255,0.06)",
@@ -222,7 +222,7 @@ export default function TurkceYamalar() {
 
             {/* Genres */}
             <div>
-              <span className="font-inter text-[10px] font-bold uppercase tracking-[1.5px] text-white/20 mb-3 block">Oyun Türleri</span>
+              <span className="font-caviar text-[10px] font-bold uppercase tracking-[1.5px] text-white/20 mb-3 block">Oyun Türleri</span>
               <div
                 ref={genreScrollRef}
                 className="flex flex-wrap gap-1.5 max-h-[200px] overflow-y-auto scrollbar-hide"
@@ -237,7 +237,7 @@ export default function TurkceYamalar() {
                       <button
                         key={cat.id}
                         onClick={() => toggleGenre(cat.id)}
-                        className="h-7 px-3 rounded-lg text-[11px] font-inter font-medium transition-all duration-200"
+                        className="h-7 px-3 rounded-lg text-[11px] font-caviar font-medium transition-all duration-200"
                         style={{
                           background: sel ? "rgba(201,155,255,0.15)" : "rgba(255,255,255,0.03)",
                           border: sel ? "1px solid rgba(201,155,255,0.3)" : "1px solid rgba(255,255,255,0.06)",
@@ -255,7 +255,7 @@ export default function TurkceYamalar() {
             {/* Clear */}
             {activeFilterCount > 0 && (
               <div className="flex justify-end">
-                <button onClick={clearAll} className="text-xs font-inter text-[#C99BFF]/70 hover:text-[#C99BFF] transition-colors">
+                <button onClick={clearAll} className="text-xs font-caviar text-[#C99BFF]/70 hover:text-[#C99BFF] transition-colors">
                   Filtreleri temizle ({activeFilterCount})
                 </button>
               </div>
@@ -266,7 +266,7 @@ export default function TurkceYamalar() {
         {/* Results count */}
         {pagination && !isLoading && (
           <div className="mb-5 flex items-center justify-between">
-            <span className="font-inter text-[11px] text-white/25">{pagination.total} çeviri bulundu</span>
+            <span className="font-caviar text-[11px] text-white/25">{pagination.total} çeviri bulundu</span>
           </div>
         )}
 
@@ -275,7 +275,7 @@ export default function TurkceYamalar() {
           <div className="flex items-center justify-center py-24">
             <div className="flex flex-col items-center gap-4">
               <div className="w-10 h-10 border-2 border-[#C99BFF] border-t-transparent rounded-full animate-spin" />
-              <span className="text-white/40 text-sm font-inter">Çeviriler yükleniyor...</span>
+              <span className="text-white/40 text-sm font-caviar">Çeviriler yükleniyor...</span>
             </div>
           </div>
         )}
@@ -285,8 +285,8 @@ export default function TurkceYamalar() {
           <div className="flex items-center justify-center py-24">
             <div className="flex flex-col items-center gap-3 text-center">
               <span className="text-white/15 text-5xl">🎮</span>
-              <h3 className="text-white/50 text-base font-bold font-inter">Çeviri bulunamadı</h3>
-              <p className="text-white/25 text-sm font-inter">Farklı filtreler deneyebilirsiniz.</p>
+              <h3 className="text-white/50 text-base font-bold font-caviar">Çeviri bulunamadı</h3>
+              <p className="text-white/25 text-sm font-caviar">Farklı filtreler deneyebilirsiniz.</p>
             </div>
           </div>
         )}
@@ -306,9 +306,9 @@ export default function TurkceYamalar() {
                 <Image src="/icons/arrowl.svg" alt="" width={18} height={18} className="opacity-70" />
               </button>
               {getPageNumbers().map((page, idx) => typeof page === 'string' ? (
-                <span key={`s${idx}`} className="text-white/40 text-xs font-inter px-0.5">...</span>
+                <span key={`s${idx}`} className="text-white/40 text-xs font-caviar px-0.5">...</span>
               ) : (
-                <button key={page} onClick={() => setCurrentPage(page)} className={`w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center rounded-full text-white text-xs font-bold font-inter transition-all ${currentPage === page ? "" : "hover:bg-white/10"}`} style={currentPage === page ? { background: "#C99BFF", boxShadow: "0 0 10px rgba(201,155,255,0.4)" } : {}}>{page}</button>
+                <button key={page} onClick={() => setCurrentPage(page)} className={`w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center rounded-full text-white text-xs font-bold font-caviar transition-all ${currentPage === page ? "" : "hover:bg-white/10"}`} style={currentPage === page ? { background: "#C99BFF", boxShadow: "0 0 10px rgba(201,155,255,0.4)" } : {}}>{page}</button>
               ))}
               <button onClick={() => setCurrentPage(p => Math.min(pagination.totalPages, p + 1))} disabled={currentPage === pagination.totalPages} className="w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center rounded-full hover:bg-white/10 transition-all disabled:opacity-30">
                 <Image src="/icons/arrowright.svg" alt="" width={18} height={18} className="opacity-70" />
@@ -316,7 +316,7 @@ export default function TurkceYamalar() {
             </div>
           </div>
         )}
-        {pagination && !isLoading && <p className="mt-3 text-center font-inter text-[11px] text-white/15">Sayfa {pagination.page}/{pagination.totalPages}</p>}
+        {pagination && !isLoading && <p className="mt-3 text-center font-caviar text-[11px] text-white/15">Sayfa {pagination.page}/{pagination.totalPages}</p>}
       </div>
 
       <Footer />
@@ -350,7 +350,7 @@ function GameCard({ game, onNotify }: { game: GameListItem; onNotify?: (gameId: 
 
           {game.isFree && (
             <div className="absolute top-2 right-2 px-1.5 py-0.5 rounded backdrop-blur-sm" style={{ background: "rgba(13,242,105,0.8)" }}>
-              <span className="uppercase text-[8px] font-bold tracking-[0.4px] text-black font-inter">ÜCRETSİZ</span>
+              <span className="uppercase text-[8px] font-bold tracking-[0.4px] text-black font-caviar">ÜCRETSİZ</span>
             </div>
           )}
 
@@ -378,23 +378,23 @@ function GameCard({ game, onNotify }: { game: GameListItem; onNotify?: (gameId: 
                   <circle cx="18" cy="18" r="16" fill="none" strokeWidth="2.5" strokeLinecap="round" stroke="url(#pg)" strokeDasharray={circ} strokeDashoffset={offset} style={{ filter: isComplete ? "drop-shadow(0 0 3px rgba(201,155,255,0.5))" : undefined }} />
                   <defs><linearGradient id="pg" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stopColor="#C99BFF" /><stop offset="100%" stopColor="#7B5EA7" /></linearGradient></defs>
                 </svg>
-                <span className="absolute inset-0 flex items-center justify-center font-inter font-bold text-[8px] text-white/90">%{progress}</span>
+                <span className="absolute inset-0 flex items-center justify-center font-caviar font-bold text-[8px] text-white/90">%{progress}</span>
               </div>
-              <span className="font-inter font-medium text-[10px] text-white/80">{isComplete ? "Tamamlandı" : "Devam Ediyor"}</span>
+              <span className="font-caviar font-medium text-[10px] text-white/80">{isComplete ? "Tamamlandı" : "Devam Ediyor"}</span>
             </div>
             {genres.length > 0 && (
               <div className="flex flex-wrap gap-1">
                 {genres.slice(0, 3).map(g => (
-                  <span key={g} className="px-2 py-0.5 rounded text-[9px] sm:text-[10px] font-inter font-semibold text-white/70 truncate max-w-[90px]" style={{ background: "rgba(201,155,255,0.12)", border: "1px solid rgba(201,155,255,0.20)" }}>{g}</span>
+                  <span key={g} className="px-2 py-0.5 rounded text-[9px] sm:text-[10px] font-caviar font-semibold text-white/70 truncate max-w-[90px]" style={{ background: "rgba(201,155,255,0.12)", border: "1px solid rgba(201,155,255,0.20)" }}>{g}</span>
                 ))}
-                {genres.length > 3 && <span className="text-[9px] font-inter text-white/35 self-center">+{genres.length - 3}</span>}
+                {genres.length > 3 && <span className="text-[9px] font-caviar text-white/35 self-center">+{genres.length - 3}</span>}
               </div>
             )}
           </div>
         </div>
       </div>
       <div className="mt-2 px-0.5">
-        <h3 className="font-inter font-semibold text-xs sm:text-sm leading-[1.3] text-white/90 group-hover:text-[#C99BFF] transition-colors duration-300 line-clamp-2">{game.name}</h3>
+        <h3 className="font-caviar font-semibold text-xs sm:text-sm leading-[1.3] text-white/90 group-hover:text-[#C99BFF] transition-colors duration-300 line-clamp-2">{game.name}</h3>
       </div>
     </Link>
   );

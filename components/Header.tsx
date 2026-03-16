@@ -20,7 +20,7 @@ const authButtonStyle = {
   textAlign: 'center',
   color: 'white',
   fontSize: '14px',
-  fontFamily: 'LEMON MILK',
+  fontFamily: 'Caviar Dreams',
   fontWeight: 400,
   lineHeight: '22.75px',
 } as React.CSSProperties;
@@ -196,7 +196,7 @@ export default function Header() {
                   }}
                 >
                   <Image src="/icons/human.svg" alt="Profil" width={20} height={20} />
-                  <span style={{ color: 'white', fontSize: '14px', fontFamily: 'LEMON MILK', fontWeight: 400 }}>
+                  <span style={{ color: 'white', fontSize: '14px', fontFamily: 'Caviar Dreams', fontWeight: 400 }}>
                     PROFİLİM
                   </span>
                 </Link>
@@ -211,7 +211,7 @@ export default function Header() {
                       border: '1px solid rgba(168, 133, 209, 0.45)',
                     }}
                   >
-                    <span style={{ color: 'white', fontSize: '14px', fontFamily: 'LEMON MILK', fontWeight: 400 }}>
+                    <span style={{ color: 'white', fontSize: '14px', fontFamily: 'Caviar Dreams', fontWeight: 400 }}>
                       GİRİŞ YAP
                     </span>
                   </Link>
@@ -224,7 +224,7 @@ export default function Header() {
                       border: '1px solid rgba(168, 133, 209, 0.45)',
                     }}
                   >
-                    <span style={{ color: 'white', fontSize: '14px', fontFamily: 'LEMON MILK', fontWeight: 400 }}>
+                    <span style={{ color: 'white', fontSize: '14px', fontFamily: 'Caviar Dreams', fontWeight: 400 }}>
                       KAYIT OL
                     </span>
                   </Link>

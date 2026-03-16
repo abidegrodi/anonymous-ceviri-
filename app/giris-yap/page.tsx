@@ -208,7 +208,7 @@ export default function GirisYapPage() {
                         <header>
                             <div className="flex items-center gap-3 mb-4">
                                 <span className="w-6 h-[2px] rounded-full" style={{ background: 'linear-gradient(90deg, #C99BFF, transparent)' }} />
-                                <span className="text-[9px] uppercase tracking-[3px] text-[#C99BFF]/40" style={{ fontFamily: 'LEMON MILK' }}>Hesap</span>
+                                <span className="text-[9px] uppercase tracking-[3px] text-[#C99BFF]/40" style={{ fontFamily: 'Caviar Dreams' }}>Hesap</span>
                             </div>
                             <h2 className="font-bold uppercase mb-2" style={{
                                 fontFamily: 'Trajan Pro, serif',
@@ -235,7 +235,7 @@ export default function GirisYapPage() {
                                     <label
                                         htmlFor={emailId}
                                         className="text-white/45 text-[11px] font-bold uppercase tracking-[1.5px]"
-                                        style={{ fontFamily: 'LEMON MILK' }}
+                                        style={{ fontFamily: 'Caviar Dreams' }}
                                     >
                                         E-Posta
                                     </label>
@@ -268,7 +268,7 @@ export default function GirisYapPage() {
                                         <label
                                             htmlFor={passwordId}
                                             className="text-white/45 text-[11px] font-bold uppercase tracking-[1.5px]"
-                                            style={{ fontFamily: 'LEMON MILK' }}
+                                            style={{ fontFamily: 'Caviar Dreams' }}
                                         >
                                             Şifre
                                         </label>
@@ -342,7 +342,7 @@ export default function GirisYapPage() {
                                     type="submit"
                                     disabled={isSubmitting}
                                     className="relative w-full h-[52px] rounded-[14px] font-bold text-[13px] flex items-center justify-center gap-2.5 disabled:opacity-50 transition-all duration-300 hover:shadow-[0_8px_32px_rgba(201,155,255,0.18)] active:scale-[0.98] overflow-hidden group"
-                                    style={{ fontFamily: 'LEMON MILK', color: '#0A0A0A' }}
+                                    style={{ fontFamily: 'Caviar Dreams', color: '#0A0A0A' }}
                                 >
                                     <span className="absolute inset-0 transition-opacity duration-300" style={{ background: 'linear-gradient(135deg, #C99BFF 0%, #A67CD9 50%, #7B5EA7 100%)' }} />
                                     <span className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300" style={{ background: 'linear-gradient(135deg, #D4AFFF 0%, #C99BFF 50%, #A67CD9 100%)' }} />
@@ -364,7 +364,7 @@ export default function GirisYapPage() {
                                 {/* Divider */}
                                 <div className="flex items-center gap-4" role="separator">
                                     <span className="flex-1 h-px" style={{ background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.05))' }} />
-                                    <span className="text-[9px] text-white/10 uppercase tracking-[2px]" style={{ fontFamily: 'LEMON MILK' }}>veya</span>
+                                    <span className="text-[9px] text-white/10 uppercase tracking-[2px]" style={{ fontFamily: 'Caviar Dreams' }}>veya</span>
                                     <span className="flex-1 h-px" style={{ background: 'linear-gradient(90deg, rgba(255,255,255,0.05), transparent)' }} />
                                 </div>
 
@@ -373,7 +373,7 @@ export default function GirisYapPage() {
                                     href="/kayit-ol"
                                     className="w-full h-[48px] rounded-[14px] flex items-center justify-center gap-2 text-[12px] font-bold no-underline transition-all duration-300 hover:bg-white/[0.03] hover:border-white/10 active:scale-[0.98]"
                                     style={{
-                                        fontFamily: 'LEMON MILK',
+                                        fontFamily: 'Caviar Dreams',
                                         color: 'rgba(255,255,255,0.25)',
                                         border: '1px solid rgba(255,255,255,0.04)',
                                     }}
@@ -412,7 +412,7 @@ export default function GirisYapPage() {
                                         </svg>
                                     </div>
                                     <div>
-                                        <span className="text-white/60 text-[12px] font-bold block mb-0.5" style={{ fontFamily: 'LEMON MILK' }}>
+                                        <span className="text-white/60 text-[12px] font-bold block mb-0.5" style={{ fontFamily: 'Caviar Dreams' }}>
                                             Şifre Sıfırlama
                                         </span>
                                         <span id={forgotDescId} className="text-white/25 text-[12px] leading-relaxed" style={{ fontFamily: 'Caviar Dreams' }}>
@@ -426,7 +426,7 @@ export default function GirisYapPage() {
                                     <label
                                         htmlFor={forgotEmailId}
                                         className="text-white/45 text-[11px] font-bold uppercase tracking-[1.5px]"
-                                        style={{ fontFamily: 'LEMON MILK' }}
+                                        style={{ fontFamily: 'Caviar Dreams' }}
                                     >
                                         E-Posta
                                     </label>
@@ -457,7 +457,7 @@ export default function GirisYapPage() {
                                         type="submit"
                                         disabled={forgotSubmitting}
                                         className="flex-1 h-[48px] rounded-[14px] font-bold text-[13px] flex items-center justify-center gap-2 disabled:opacity-50 transition-all duration-300 hover:brightness-110 active:scale-[0.98]"
-                                        style={{ fontFamily: 'LEMON MILK', background: 'linear-gradient(135deg, #C99BFF 0%, #7B5EA7 100%)', color: '#0A0A0A' }}
+                                        style={{ fontFamily: 'Caviar Dreams', background: 'linear-gradient(135deg, #C99BFF 0%, #7B5EA7 100%)', color: '#0A0A0A' }}
                                     >
                                         {forgotSubmitting ? (
                                             <span className="w-5 h-5 border-2 border-black/20 border-t-black/60 rounded-full animate-spin" role="status" aria-label="Gönderiliyor" />
@@ -467,7 +467,7 @@ export default function GirisYapPage() {
                                         type="button"
                                         onClick={() => setShowForgotPassword(false)}
                                         className="h-[48px] px-6 rounded-[14px] text-white/25 text-[12px] font-bold hover:bg-white/[0.03] hover:text-white/40 transition-all duration-200 active:scale-[0.98]"
-                                        style={{ fontFamily: 'LEMON MILK', border: '1px solid rgba(255,255,255,0.04)' }}
+                                        style={{ fontFamily: 'Caviar Dreams', border: '1px solid rgba(255,255,255,0.04)' }}
                                     >
                                         GERİ
                                     </button>

@@ -74,7 +74,7 @@ export default function Hero() {
                 borderRadius: '9999px',
               }}
             ></div>
-            <div className="text-[#D5C6E6] text-xs font-bold font-inter uppercase tracking-[0.60px]">
+            <div className="text-[#D5C6E6] text-xs font-bold font-caviar uppercase tracking-[0.60px]">
               v2.0 Yayında
             </div>
           </div>
@@ -120,7 +120,7 @@ export default function Hero() {
                 />
               </div>
               <div
-                className="text-white text-sm sm:text-base font-normal font-manrope uppercase whitespace-nowrap"
+                className="text-white text-sm sm:text-base font-normal font-caviar uppercase whitespace-nowrap"
                 style={{
                   lineHeight: '24px',
                   textShadow: '0px 0px 0px rgba(255, 255, 255, 1.00)',
@@ -138,7 +138,7 @@ export default function Hero() {
                 }}
               >
                 <div
-                  className="text-white text-sm sm:text-base font-normal font-manrope uppercase"
+                  className="text-white text-sm sm:text-base font-normal font-caviar uppercase"
                   style={{
                     lineHeight: '24px',
                     textShadow: '0px 0px 0px rgba(255, 255, 255, 1.00)',

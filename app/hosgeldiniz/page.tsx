@@ -68,7 +68,7 @@ export default function OnboardingPage() {
       <div className="relative z-10 w-full max-w-[540px]">
         {/* Skip */}
         <div className="flex justify-end mb-4">
-          <button onClick={handleFinish} className="text-[11px] text-white/25 hover:text-white/50 transition-colors uppercase tracking-wider" style={{ fontFamily: "LEMON MILK" }}>
+          <button onClick={handleFinish} className="text-[11px] text-white/25 hover:text-white/50 transition-colors uppercase tracking-wider" style={{ fontFamily: "Caviar Dreams" }}>
             Geç →
           </button>
         </div>
@@ -78,7 +78,7 @@ export default function OnboardingPage() {
           <div className="flex-1 h-1 rounded-full overflow-hidden" style={{ background: "rgba(255,255,255,0.06)" }}>
             <div className="h-full rounded-full transition-all duration-500" style={{ width: step === 1 ? "50%" : "100%", background: "linear-gradient(90deg, #C99BFF, #7B5EA7)" }} />
           </div>
-          <span className="text-[11px] text-white/30 shrink-0" style={{ fontFamily: "LEMON MILK" }}>{step}/2</span>
+          <span className="text-[11px] text-white/30 shrink-0" style={{ fontFamily: "Caviar Dreams" }}>{step}/2</span>
         </div>
 
         {/* Card */}
@@ -91,7 +91,7 @@ export default function OnboardingPage() {
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#C99BFF" strokeWidth="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" /><path d="M13.73 21a2 2 0 0 1-3.46 0" /></svg>
                 </div>
                 <div>
-                  <h2 className="text-white/90 text-[16px] font-bold" style={{ fontFamily: "LEMON MILK" }}>Hoş Geldiniz!</h2>
+                  <h2 className="text-white/90 text-[16px] font-bold" style={{ fontFamily: "Caviar Dreams" }}>Hoş Geldiniz!</h2>
                   <p className="text-white/30 text-[11px]" style={{ fontFamily: "Caviar Dreams" }}>Adım 1/2</p>
                 </div>
               </div>
@@ -133,7 +133,7 @@ export default function OnboardingPage() {
                           )}
                         </div>
                         <div className="p-2">
-                          <span className="text-[10px] text-white/80 font-medium line-clamp-1 block" style={{ fontFamily: "Inter" }}>{game.name}</span>
+                          <span className="text-[10px] text-white/80 font-medium line-clamp-1 block" style={{ fontFamily: "Caviar Dreams" }}>{game.name}</span>
                           <span className="text-[9px] text-white/25" style={{ fontFamily: "Caviar Dreams" }}>%{game.completeRate}</span>
                         </div>
                       </button>
@@ -149,7 +149,7 @@ export default function OnboardingPage() {
               )}
 
               <div className="flex gap-3 mt-6">
-                <button onClick={() => setStep(2)} className="flex-1 py-3 rounded-xl text-[12px] uppercase tracking-wider font-bold transition-all hover:brightness-110" style={{ fontFamily: "LEMON MILK", background: "linear-gradient(135deg, #C99BFF, #7B5EA7)", color: "white" }}>
+                <button onClick={() => setStep(2)} className="flex-1 py-3 rounded-xl text-[12px] uppercase tracking-wider font-bold transition-all hover:brightness-110" style={{ fontFamily: "Caviar Dreams", background: "linear-gradient(135deg, #C99BFF, #7B5EA7)", color: "white" }}>
                   Devam Et
                 </button>
               </div>
@@ -164,7 +164,7 @@ export default function OnboardingPage() {
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#C99BFF" strokeWidth="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" /></svg>
                 </div>
                 <div>
-                  <h2 className="text-white/90 text-[16px] font-bold" style={{ fontFamily: "LEMON MILK" }}>Çeviri Önerisi</h2>
+                  <h2 className="text-white/90 text-[16px] font-bold" style={{ fontFamily: "Caviar Dreams" }}>Çeviri Önerisi</h2>
                   <p className="text-white/30 text-[11px]" style={{ fontFamily: "Caviar Dreams" }}>Adım 2/2</p>
                 </div>
               </div>
@@ -189,7 +189,7 @@ export default function OnboardingPage() {
                   onClick={handleSubmitSuggestion}
                   disabled={submittingSuggestion}
                   className="w-full py-2.5 rounded-xl text-[11px] uppercase tracking-wider font-bold mb-4 transition-all hover:brightness-110 disabled:opacity-50"
-                  style={{ fontFamily: "LEMON MILK", background: "rgba(201,155,255,0.10)", border: "1px solid rgba(201,155,255,0.25)", color: "#C99BFF" }}
+                  style={{ fontFamily: "Caviar Dreams", background: "rgba(201,155,255,0.10)", border: "1px solid rgba(201,155,255,0.25)", color: "#C99BFF" }}
                 >
                   {submittingSuggestion ? "Gönderiliyor..." : "Öneri Gönder"}
                 </button>
@@ -197,12 +197,12 @@ export default function OnboardingPage() {
 
               {/* Popular games that exist */}
               <div className="mt-2 mb-6">
-                <span className="text-[10px] uppercase tracking-wider block mb-3" style={{ fontFamily: "LEMON MILK", color: "rgba(255,255,255,0.20)" }}>Mevcut çevirilerimiz arasından:</span>
+                <span className="text-[10px] uppercase tracking-wider block mb-3" style={{ fontFamily: "Caviar Dreams", color: "rgba(255,255,255,0.20)" }}>Mevcut çevirilerimiz arasından:</span>
                 <div className="flex flex-wrap gap-2">
                   {games.filter(g => g.completeRate === 100).slice(0, 6).map((g) => (
                     <Link key={g.gameId} href={`/ceviriler/${g.gameId}`}
                       className="px-3 py-1.5 rounded-lg text-[10px] text-white/50 hover:text-[#C99BFF] transition-colors"
-                      style={{ fontFamily: "Inter", background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.06)" }}>
+                      style={{ fontFamily: "Caviar Dreams", background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.06)" }}>
                       {g.name}
                     </Link>
                   ))}
@@ -210,10 +210,10 @@ export default function OnboardingPage() {
               </div>
 
               <div className="flex gap-3">
-                <button onClick={() => setStep(1)} className="px-5 py-3 rounded-xl text-[12px] uppercase tracking-wider transition-all hover:bg-white/5" style={{ fontFamily: "LEMON MILK", color: "rgba(255,255,255,0.40)", border: "1px solid rgba(255,255,255,0.08)" }}>
+                <button onClick={() => setStep(1)} className="px-5 py-3 rounded-xl text-[12px] uppercase tracking-wider transition-all hover:bg-white/5" style={{ fontFamily: "Caviar Dreams", color: "rgba(255,255,255,0.40)", border: "1px solid rgba(255,255,255,0.08)" }}>
                   Geri
                 </button>
-                <button onClick={handleFinish} className="flex-1 py-3 rounded-xl text-[12px] uppercase tracking-wider font-bold transition-all hover:brightness-110" style={{ fontFamily: "LEMON MILK", background: "linear-gradient(135deg, #C99BFF, #7B5EA7)", color: "white" }}>
+                <button onClick={handleFinish} className="flex-1 py-3 rounded-xl text-[12px] uppercase tracking-wider font-bold transition-all hover:brightness-110" style={{ fontFamily: "Caviar Dreams", background: "linear-gradient(135deg, #C99BFF, #7B5EA7)", color: "white" }}>
                   Keşfetmeye Başla
                 </button>
               </div>

@@ -62,7 +62,7 @@ export default function GameSection({ title, games, showViewAll = true, onNotify
             />
             {/* Başlık */}
             <h2
-              className="capitalize flex items-center ml-3 font-inter font-bold text-xl sm:text-2xl md:text-[30px] leading-tight sm:leading-[36px] tracking-[-0.5px] md:tracking-[-0.75px]"
+              className="capitalize flex items-center ml-3 font-trajan font-bold text-xl sm:text-2xl md:text-[30px] leading-tight sm:leading-[36px] tracking-[-0.5px] md:tracking-[-0.75px]"
               style={{
                 background: "linear-gradient(180deg, #FFFFFF 0%, #795D99 100%)",
                 WebkitBackgroundClip: "text",
@@ -80,7 +80,7 @@ export default function GameSection({ title, games, showViewAll = true, onNotify
               className="inline-flex items-center gap-1.5 flex-shrink-0 hover:opacity-90 transition no-underline"
             >
               <span
-                className="font-inter font-normal text-xs sm:text-sm leading-[22.75px] uppercase whitespace-nowrap"
+                className="font-caviar font-normal text-xs sm:text-sm leading-[22.75px] uppercase whitespace-nowrap"
                 style={{
                   background: "linear-gradient(90deg, #FFFFFF 0%, #C99BFF 100%)",
                   WebkitBackgroundClip: "text",

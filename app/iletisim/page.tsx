@@ -33,7 +33,7 @@ export default function ContactPage() {
     setFormData({ name: "", subject: "", message: "" });
   };
 
-  const inputBase = "w-full bg-transparent border border-white/[0.08] rounded-xl px-4 text-white text-sm font-inter placeholder:text-white/20 focus:outline-none focus:border-[#C99BFF]/30 transition-all duration-200";
+  const inputBase = "w-full bg-transparent border border-white/[0.08] rounded-xl px-4 text-white text-sm font-caviar placeholder:text-white/20 focus:outline-none focus:border-[#C99BFF]/30 transition-all duration-200";
 
   return (
     <main className="relative min-h-screen w-full bg-[#0a0a0a] overflow-x-hidden text-white">
@@ -61,7 +61,7 @@ export default function ContactPage() {
           >
             Bize Ulaşın
           </h1>
-          <p className="text-white/40 text-sm sm:text-base font-inter max-w-[500px] mx-auto leading-relaxed">
+          <p className="text-white/40 text-sm sm:text-base font-caviar max-w-[500px] mx-auto leading-relaxed">
             Soru, öneri veya geri bildirimleriniz için bizimle iletişime geçin.
           </p>
         </div>
@@ -74,8 +74,8 @@ export default function ContactPage() {
               <Image src="/icons/e-posta.svg" alt="" width={18} height={14} />
             </div>
             <div>
-              <span className="font-inter text-[10px] font-bold uppercase tracking-[1.5px] text-white/25 block">E-Posta</span>
-              <span className="font-inter text-sm text-white/70">info@anonymous.com</span>
+              <span className="font-caviar text-[10px] font-bold uppercase tracking-[1.5px] text-white/25 block">E-Posta</span>
+              <span className="font-caviar text-sm text-white/70">info@anonymous.com</span>
             </div>
           </div>
 
@@ -86,11 +86,11 @@ export default function ContactPage() {
             style={{ background: "rgba(201,155,255,0.03)", border: "1px solid rgba(255,255,255,0.06)" }}
           >
             <div className="w-11 h-11 rounded-xl flex items-center justify-center shrink-0" style={{ background: "rgba(201,155,255,0.08)", border: "1px solid rgba(201,155,255,0.12)" }}>
-              <span className="font-inter text-sm font-bold text-[#C99BFF]/60">?</span>
+              <span className="font-caviar text-sm font-bold text-[#C99BFF]/60">?</span>
             </div>
             <div className="flex-1">
-              <span className="font-inter text-[10px] font-bold uppercase tracking-[1.5px] text-white/25 block">Yardım</span>
-              <span className="font-inter text-sm text-white/70">Sıkça Sorulan Sorular</span>
+              <span className="font-caviar text-[10px] font-bold uppercase tracking-[1.5px] text-white/25 block">Yardım</span>
+              <span className="font-caviar text-sm text-white/70">Sıkça Sorulan Sorular</span>
             </div>
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(201,155,255,0.3)" strokeWidth="2" className="shrink-0 group-hover:stroke-[#C99BFF]/60 transition-colors">
               <path d="M5 12h14m-7-7l7 7-7 7" strokeLinecap="round" strokeLinejoin="round" />
@@ -105,14 +105,14 @@ export default function ContactPage() {
         >
           <div className="flex items-center gap-2 mb-8">
             <div className="w-1 h-5 rounded-full" style={{ background: "linear-gradient(180deg, #C99BFF 0%, rgba(201,155,255,0.2) 100%)" }} />
-            <span className="font-inter text-xs font-bold uppercase tracking-[1.5px] text-white/30">Mesaj Gönder</span>
+            <span className="font-caviar text-xs font-bold uppercase tracking-[1.5px] text-white/30">Mesaj Gönder</span>
           </div>
 
           <form onSubmit={handleSubmit}>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
               {/* Name */}
               <div>
-                <label className="font-inter text-[11px] text-white/30 uppercase tracking-wider mb-2 block">Adınız</label>
+                <label className="font-caviar text-[11px] text-white/30 uppercase tracking-wider mb-2 block">Adınız</label>
                 <input
                   type="text"
                   name="name"
@@ -126,7 +126,7 @@ export default function ContactPage() {
 
               {/* Subject */}
               <div>
-                <label className="font-inter text-[11px] text-white/30 uppercase tracking-wider mb-2 block">Konu</label>
+                <label className="font-caviar text-[11px] text-white/30 uppercase tracking-wider mb-2 block">Konu</label>
                 <div className="relative">
                   <select
                     name="subject"
@@ -150,7 +150,7 @@ export default function ContactPage() {
 
             {/* Message */}
             <div className="mb-6">
-              <label className="font-inter text-[11px] text-white/30 uppercase tracking-wider mb-2 block">Mesajınız</label>
+              <label className="font-caviar text-[11px] text-white/30 uppercase tracking-wider mb-2 block">Mesajınız</label>
               <textarea
                 name="message"
                 value={formData.message}
@@ -165,7 +165,7 @@ export default function ContactPage() {
             <button
               type="submit"
               disabled={isSending}
-              className="w-full sm:w-auto h-11 px-10 rounded-xl font-inter text-sm font-semibold transition-all duration-200 flex items-center justify-center gap-2 disabled:opacity-50"
+              className="w-full sm:w-auto h-11 px-10 rounded-xl font-caviar text-sm font-semibold transition-all duration-200 flex items-center justify-center gap-2 disabled:opacity-50"
               style={{
                 background: sent ? "rgba(13,242,105,0.15)" : "linear-gradient(135deg, #C99BFF 0%, #7B5EA7 100%)",
                 color: sent ? "#0DF269" : "#000",

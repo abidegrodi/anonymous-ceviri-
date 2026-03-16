@@ -13,10 +13,9 @@ const config: Config = {
         foreground: "var(--foreground)",
       },
       fontFamily: {
+        'sans': ['Caviar Dreams', 'sans-serif'],
         'caviar': ['Caviar Dreams', 'sans-serif'],
-        'inter': ['var(--font-inter)', 'sans-serif'],
-        'manrope': ['var(--font-manrope)', 'sans-serif'],
-        'space-grotesk': ['var(--font-space-grotesk)', 'sans-serif'],
+        'trajan': ['Trajan Pro', 'serif'],
       },
     },
   },

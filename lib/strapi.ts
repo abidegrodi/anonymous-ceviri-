@@ -84,8 +84,8 @@ export function mapStrapiDuyuruToBlogPost(item: StrapiDuyuru) {
     heroImage: heroUrl ?? "/assets/blogicsayfahero.png",
     content: item.content ?? "",
     changes,
-    videoThumbnail: item.videoThumbnail ?? "https://placehold.co/700x393",
-    screenshots: getMediaUrls(item.screenshots).length > 0 ? getMediaUrls(item.screenshots) : ["https://placehold.co/341x191", "https://placehold.co/341x191"],
+    videoThumbnail: item.videoThumbnail ?? "",
+    screenshots: getMediaUrls(item.screenshots),
     note: item.note ?? "",
   };
 }
