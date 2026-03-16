@@ -71,9 +71,9 @@ export default function Header() {
               <Link href="/iletisim" className="hover:opacity-80 transition-opacity" style={navLinkStyle}>
                 İletişim
               </Link>
-              <Link href="/destek" className="hover:opacity-80 transition-opacity" style={navLinkStyle}>
+              <a href="https://destek.anonymousceviri.com/" target="_blank" rel="noopener noreferrer" className="hover:opacity-80 transition-opacity" style={navLinkStyle}>
                 Destek
-              </Link>
+              </a>
             </div>
 
             {/* Desktop Auth Buttons */}
@@ -174,14 +174,16 @@ export default function Header() {
             >
               İletişim
             </Link>
-            <Link
-              href="/destek"
+            <a
+              href="https://destek.anonymousceviri.com/"
+              target="_blank"
+              rel="noopener noreferrer"
               onClick={() => setIsMenuOpen(false)}
               className="block text-lg font-bold hover:opacity-80 transition-opacity py-2"
               style={{ fontFamily: 'Caviar Dreams', background: 'linear-gradient(180deg, #FFFFFF 0%, #795D99 90%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}
             >
               Destek
-            </Link>
+            </a>
             <div className="flex flex-col sm:flex-row gap-3 pt-4 border-t border-white/10">
               {isAuthenticated ? (
                 <Link

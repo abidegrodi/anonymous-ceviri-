@@ -1,10 +1,11 @@
 "use client";
 
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { fetchFaqs, type StrapiFaq } from "@/lib/strapi";
 
 const categories = [
   { id: "all", label: "Tümü" },
@@ -14,65 +15,13 @@ const categories = [
   { id: "odemeler", label: "Ödemeler", icon: "/icons/odemeler.svg" },
 ];
 
-const faqItems = [
-  {
-    id: 1,
-    category: "genel",
-    question: "Türkçe çeviriler hangi oyun sürümleriyle uyumlu?",
-    answer:
-      "Çevirilerimiz genellikle oyunların en güncel sürümleriyle uyumludur. Ancak Epic Games, Steam veya diğer platformlara göre farklılık gösterebilir. Her çeviri sayfasında uyumlu sürüm bilgisi yer almaktadır.",
-  },
-  {
-    id: 2,
-    category: "uyelik",
-    question: "Üyelik ücretleri nelerdir ve neleri kapsar?",
-    answer:
-      "Üyelik ücretleri seçtiğiniz pakete göre değişiklik gösterir. Tüm paketlerimiz güncel çevirilere erişim, öncelikli destek ve yeni çevirilere erken erişim imkanı sunar.",
-  },
-  {
-    id: 3,
-    category: "teknik",
-    question: "Çeviri kurulumu nasıl yapılır?",
-    answer:
-      "Çeviri kurulumu için indirdiğiniz dosyayı oyunun ana dizinine kopyalamanız yeterlidir. Detaylı kurulum rehberi her çeviri sayfasında yer almaktadır. Sorun yaşarsanız destek ekibimizle iletişime geçebilirsiniz.",
-  },
-  {
-    id: 4,
-    category: "odemeler",
-    question: "İade politikanız nedir?",
-    answer:
-      "Dijital içeriklerde iade politikamız kullanım durumuna göre değişiklik göstermektedir. Satın alma sonrası 24 saat içinde iade talebinde bulunabilirsiniz.",
-  },
-  {
-    id: 5,
-    category: "odemeler",
-    question: "Hangi ödeme yöntemlerini kabul ediyorsunuz?",
-    answer:
-      "Kredi kartı, banka kartı ve çeşitli dijital cüzdanları kabul etmekteyiz. Tüm ödemeler güvenli altyapı üzerinden gerçekleştirilir.",
-  },
-  {
-    id: 6,
-    category: "genel",
-    question: "Çeviri ekibine nasıl katılabilirim?",
-    answer:
-      "Çeviri ekibimize katılmak için Discord sunucumuza gelebilir veya iletişim sayfamızdan başvurunuzu iletebilirsiniz. Deneyimli çevirmenlerimiz sizi yönlendirecektir.",
-  },
-  {
-    id: 7,
-    category: "teknik",
-    question: "Çeviri dosyaları güvenli mi?",
-    answer:
-      "Evet, tüm çeviri dosyalarımız virüs taramasından geçirilmektedir. Dosyalar yalnızca metin değişiklikleri içerir ve oyun dosyalarınıza zarar vermez.",
-  },
-];
-
 function AccordionItem({
   item,
   isOpen,
   onToggle,
   index,
 }: {
-  item: (typeof faqItems)[0];
+  item: StrapiFaq;
   isOpen: boolean;
   onToggle: () => void;
   index: number;
@@ -164,6 +113,26 @@ export default function FAQPage() {
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [searchQuery, setSearchQuery] = useState("");
   const [openId, setOpenId] = useState<number | null>(null);
+  const [faqItems, setFaqItems] = useState<StrapiFaq[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    let cancelled = false;
+    setLoading(true);
+    setError(null);
+    fetchFaqs()
+      .then((data) => {
+        if (!cancelled) setFaqItems(data);
+      })
+      .catch(() => {
+        if (!cancelled) setError("SSS yüklenemedi. Strapi panelinin çalıştığından emin olun.");
+      })
+      .finally(() => {
+        if (!cancelled) setLoading(false);
+      });
+    return () => { cancelled = true; };
+  }, []);
 
   const filteredItems = useMemo(() => {
     let items = faqItems;
@@ -179,7 +148,7 @@ export default function FAQPage() {
       );
     }
     return items;
-  }, [selectedCategory, searchQuery]);
+  }, [selectedCategory, searchQuery, faqItems]);
 
   return (
     <main className="relative min-h-screen w-full bg-[#0a0a0a] overflow-x-hidden text-white">
@@ -316,8 +285,20 @@ export default function FAQPage() {
           })}
         </div>
 
+        {/* Loading / Error */}
+        {loading && (
+          <div className="text-center py-12">
+            <p className="text-sm text-white/40" style={{ fontFamily: "Caviar Dreams" }}>Sorular yükleniyor…</p>
+          </div>
+        )}
+        {error && (
+          <div className="rounded-2xl mb-6 p-5" style={{ border: "1px solid rgba(239,68,68,0.3)", background: "rgba(239,68,68,0.05)" }}>
+            <p className="text-red-400 text-sm" style={{ fontFamily: "Caviar Dreams" }}>{error}</p>
+          </div>
+        )}
+
         {/* FAQ list */}
-        <div className="flex flex-col gap-3">
+        {!loading && <div className="flex flex-col gap-3">
           {filteredItems.length === 0 ? (
             <div className="text-center py-16">
               <div className="w-12 h-12 mx-auto mb-4 rounded-xl flex items-center justify-center" style={{ background: "rgba(201,155,255,0.06)", border: "1px solid rgba(201,155,255,0.1)" }}>
@@ -343,7 +324,7 @@ export default function FAQPage() {
               />
             ))
           )}
-        </div>
+        </div>}
 
         {/* Count */}
         <div className="mt-5 flex items-center justify-end gap-2">

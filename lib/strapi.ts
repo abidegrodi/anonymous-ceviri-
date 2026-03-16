@@ -125,3 +125,28 @@ export async function fetchDuyuruBySlug(slug: string): Promise<StrapiDuyuru | nu
   const raw = list[0];
   return raw ? normalizeStrapiItem(raw as { id?: number; attributes?: StrapiDuyuru } & StrapiDuyuru) : null;
 }
+
+// ─── FAQ (Sıkça Sorulan Sorular) ───
+
+export interface StrapiFaq {
+  id: number;
+  question: string;
+  answer: string;
+  category: string;
+  order?: number;
+}
+
+/** Tüm FAQ kayıtlarını getirir (sıralı) */
+export async function fetchFaqs(): Promise<StrapiFaq[]> {
+  const res = await fetch(
+    `${STRAPI_URL}/api/faqs?sort=order:asc&pagination[pageSize]=100`,
+    { next: { revalidate: 60 } }
+  );
+  if (!res.ok) {
+    throw new Error("SSS yüklenemedi");
+  }
+  const json = await res.json();
+  const data = json.data ?? json;
+  const list = Array.isArray(data) ? data : [];
+  return list.map((item: unknown) => normalizeStrapiItem(item as { id?: number; attributes?: StrapiFaq } & StrapiFaq));
+}
