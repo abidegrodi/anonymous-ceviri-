@@ -126,6 +126,43 @@ export async function fetchDuyuruBySlug(slug: string): Promise<StrapiDuyuru | nu
   return raw ? normalizeStrapiItem(raw as { id?: number; attributes?: StrapiDuyuru } & StrapiDuyuru) : null;
 }
 
+// ─── Editörün Seçimi (Single Type) ───
+
+export interface StrapiEditorPick {
+  id: number;
+  label?: string;
+  title: string;
+  description?: string;
+  buttonText?: string;
+  buttonLink: string;
+  backgroundImage?: { data?: { attributes?: { url: string } } };
+}
+
+export async function fetchEditorPick(): Promise<StrapiEditorPick | null> {
+  try {
+    const res = await fetch(
+      `${STRAPI_URL}/api/editor-pick?publicationState=live&populate=backgroundImage`,
+      { next: { revalidate: 60 } }
+    );
+    if (!res.ok) return null;
+    const json = await res.json();
+    const data = json.data;
+    if (!data) return null;
+    const item = normalizeStrapiItem(data as { id?: number; attributes?: StrapiEditorPick } & StrapiEditorPick);
+    if (item.backgroundImage?.data?.attributes?.url) {
+      const url = item.backgroundImage.data.attributes.url;
+      if (!url.startsWith("http")) {
+        item.backgroundImage = {
+          data: { attributes: { url: `${STRAPI_URL}${url}` } },
+        };
+      }
+    }
+    return item;
+  } catch {
+    return null;
+  }
+}
+
 // ─── FAQ (Sıkça Sorulan Sorular) ───
 
 export interface StrapiFaq {

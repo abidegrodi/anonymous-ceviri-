@@ -175,9 +175,7 @@ export default function Home() {
               onNotify={handleNotify}
             />
 
-            <EditorsChoice
-              gameId={allGames.find((g) => g.name.toLowerCase().includes("ghostrunner 2"))?.gameId}
-            />
+            <EditorsChoice />
 
             {/* Kategorilere göre bölümler */}
             {categorySections.map((section, idx) => (
