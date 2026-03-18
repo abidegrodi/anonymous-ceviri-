@@ -47,8 +47,9 @@ export default function BlogDetail() {
       .then(([duyuru, list]) => {
         if (cancelled) return;
         if (duyuru) {
+          console.log(duyuru);
           setPost(mapStrapiDuyuruToBlogPost(duyuru));
-          const baseUrl = process.env.NEXT_PUBLIC_STRAPI_URL || "http://localhost:1337";
+          const baseUrl =  "https://satisfying-heart-f6617a9476.strapiapp.com";
           const others = list
             .filter((d) => d.slug !== slug)
             .slice(0, 3)

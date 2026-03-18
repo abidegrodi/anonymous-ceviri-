@@ -3,7 +3,7 @@
  * Panel çalışırken: http://localhost:1337
  */
 
-const STRAPI_URL = process.env.NEXT_PUBLIC_STRAPI_URL || "http://localhost:1337";
+const STRAPI_URL = "https://satisfying-heart-f6617a9476.strapiapp.com";
 
 export interface StrapiDuyuru {
   id: number;
@@ -30,12 +30,16 @@ export interface StrapiDuyuru {
 
 function getMediaUrl(media: StrapiDuyuru["image"]) {
   const url = media?.data?.attributes?.url;
-  return url ? `${STRAPI_URL}${url}` : null;
+  if (!url) return null;
+  return url.startsWith("http") ? url : `${STRAPI_URL}${url}`;
 }
 
 function getMediaUrls(media: StrapiDuyuru["screenshots"]) {
   const list = media?.data ?? [];
-  return list.map((item) => `${STRAPI_URL}${item.attributes?.url ?? ""}`).filter(Boolean);
+  return list.map((item) => {
+    const url = item.attributes?.url ?? "";
+    return url.startsWith("http") ? url : `${STRAPI_URL}${url}`;
+  }).filter(Boolean);
 }
 
 /** Liste sayfası için: Strapi cevabını uygulama tipine çevirir */
@@ -59,7 +63,8 @@ export function mapStrapiDuyuruToAnnouncement(item: StrapiDuyuru) {
 
 /** Detay sayfası için: Strapi duyurusunu blog post formatına çevirir */
 export function mapStrapiDuyuruToBlogPost(item: StrapiDuyuru) {
-  const heroUrl = getMediaUrl(item.heroImage) ?? getMediaUrl(item.image);
+
+  const heroUrl = getMediaUrl(item.image) ?? getMediaUrl(item.heroImage)
   const changes = Array.isArray(item.changes)
     ? item.changes
     : typeof item.changes === "object" && item.changes !== null
