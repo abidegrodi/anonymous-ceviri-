@@ -427,8 +427,9 @@ export default function GameDetailPage() {
 
                   {/* Action Buttons */}
                   <div className="flex flex-col sm:flex-row gap-3">
-                    <button
-                      className="flex-1 flex items-center justify-center gap-3 py-3.5 sm:py-4 px-6 sm:px-8 rounded-2xl transition-all duration-200 hover:brightness-110 hover:shadow-[0_0_30px_rgba(201,155,255,0.25)] active:scale-[0.98]"
+                    <Link
+                      href="/kayit-ol"
+                      className="flex-1 flex items-center justify-center gap-3 py-3.5 sm:py-4 px-6 sm:px-8 rounded-2xl transition-all duration-200 hover:brightness-110 hover:shadow-[0_0_30px_rgba(201,155,255,0.25)] active:scale-[0.98] no-underline"
                       style={{ background: "linear-gradient(135deg, #C99BFF 0%, #9B6DD7 100%)" }}
                     >
                       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" className="shrink-0">
@@ -438,7 +439,7 @@ export default function GameDetailPage() {
                       <span className="uppercase text-[13px] sm:text-[15px]" style={{ fontFamily: "Caviar Dreams, sans-serif", fontWeight: 700, letterSpacing: "1.2px", color: "#FAF8FF" }}>
                         Türkçe Çeviriyi İndir
                       </span>
-                    </button>
+                    </Link>
 
                     {isAuthenticated && (
                       <div className="flex gap-2.5">
@@ -643,11 +644,6 @@ export default function GameDetailPage() {
                       )}
                     </div>
 
-                    <div className="mt-4 p-4 rounded-xl text-center" style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.04)" }}>
-                      <p className="text-[12px] text-white/25" style={{ fontFamily: "Caviar Dreams" }}>
-                        Güncellemelerden haberdar olmak için bildirim butonuna tıklayın.
-                      </p>
-                    </div>
                   </div>
                 )}
 

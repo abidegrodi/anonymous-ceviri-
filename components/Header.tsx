@@ -27,6 +27,7 @@ const authButtonStyle = {
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isProfileOpen, setIsProfileOpen] = useState(false);
   const { user, isAuthenticated, isLoading, logout } = useAuth();
 
   return (
@@ -79,16 +80,55 @@ export default function Header() {
             {/* Desktop Auth Buttons */}
             <div className="hidden lg:flex items-center gap-3">
               {isAuthenticated ? (
-                <Link
-                  href="/profil"
-                  className="w-[44px] h-[44px] rounded-full flex items-center justify-center hover:opacity-80 transition-opacity"
-                  style={{
-                    background: 'linear-gradient(135deg, rgba(168, 133, 209, 0.15) 0%, rgba(121, 93, 153, 0.25) 100%)',
-                    border: '1px solid rgba(168, 133, 209, 0.4)',
-                  }}
-                >
-                  <Image src="/icons/human.svg" alt="Profil" width={22} height={22} />
-                </Link>
+                <div className="relative">
+                  <button
+                    onClick={() => setIsProfileOpen(!isProfileOpen)}
+                    className="w-[44px] h-[44px] rounded-full flex items-center justify-center hover:opacity-80 transition-opacity"
+                    style={{
+                      background: 'linear-gradient(135deg, rgba(168, 133, 209, 0.15) 0%, rgba(121, 93, 153, 0.25) 100%)',
+                      border: '1px solid rgba(168, 133, 209, 0.4)',
+                    }}
+                  >
+                    <Image src="/icons/human.svg" alt="Profil" width={22} height={22} />
+                  </button>
+                  {isProfileOpen && (
+                    <>
+                      <div className="fixed inset-0 z-40" onClick={() => setIsProfileOpen(false)} />
+                      <div
+                        className="absolute right-0 top-[52px] z-50 w-[180px] rounded-xl overflow-hidden py-1"
+                        style={{
+                          background: 'rgba(15, 15, 15, 0.95)',
+                          border: '1px solid rgba(201, 155, 255, 0.12)',
+                          backdropFilter: 'blur(12px)',
+                          boxShadow: '0 8px 32px rgba(0,0,0,0.4)',
+                        }}
+                      >
+                        <Link
+                          href="/profil"
+                          onClick={() => setIsProfileOpen(false)}
+                          className="flex items-center gap-3 px-4 py-3 text-white/70 hover:text-white hover:bg-white/[0.04] transition-all no-underline"
+                          style={{ fontFamily: 'Caviar Dreams', fontSize: '13px' }}
+                        >
+                          <Image src="/icons/human.svg" alt="" width={16} height={16} className="opacity-60" />
+                          Profilim
+                        </Link>
+                        <div className="mx-3 h-px" style={{ background: 'rgba(255,255,255,0.06)' }} />
+                        <button
+                          onClick={() => { setIsProfileOpen(false); logout(); }}
+                          className="flex items-center gap-3 w-full px-4 py-3 text-[#FF5555]/70 hover:text-[#FF5555] hover:bg-white/[0.04] transition-all text-left"
+                          style={{ fontFamily: 'Caviar Dreams', fontSize: '13px' }}
+                        >
+                          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="opacity-60">
+                            <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4" strokeLinecap="round" strokeLinejoin="round" />
+                            <polyline points="16 17 21 12 16 7" strokeLinecap="round" strokeLinejoin="round" />
+                            <line x1="21" y1="12" x2="9" y2="12" strokeLinecap="round" />
+                          </svg>
+                          Çıkış Yap
+                        </button>
+                      </div>
+                    </>
+                  )}
+                </div>
               ) : (
                 <>
                   <Link

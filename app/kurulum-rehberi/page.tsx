@@ -154,10 +154,10 @@ export default function KurulumRehberiPage() {
           {/* CTA */}
           <div className="text-center p-6 rounded-[20px]" style={{ background: "rgba(201,155,255,0.04)", border: "1px solid rgba(201,155,255,0.10)" }}>
             <p className="text-[13px] mb-4" style={{ fontFamily: "Caviar Dreams", color: "rgba(255,255,255,0.50)" }}>Sorun mu yaşıyorsunuz?</p>
-            <Link href="/destek" className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-[12px] text-[#C99BFF] hover:bg-white/5 transition" style={{ fontFamily: "Caviar Dreams", border: "1px solid rgba(201,155,255,0.20)" }}>
+            <a href="https://destek.anonymousceviri.com/" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-[12px] text-[#C99BFF] hover:bg-white/5 transition" style={{ fontFamily: "Caviar Dreams", border: "1px solid rgba(201,155,255,0.20)" }}>
               DESTEK MERKEZİ
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 12h14m-7-7l7 7-7 7" strokeLinecap="round" strokeLinejoin="round" /></svg>
-            </Link>
+            </a>
           </div>
         </div>
       </div>

@@ -357,7 +357,7 @@ export default function FAQPage() {
               <h4
                 className="text-[15px] font-bold mb-1"
                 style={{
-                  fontFamily: "Trajan Pro, serif",
+                  fontFamily: "Caviar Dreams, sans-serif",
                   background: "linear-gradient(180deg, #FFFFFF 0%, #C99BFF 100%)",
                   WebkitBackgroundClip: "text",
                   WebkitTextFillColor: "transparent",
