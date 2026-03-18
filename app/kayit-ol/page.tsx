@@ -121,13 +121,13 @@ export default function RegisterPage() {
                     >
                         Topluluğa Katıl
                     </h1>
-                    <p className="text-white/30 text-[15px] sm:text-[16px] max-w-[420px] mx-auto leading-relaxed" style={{ fontFamily: 'Caviar Dreams' }}>
+                    <p className="text-white/70 text-[15px] sm:text-[16px] font-medium max-w-[420px] mx-auto leading-relaxed" style={{ fontFamily: 'Caviar Dreams' }}>
                         Anonymous Çeviri dünyasının ayrıcalıklarına katılmaya sadece bir adım kaldı.
                     </p>
                 </div>
 
                 {/* Two column layout */}
-                <div className="flex flex-col lg:flex-row gap-6 lg:gap-8 items-start">
+                <div className="flex flex-col-reverse lg:flex-row gap-6 lg:gap-8 items-start">
 
                     {/* Left - Form */}
                     <div className="w-full lg:flex-1 lg:max-w-none">
@@ -144,17 +144,17 @@ export default function RegisterPage() {
 
                             <div className="flex items-center gap-2 mb-7">
                                 <div className="w-1 h-5 rounded-full" style={{ background: "linear-gradient(180deg, #C99BFF 0%, rgba(201,155,255,0.2) 100%)" }} />
-                                <span className="text-[13px] font-bold uppercase tracking-[1.5px] text-white/30" style={{ fontFamily: 'Caviar Dreams' }}>Hesap Bilgileri</span>
+                                <span className="text-[13px] font-bold uppercase tracking-[1.5px] text-white/60" style={{ fontFamily: 'Caviar Dreams' }}>Hesap Bilgileri</span>
                             </div>
 
                             <div className="flex flex-col gap-5">
                                 {/* Email */}
                                 <div>
-                                    <label className="text-white/50 text-[12px] font-bold uppercase tracking-wider mb-2 block" style={{ fontFamily: 'Caviar Dreams' }}>E-Posta Adresi</label>
+                                    <label className="text-white text-[13px] font-bold tracking-wider mb-2 block" style={{ fontFamily: 'Caviar Dreams' }}>E-Posta Adresi</label>
                                     <input
                                         type="email" value={email} onChange={(e) => setEmail(e.target.value)}
                                         placeholder="ornek@email.com"
-                                        className="w-full h-12 sm:h-[52px] rounded-xl px-4 text-[14px] text-white placeholder:text-white/15 bg-transparent border border-white/[0.06] focus:border-[#C99BFF]/25 focus:shadow-[0_0_16px_rgba(201,155,255,0.06)] focus:outline-none transition-all"
+                                        className="w-full h-12 sm:h-[52px] rounded-xl px-4 text-[14px] text-white placeholder:text-white/40 bg-transparent border border-white/[0.10] focus:border-[#C99BFF]/25 focus:shadow-[0_0_16px_rgba(201,155,255,0.06)] focus:outline-none transition-all"
                                         style={{ fontFamily: 'Caviar Dreams' }} required
                                     />
                                 </div>
@@ -162,20 +162,20 @@ export default function RegisterPage() {
                                 {/* Password row */}
                                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                     <div>
-                                        <label className="text-white/50 text-[12px] font-bold uppercase tracking-wider mb-2 block" style={{ fontFamily: 'Caviar Dreams' }}>Parola</label>
+                                        <label className="text-white text-[13px] font-bold tracking-wider mb-2 block" style={{ fontFamily: 'Caviar Dreams' }}>Parola</label>
                                         <input
                                             type="password" value={password} onChange={(e) => setPassword(e.target.value)}
                                             placeholder="Min. 6 karakter"
-                                            className="w-full h-12 sm:h-[52px] rounded-xl px-4 text-[14px] text-white placeholder:text-white/15 bg-transparent border border-white/[0.06] focus:border-[#C99BFF]/25 focus:shadow-[0_0_16px_rgba(201,155,255,0.06)] focus:outline-none transition-all"
+                                            className="w-full h-12 sm:h-[52px] rounded-xl px-4 text-[14px] text-white placeholder:text-white/40 bg-transparent border border-white/[0.10] focus:border-[#C99BFF]/25 focus:shadow-[0_0_16px_rgba(201,155,255,0.06)] focus:outline-none transition-all"
                                             style={{ fontFamily: 'Caviar Dreams' }} required
                                         />
                                     </div>
                                     <div>
-                                        <label className="text-white/50 text-[12px] font-bold uppercase tracking-wider mb-2 block" style={{ fontFamily: 'Caviar Dreams' }}>Parola Tekrarı</label>
+                                        <label className="text-white text-[13px] font-bold tracking-wider mb-2 block" style={{ fontFamily: 'Caviar Dreams' }}>Parola Tekrarı</label>
                                         <input
                                             type="password" value={passwordConfirm} onChange={(e) => setPasswordConfirm(e.target.value)}
                                             placeholder="Tekrar girin"
-                                            className="w-full h-12 sm:h-[52px] rounded-xl px-4 text-[14px] text-white placeholder:text-white/15 bg-transparent border border-white/[0.06] focus:border-[#C99BFF]/25 focus:shadow-[0_0_16px_rgba(201,155,255,0.06)] focus:outline-none transition-all"
+                                            className="w-full h-12 sm:h-[52px] rounded-xl px-4 text-[14px] text-white placeholder:text-white/40 bg-transparent border border-white/[0.10] focus:border-[#C99BFF]/25 focus:shadow-[0_0_16px_rgba(201,155,255,0.06)] focus:outline-none transition-all"
                                             style={{ fontFamily: 'Caviar Dreams' }} required
                                         />
                                     </div>
@@ -183,11 +183,11 @@ export default function RegisterPage() {
 
                                 {/* Age */}
                                 <div>
-                                    <label className="text-white/50 text-[12px] font-bold uppercase tracking-wider mb-2 block" style={{ fontFamily: 'Caviar Dreams' }}>Yaş</label>
+                                    <label className="text-white text-[13px] font-bold tracking-wider mb-2 block" style={{ fontFamily: 'Caviar Dreams' }}>Yaş</label>
                                     <input
                                         type="number" value={age} onChange={(e) => setAge(e.target.value)}
                                         placeholder="Yaşınızı girin" min="0" max="100"
-                                        className="w-full h-12 sm:h-[52px] rounded-xl px-4 text-[14px] text-white placeholder:text-white/15 bg-transparent border border-white/[0.06] focus:border-[#C99BFF]/25 focus:shadow-[0_0_16px_rgba(201,155,255,0.06)] focus:outline-none transition-all"
+                                        className="w-full h-12 sm:h-[52px] rounded-xl px-4 text-[14px] text-white placeholder:text-white/40 bg-transparent border border-white/[0.10] focus:border-[#C99BFF]/25 focus:shadow-[0_0_16px_rgba(201,155,255,0.06)] focus:outline-none transition-all"
                                         style={{ fontFamily: 'Caviar Dreams' }} required
                                     />
                                 </div>
@@ -215,9 +215,9 @@ export default function RegisterPage() {
                                 </button>
 
                                 {/* Login link */}
-                                <p className="text-center text-white/20 text-[13px] pt-1" style={{ fontFamily: 'Caviar Dreams' }}>
+                                <p className="text-center text-white/60 text-[13px] font-medium pt-1" style={{ fontFamily: 'Caviar Dreams' }}>
                                     Zaten hesabınız var mı?{' '}
-                                    <Link href="/giris-yap" className="text-[#C99BFF]/50 hover:text-[#C99BFF] transition-colors no-underline font-bold">Giriş Yap</Link>
+                                    <Link href="/giris-yap" className="text-[#C99BFF]/80 hover:text-[#C99BFF] transition-colors no-underline font-bold">Giriş Yap</Link>
                                 </p>
                             </div>
                         </form>
@@ -240,10 +240,10 @@ export default function RegisterPage() {
 
                             <div className="flex items-center justify-between mb-6">
                                 <div>
-                                    <span className="text-[11px] font-bold uppercase tracking-[1.5px] block mb-1" style={{ fontFamily: 'Caviar Dreams', color: 'rgba(13,242,105,0.5)' }}>Aylık Üyelik</span>
+                                    <span className="text-[11px] font-bold uppercase tracking-[1.5px] block mb-1" style={{ fontFamily: 'Caviar Dreams', color: 'rgba(13,242,105,0.7)' }}>Aylık Üyelik</span>
                                     <div className="flex items-baseline gap-1">
                                         <span className="text-[28px] font-bold text-white/90" style={{ fontFamily: 'Caviar Dreams' }}>₺150</span>
-                                        <span className="text-[13px] text-white/25" style={{ fontFamily: 'Caviar Dreams' }}>/ay</span>
+                                        <span className="text-[13px] text-white/40" style={{ fontFamily: 'Caviar Dreams' }}>/ay</span>
                                     </div>
                                 </div>
                                 <div className="px-3 py-1.5 rounded-lg" style={{ background: 'rgba(13,242,105,0.08)', border: '1px solid rgba(13,242,105,0.15)' }}>
@@ -267,8 +267,8 @@ export default function RegisterPage() {
                                             </svg>
                                         </div>
                                         <div>
-                                            <span className="text-white/60 text-[14px] font-bold block" style={{ fontFamily: 'Caviar Dreams' }}>{f.title}</span>
-                                            <span className="text-white/20 text-[12px]" style={{ fontFamily: 'Caviar Dreams' }}>{f.desc}</span>
+                                            <span className="text-white/80 text-[14px] font-bold block" style={{ fontFamily: 'Caviar Dreams' }}>{f.title}</span>
+                                            <span className="text-white/50 text-[12px]" style={{ fontFamily: 'Caviar Dreams' }}>{f.desc}</span>
                                         </div>
                                     </div>
                                 ))}
@@ -284,8 +284,8 @@ export default function RegisterPage() {
                                 <span className="text-[9px] font-bold text-[#C99BFF]">i</span>
                             </div>
                             <div>
-                                <span className="text-white/50 text-[13px] font-bold block mb-0.5" style={{ fontFamily: 'Caviar Dreams' }}>E-posta Doğrulaması</span>
-                                <span className="text-white/20 text-[12px] leading-relaxed" style={{ fontFamily: 'Caviar Dreams' }}>
+                                <span className="text-white/70 text-[13px] font-bold block mb-0.5" style={{ fontFamily: 'Caviar Dreams' }}>E-posta Doğrulaması</span>
+                                <span className="text-white/50 text-[12px] leading-relaxed" style={{ fontFamily: 'Caviar Dreams' }}>
                                     Kayıt sonrası e-posta adresinize doğrulama bağlantısı gönderilecektir. Giriş için doğrulama zorunludur.
                                 </span>
                             </div>

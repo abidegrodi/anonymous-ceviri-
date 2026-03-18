@@ -322,16 +322,16 @@ export default function GameDetailPage() {
         <div className="max-w-[1280px] mx-auto px-4 md:px-8 py-8">
           {/* Breadcrumb */}
           <div className="flex items-center gap-3 text-sm mb-8 flex-wrap">
-            <Link href="/" className="text-white/50 hover:text-[#C99BFF] transition-colors uppercase" style={{ fontFamily: "Caviar Dreams" }}>
-              ANA SAYFA
+            <Link href="/" className="text-white/50 hover:text-[#C99BFF] transition-colors " style={{ fontFamily: "Caviar Dreams" }}>
+              Ana Sayfa
             </Link>
             <Image src="/icons/arrowr.svg" alt=">" width={20} height={20} className="opacity-50" />
-            <Link href="/turkce-ceviriler" className="text-white/50 hover:text-[#C99BFF] transition-colors uppercase" style={{ fontFamily: "Caviar Dreams" }}>
-              TÜM ÇEVİRİLER
+            <Link href="/turkce-ceviriler" className="text-white/50 hover:text-[#C99BFF] transition-colors " style={{ fontFamily: "Caviar Dreams" }}>
+              Tüm Çeviriler
             </Link>
             <Image src="/icons/arrowr.svg" alt=">" width={20} height={20} className="opacity-50" />
-            <span className="font-medium uppercase" style={{ fontFamily: "Caviar Dreams", background: "linear-gradient(180deg, rgba(255,255,255,0.90) 0%, rgba(121,93,153,0.90) 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>
-              {game.name.toUpperCase()}
+            <span className="font-medium" style={{ fontFamily: "Caviar Dreams", background: "linear-gradient(180deg, rgba(255,255,255,0.90) 0%, rgba(121,93,153,0.90) 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>
+              {game.name}
             </span>
           </div>
 
@@ -394,7 +394,7 @@ export default function GameDetailPage() {
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-2.5">
                         <Image src="/icons/ceviridurumu.svg" alt="" width={20} height={24} className="shrink-0 opacity-80" />
-                        <span className="uppercase text-[12px] sm:text-[14px]" style={{ fontFamily: "Caviar Dreams, sans-serif", fontWeight: 400, letterSpacing: "0.5px", color: "rgba(255, 255, 255, 0.70)" }}>
+                        <span className="text-[12px] sm:text-[14px]" style={{ fontFamily: "Caviar Dreams, sans-serif", fontWeight: 400, letterSpacing: "0.5px", color: "rgba(255, 255, 255, 0.70)" }}>
                           Çeviri Durumu
                         </span>
                       </div>

@@ -69,22 +69,22 @@ export default function KurulumRehberiPage() {
 
           {/* Breadcrumb */}
           <div className="flex items-center gap-3 text-sm mb-8 flex-wrap">
-            <button onClick={() => router.back()} className="text-white/50 hover:text-[#C99BFF] transition-colors uppercase flex items-center gap-2" style={{ fontFamily: "Caviar Dreams" }}>
+            <button onClick={() => router.back()} className="text-white/50 hover:text-[#C99BFF] transition-colors flex items-center gap-2" style={{ fontFamily: "Caviar Dreams" }}>
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="opacity-60"><path d="M19 12H5m0 0l7 7m-7-7l7-7" strokeLinecap="round" strokeLinejoin="round" /></svg>
-              GERİ DÖN
+              Geri Dön
             </button>
             <Image src="/icons/arrowr.svg" alt=">" width={20} height={20} className="opacity-50" />
-            <span className="font-medium uppercase" style={{ fontFamily: "Caviar Dreams", background: "linear-gradient(180deg, rgba(255,255,255,0.90) 0%, rgba(121,93,153,0.90) 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>
-              KURULUM REHBERİ
+            <span className="font-medium" style={{ fontFamily: "Caviar Dreams", background: "linear-gradient(180deg, rgba(255,255,255,0.90) 0%, rgba(121,93,153,0.90) 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>
+              Kurulum Rehberi
             </span>
           </div>
 
           {/* Title */}
           <div className="mb-10">
-            <h1 className="mb-3 uppercase" style={{ fontFamily: "Trajan Pro, serif", fontSize: "clamp(26px, 4vw, 42px)", fontWeight: 700, lineHeight: "1.1" }}>
+            <h1 className="mb-3" style={{ fontFamily: "Trajan Pro, serif", fontSize: "clamp(26px, 4vw, 42px)", fontWeight: 700, lineHeight: "1.1" }}>
               <span className="text-[#C99BFF]">| </span>
               <span style={{ background: "linear-gradient(180deg, rgba(255,255,255,0.90) 0%, rgba(121,93,153,0.90) 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>
-                ÇEVİRİ KURULUM REHBERİ
+                Çeviri Kurulum Rehberi
               </span>
             </h1>
             <p style={{ fontFamily: "Caviar Dreams", fontSize: "16px", lineHeight: "26px", color: "rgba(255,255,255,0.60)" }}>

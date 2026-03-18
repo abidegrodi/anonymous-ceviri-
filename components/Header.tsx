@@ -34,9 +34,9 @@ export default function Header() {
       <header
         className="fixed top-0 w-full z-50"
         style={{
-          background: "#000000",
-          backdropFilter: "blur(12px)",
-          WebkitBackdropFilter: "blur(12px)",
+          background: "rgba(5, 5, 5, 0.70)",
+          backdropFilter: "blur(6px)",
+          WebkitBackdropFilter: "blur(6px)",
           borderBottom: "1px solid rgba(255, 255, 255, 0.05)",
           height: "80px",
         }}

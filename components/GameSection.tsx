@@ -24,12 +24,14 @@ export default function GameSection({ title, games, showViewAll = true, onNotify
   const [scrollPosition, setScrollPosition] = useState(0);
 
   const scroll = (direction: "left" | "right") => {
-    const container = document.getElementById(`game-section-${title}`);
+    const desktop = document.getElementById(`game-section-${title}`);
+    const mobile = document.getElementById(`game-section-mobile-${title}`);
+    const container = desktop?.offsetParent !== null ? desktop : mobile;
     if (container) {
-      const scrollAmount = 300;
+      const scrollAmount = container.clientWidth;
       const newPosition = direction === "left"
-        ? scrollPosition - scrollAmount
-        : scrollPosition + scrollAmount;
+        ? Math.max(0, container.scrollLeft - scrollAmount)
+        : container.scrollLeft + scrollAmount;
       container.scrollTo({ left: newPosition, behavior: "smooth" });
       setScrollPosition(newPosition);
     }
@@ -80,7 +82,7 @@ export default function GameSection({ title, games, showViewAll = true, onNotify
               className="inline-flex items-center gap-1.5 flex-shrink-0 hover:opacity-90 transition no-underline"
             >
               <span
-                className="font-caviar font-normal text-xs sm:text-sm leading-[22.75px] uppercase whitespace-nowrap"
+                className="font-caviar font-normal text-xs sm:text-sm leading-[22.75px] whitespace-nowrap"
                 style={{
                   background: "linear-gradient(90deg, #FFFFFF 0%, #C99BFF 100%)",
                   WebkitBackgroundClip: "text",
@@ -123,22 +125,43 @@ export default function GameSection({ title, games, showViewAll = true, onNotify
           )}
         </div>
 
-        {/* Oyun kartları */}
+        {/* Masaüstü: 5'li row + scroll */}
         <div
           id={`game-section-${title}`}
-          className="overflow-x-auto scrollbar-hide pb-4"
+          className="hidden md:block overflow-x-auto scrollbar-hide pb-4"
           style={{ scrollBehavior: "smooth" }}
         >
           <div
             className="grid"
             style={{
-              gridTemplateColumns: `repeat(${games.length}, 1fr)`,
+              gridTemplateColumns: `repeat(${Math.max(games.length, 5)}, 1fr)`,
               gap: "16px",
               width: games.length > 5 ? `${(games.length / 5) * 100}%` : "100%",
             }}
           >
             {games.map((game, index) => (
               <GameCard key={index} {...game} onNotify={onNotify} />
+            ))}
+          </div>
+        </div>
+        {/* Mobil: 2'li + scroll */}
+        <div
+          id={`game-section-mobile-${title}`}
+          className="md:hidden overflow-x-auto scrollbar-hide pb-4"
+          style={{ scrollBehavior: "smooth" }}
+        >
+          <div
+            className="flex gap-3"
+            style={{
+              width: games.length > 2 ? `${(Math.ceil(games.length / 2) / 1) * 100}%` : "100%",
+            }}
+          >
+            {Array.from({ length: Math.ceil(games.length / 2) }).map((_, i) => (
+              <div key={i} className="grid grid-cols-2 gap-3" style={{ width: `${100 / Math.ceil(games.length / 2)}%` }}>
+                {games.slice(i * 2, i * 2 + 2).map((game, idx) => (
+                  <GameCard key={idx} {...game} onNotify={onNotify} />
+                ))}
+              </div>
             ))}
           </div>
         </div>

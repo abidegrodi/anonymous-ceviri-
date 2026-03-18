@@ -64,7 +64,7 @@ export default function SupportPage() {
           </div>
 
           <h1
-            className="font-bold uppercase mb-4"
+            className="font-bold mb-4"
             style={{
               fontSize: "clamp(28px, 5vw, 48px)",
               fontFamily: "Trajan Pro, serif",
@@ -286,7 +286,7 @@ export default function SupportPage() {
                 border: "1px solid rgba(255,255,255,0.05)",
               }}
             >
-              <span className="text-[13px] font-bold uppercase tracking-[1.5px] text-white/20 block mb-4" style={{ fontFamily: "Caviar Dreams" }}>
+              <span className="text-[13px] font-bold  tracking-[1.5px] text-white/20 block mb-4" style={{ fontFamily: "Caviar Dreams" }}>
                 Hızlı Linkler
               </span>
               <div className="flex flex-col gap-1">

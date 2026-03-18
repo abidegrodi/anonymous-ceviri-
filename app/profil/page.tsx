@@ -118,7 +118,7 @@ function ProfileContent() {
                 <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/70 backdrop-blur-sm px-4">
                     <div className="w-full max-w-[440px] p-6 sm:p-8 rounded-[20px]" style={{ background: 'linear-gradient(145deg, rgba(30,28,22,0.95) 0%, rgba(18,17,14,0.98) 100%)', border: '1px solid rgba(201,155,255,0.10)' }}>
                         <h2 className="text-white text-lg font-bold mb-2" style={{ fontFamily: 'Trajan Pro, serif' }}>Kullanıcı Adı Belirle</h2>
-                        <p className="text-white/40 text-sm mb-6" style={{ fontFamily: 'Caviar Dreams' }}>
+                        <p className="text-white/60 text-sm mb-6" style={{ fontFamily: 'Caviar Dreams' }}>
                             {user.Username ? 'Kullanıcı adınızı güncelleyebilirsiniz.' : 'Yorum yapabilmek için bir kullanıcı adı belirlemeniz gerekmektedir.'}
                         </p>
                         <form onSubmit={handleUpdateUsername} className="flex flex-col gap-4">
@@ -149,9 +149,9 @@ function ProfileContent() {
 
                     {/* Breadcrumb */}
                     <div className="flex items-center gap-3 text-sm mb-8">
-                        <Link href="/" className="text-white/50 hover:text-[#C99BFF] transition-colors uppercase" style={{ fontFamily: 'Caviar Dreams' }}>ANA SAYFA</Link>
+                        <Link href="/" className="text-white/50 hover:text-[#C99BFF] transition-colors" style={{ fontFamily: 'Caviar Dreams' }}>Ana Sayfa</Link>
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.25)" strokeWidth="2"><path d="M9 18l6-6-6-6" /></svg>
-                        <span className="font-medium uppercase" style={{ fontFamily: 'Caviar Dreams', background: 'linear-gradient(180deg, rgba(255,255,255,0.90) 0%, rgba(121,93,153,0.90) 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>PROFİL</span>
+                        <span className="font-medium" style={{ fontFamily: 'Caviar Dreams', background: 'linear-gradient(180deg, rgba(255,255,255,0.90) 0%, rgba(121,93,153,0.90) 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>Profil</span>
                     </div>
 
                     {/* Profile Header */}
@@ -172,7 +172,7 @@ function ProfileContent() {
                             <div className="flex-1 min-w-0 text-center sm:text-left">
                                 {editMode ? (
                                     <div className="flex flex-col gap-2">
-                                        <label className="text-white/30 text-[10px] uppercase tracking-wider" style={{ fontFamily: 'Caviar Dreams' }}>Kullanıcı Adı</label>
+                                        <label className="text-white/50 text-[12px] font-bold tracking-wider" style={{ fontFamily: 'Caviar Dreams' }}>Kullanıcı Adı</label>
                                         <input type="text" value={editUsername} onChange={(e) => setEditUsername(e.target.value)} placeholder="Kullanıcı adınız"
                                             className="w-full sm:max-w-[300px] h-[44px] px-4 rounded-xl text-white placeholder:text-white/20 focus:outline-none text-base font-bold bg-white/5"
                                             style={{ fontFamily: 'Caviar Dreams', border: '1px solid rgba(201,155,255,0.25)' }} autoFocus minLength={2} maxLength={30}
@@ -184,11 +184,11 @@ function ProfileContent() {
                                             {user.Username || 'Kullanıcı adı belirlenmemiş'}
                                         </h1>
                                         <div className="mt-2 flex items-center justify-center sm:justify-start gap-3 flex-wrap">
-                                            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg text-[10px] font-bold uppercase tracking-wider"
+                                            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg text-[10px] font-bold  tracking-wider"
                                                 style={{ background: 'rgba(201,155,255,0.10)', border: '1px solid rgba(201,155,255,0.20)', color: '#C99BFF', fontFamily: 'Caviar Dreams' }}>
                                                 ÜYE
                                             </span>
-                                            <span className="text-white/15 text-[10px]" style={{ fontFamily: 'Caviar Dreams' }}>{user.Email}</span>
+                                            <span className="text-white/40 text-[12px]" style={{ fontFamily: 'Caviar Dreams' }}>{user.Email}</span>
                                         </div>
                                     </>
                                 )}
@@ -211,7 +211,7 @@ function ProfileContent() {
                                     </>
                                 ) : (
                                     <button onClick={() => { setEditUsername(user.Username || ''); setEditMode(true); }}
-                                        className="px-5 py-2.5 rounded-xl text-white/50 text-[12px] hover:bg-white/8 hover:text-white/70 transition"
+                                        className="px-5 py-2.5 rounded-xl text-white/60 text-[13px] font-bold hover:bg-white/8 hover:text-white/80 transition"
                                         style={{ border: '1px solid rgba(255,255,255,0.08)', fontFamily: 'Caviar Dreams' }}>
                                         DÜZENLE
                                     </button>
@@ -226,8 +226,8 @@ function ProfileContent() {
                             <button key={tab.id} onClick={() => setActiveTab(tab.id)}
                                 className={`flex items-center gap-2 px-4 sm:px-5 py-2.5 rounded-xl shrink-0 transition-all duration-200 ${activeTab === tab.id ? 'bg-white/8' : 'hover:bg-white/4'}`}
                                 style={{ border: activeTab === tab.id ? '1px solid rgba(201,155,255,0.25)' : '1px solid transparent' }}>
-                                <span className={activeTab === tab.id ? 'text-[#C99BFF]' : 'text-white/30'}>{tab.icon}</span>
-                                <span className="text-[11px] uppercase tracking-wider" style={{ fontFamily: 'Caviar Dreams', color: activeTab === tab.id ? '#C99BFF' : 'rgba(255,255,255,0.40)' }}>
+                                <span className={activeTab === tab.id ? 'text-[#C99BFF]' : 'text-white/40'}>{tab.icon}</span>
+                                <span className="text-[12px] font-bold tracking-wider" style={{ fontFamily: 'Caviar Dreams', color: activeTab === tab.id ? '#C99BFF' : 'rgba(255,255,255,0.55)' }}>
                                     {tab.label}
                                 </span>
                             </button>
@@ -263,18 +263,18 @@ function GenelTab({ registerDate }: { registerDate: string }) {
                 <div className="px-5 sm:px-6 py-4 flex items-center justify-between" style={{ borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
                     <div className="flex items-center gap-2.5">
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C99BFF" strokeWidth="1.5"><path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" strokeLinecap="round" /></svg>
-                        <span className="text-[12px] uppercase tracking-wider" style={{ fontFamily: 'Caviar Dreams', color: 'rgba(255,255,255,0.70)' }}>Son İndirmeler</span>
+                        <span className="text-[13px] font-bold tracking-wider" style={{ fontFamily: 'Caviar Dreams', color: 'rgba(255,255,255,0.80)' }}>Son İndirmeler</span>
                     </div>
                 </div>
                 <div className="hidden sm:grid grid-cols-[2fr_1fr_1fr_1fr] gap-4 px-5 sm:px-6 py-3" style={{ borderBottom: '1px solid rgba(255,255,255,0.04)' }}>
-                    <span className="text-[10px] uppercase tracking-wider" style={{ fontFamily: 'Caviar Dreams', color: 'rgba(255,255,255,0.25)' }}>Oyun Adı</span>
-                    <span className="text-[10px] uppercase tracking-wider" style={{ fontFamily: 'Caviar Dreams', color: 'rgba(255,255,255,0.25)' }}>Platform</span>
-                    <span className="text-[10px] uppercase tracking-wider" style={{ fontFamily: 'Caviar Dreams', color: 'rgba(255,255,255,0.25)' }}>Tarih</span>
-                    <span className="text-[10px] uppercase tracking-wider text-right" style={{ fontFamily: 'Caviar Dreams', color: 'rgba(255,255,255,0.25)' }}>Durum</span>
+                    <span className="text-[11px] font-bold tracking-wider" style={{ fontFamily: 'Caviar Dreams', color: 'rgba(255,255,255,0.40)' }}>Oyun Adı</span>
+                    <span className="text-[11px] font-bold tracking-wider" style={{ fontFamily: 'Caviar Dreams', color: 'rgba(255,255,255,0.40)' }}>Platform</span>
+                    <span className="text-[11px] font-bold tracking-wider" style={{ fontFamily: 'Caviar Dreams', color: 'rgba(255,255,255,0.40)' }}>Tarih</span>
+                    <span className="text-[11px] font-bold tracking-wider text-right" style={{ fontFamily: 'Caviar Dreams', color: 'rgba(255,255,255,0.40)' }}>Durum</span>
                 </div>
                 <div className="px-5 sm:px-6 py-12 text-center">
-                    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.08)" strokeWidth="1" className="mx-auto mb-3"><path d="M12 3v12m0 0l-4-4m4 4l4-4" strokeLinecap="round" /><path d="M3 17v2a2 2 0 002 2h14a2 2 0 002-2v-2" strokeLinecap="round" /></svg>
-                    <p className="text-white/20 text-sm" style={{ fontFamily: 'Caviar Dreams' }}>Henüz indirme geçmişiniz bulunmamaktadır.</p>
+                    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.12)" strokeWidth="1" className="mx-auto mb-3"><path d="M12 3v12m0 0l-4-4m4 4l4-4" strokeLinecap="round" /><path d="M3 17v2a2 2 0 002 2h14a2 2 0 002-2v-2" strokeLinecap="round" /></svg>
+                    <p className="text-white/40 text-sm font-medium" style={{ fontFamily: 'Caviar Dreams' }}>Henüz indirme geçmişiniz bulunmamaktadır.</p>
                 </div>
             </div>
         </div>
@@ -291,7 +291,7 @@ function StatCard({ label, value, suffix, icon, accent }: { label: string; value
                 {icon}
             </div>
             <div className="mt-4">
-                <span className="text-[10px] uppercase tracking-wider block mb-1" style={{ fontFamily: 'Caviar Dreams', color: accent ? `${accentColor}99` : 'rgba(255,255,255,0.35)' }}>{label}</span>
+                <span className="text-[12px] font-bold tracking-wider block mb-1" style={{ fontFamily: 'Caviar Dreams', color: accent ? `${accentColor}99` : 'rgba(255,255,255,0.50)' }}>{label}</span>
                 <div className="flex items-baseline gap-1.5">
                     <span className="text-2xl font-bold" style={{ fontFamily: 'Caviar Dreams', color: accent ? accentColor : 'rgba(255,255,255,0.85)' }}>{value}</span>
                     {suffix && <span className="text-sm" style={{ fontFamily: 'Caviar Dreams', color: `${accentColor}60` }}>{suffix}</span>}
@@ -307,17 +307,17 @@ function IndirmeTab() {
         <div className="rounded-[20px] overflow-hidden" style={{ background: 'rgba(24,22,17,0.65)', border: '1px solid rgba(255,255,255,0.06)' }}>
             <div className="px-5 sm:px-6 py-4 flex items-center gap-2.5" style={{ borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C99BFF" strokeWidth="1.5"><path d="M12 3v12m0 0l-4-4m4 4l4-4" strokeLinecap="round" strokeLinejoin="round" /><path d="M3 17v2a2 2 0 002 2h14a2 2 0 002-2v-2" strokeLinecap="round" /></svg>
-                <span className="text-[12px] uppercase tracking-wider" style={{ fontFamily: 'Caviar Dreams', color: 'rgba(255,255,255,0.70)' }}>İndirme Geçmişi</span>
+                <span className="text-[13px] font-bold tracking-wider" style={{ fontFamily: 'Caviar Dreams', color: 'rgba(255,255,255,0.80)' }}>İndirme Geçmişi</span>
             </div>
             <div className="hidden sm:grid grid-cols-[2fr_1fr_1fr_1fr] gap-4 px-5 sm:px-6 py-3" style={{ borderBottom: '1px solid rgba(255,255,255,0.04)' }}>
-                <span className="text-[10px] uppercase tracking-wider" style={{ fontFamily: 'Caviar Dreams', color: 'rgba(255,255,255,0.25)' }}>Oyun Adı</span>
-                <span className="text-[10px] uppercase tracking-wider" style={{ fontFamily: 'Caviar Dreams', color: 'rgba(255,255,255,0.25)' }}>Platform</span>
-                <span className="text-[10px] uppercase tracking-wider" style={{ fontFamily: 'Caviar Dreams', color: 'rgba(255,255,255,0.25)' }}>Tarih</span>
-                <span className="text-[10px] uppercase tracking-wider text-right" style={{ fontFamily: 'Caviar Dreams', color: 'rgba(255,255,255,0.25)' }}>Durum</span>
+                <span className="text-[11px] font-bold tracking-wider" style={{ fontFamily: 'Caviar Dreams', color: 'rgba(255,255,255,0.40)' }}>Oyun Adı</span>
+                <span className="text-[11px] font-bold tracking-wider" style={{ fontFamily: 'Caviar Dreams', color: 'rgba(255,255,255,0.40)' }}>Platform</span>
+                <span className="text-[11px] font-bold tracking-wider" style={{ fontFamily: 'Caviar Dreams', color: 'rgba(255,255,255,0.40)' }}>Tarih</span>
+                <span className="text-[11px] font-bold tracking-wider text-right" style={{ fontFamily: 'Caviar Dreams', color: 'rgba(255,255,255,0.40)' }}>Durum</span>
             </div>
             <div className="px-5 sm:px-6 py-16 text-center">
                 <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.06)" strokeWidth="1" className="mx-auto mb-3"><path d="M12 3v12m0 0l-4-4m4 4l4-4" strokeLinecap="round" /><path d="M3 17v2a2 2 0 002 2h14a2 2 0 002-2v-2" strokeLinecap="round" /></svg>
-                <p className="text-white/20 text-sm" style={{ fontFamily: 'Caviar Dreams' }}>Henüz indirme geçmişiniz bulunmamaktadır.</p>
+                <p className="text-white/40 text-sm font-medium" style={{ fontFamily: 'Caviar Dreams' }}>Henüz indirme geçmişiniz bulunmamaktadır.</p>
             </div>
         </div>
     );
@@ -329,14 +329,14 @@ function UyelikTab() {
         <div className="rounded-[20px] overflow-hidden" style={{ background: 'rgba(24,22,17,0.65)', border: '1px solid rgba(255,255,255,0.06)' }}>
             <div className="px-5 sm:px-6 py-4 flex items-center gap-2.5" style={{ borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C99BFF" strokeWidth="1.5"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" strokeLinecap="round" strokeLinejoin="round" /></svg>
-                <span className="text-[12px] uppercase tracking-wider" style={{ fontFamily: 'Caviar Dreams', color: 'rgba(255,255,255,0.70)' }}>Üyelik Planım</span>
+                <span className="text-[13px] font-bold tracking-wider" style={{ fontFamily: 'Caviar Dreams', color: 'rgba(255,255,255,0.80)' }}>Üyelik Planım</span>
             </div>
             <div className="p-6 sm:p-10 text-center">
                 <div className="w-16 h-16 mx-auto mb-5 rounded-2xl flex items-center justify-center" style={{ background: 'rgba(201,155,255,0.06)', border: '1px solid rgba(201,155,255,0.12)' }}>
                     <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="rgba(201,155,255,0.40)" strokeWidth="1.5"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" strokeLinecap="round" strokeLinejoin="round" /></svg>
                 </div>
-                <h3 className="text-white/60 text-base font-bold mb-2" style={{ fontFamily: 'Trajan Pro, serif', fontSize: '14px' }}>Aktif Üyeliğiniz Bulunmamaktadır</h3>
-                <p className="text-white/25 text-sm max-w-md mx-auto mb-7" style={{ fontFamily: 'Caviar Dreams' }}>
+                <h3 className="text-white/80 text-base font-bold mb-2" style={{ fontFamily: 'Trajan Pro, serif', fontSize: '16px' }}>Aktif Üyeliğiniz Bulunmamaktadır</h3>
+                <p className="text-white/50 text-sm max-w-md mx-auto mb-7 font-medium" style={{ fontFamily: 'Caviar Dreams' }}>
                     Anonymous Çeviri üyeliği ile tüm Türkçe çevirilere erişim sağlayabilirsiniz.
                 </p>
                 <a href="https://odeme.anonymousceviri.com" target="_blank" rel="noopener noreferrer"
@@ -358,11 +358,11 @@ function AyarlarTab({ user, onEditUsername, onLogout }: { user: any; onEditUsern
             <div className="p-5 rounded-[16px] flex flex-col sm:flex-row sm:items-center justify-between gap-3"
                 style={{ background: 'rgba(24,22,17,0.65)', border: '1px solid rgba(255,255,255,0.06)' }}>
                 <div>
-                    <span className="text-[10px] uppercase tracking-wider block mb-1" style={{ fontFamily: 'Caviar Dreams', color: 'rgba(255,255,255,0.30)' }}>Kullanıcı Adı</span>
-                    <span className="text-white/85 text-[15px] font-medium" style={{ fontFamily: 'Caviar Dreams' }}>{user.Username || 'Belirlenmemiş'}</span>
+                    <span className="text-[12px] font-bold tracking-wider block mb-1" style={{ fontFamily: 'Caviar Dreams', color: 'rgba(255,255,255,0.45)' }}>Kullanıcı Adı</span>
+                    <span className="text-white/90 text-[15px] font-bold" style={{ fontFamily: 'Caviar Dreams' }}>{user.Username || 'Belirlenmemiş'}</span>
                 </div>
                 <button onClick={onEditUsername}
-                    className="shrink-0 px-4 py-2 rounded-lg text-white/40 text-[11px] hover:bg-white/5 hover:text-white/60 transition"
+                    className="shrink-0 px-4 py-2 rounded-lg text-white/55 text-[12px] font-bold hover:bg-white/5 hover:text-white/70 transition"
                     style={{ border: '1px solid rgba(255,255,255,0.08)', fontFamily: 'Caviar Dreams' }}>
                     DÜZENLE
                 </button>
@@ -370,14 +370,14 @@ function AyarlarTab({ user, onEditUsername, onLogout }: { user: any; onEditUsern
 
             {/* E-posta */}
             <div className="p-5 rounded-[16px]" style={{ background: 'rgba(24,22,17,0.65)', border: '1px solid rgba(255,255,255,0.06)' }}>
-                <span className="text-[10px] uppercase tracking-wider block mb-1" style={{ fontFamily: 'Caviar Dreams', color: 'rgba(255,255,255,0.30)' }}>E-Posta Adresi</span>
-                <span className="text-white/85 text-[15px] font-medium" style={{ fontFamily: 'Caviar Dreams' }}>{user.Email}</span>
+                <span className="text-[12px] font-bold tracking-wider block mb-1" style={{ fontFamily: 'Caviar Dreams', color: 'rgba(255,255,255,0.45)' }}>E-Posta Adresi</span>
+                <span className="text-white/90 text-[15px] font-bold" style={{ fontFamily: 'Caviar Dreams' }}>{user.Email}</span>
             </div>
 
             {/* Çıkış */}
             <div className="pt-4">
                 <button onClick={onLogout}
-                    className="w-full sm:w-auto px-8 py-3 rounded-xl text-[#FF5555] text-[12px] font-bold hover:bg-[#FF5555]/8 transition"
+                    className="w-full sm:w-auto px-8 py-3 rounded-xl text-[#FF5555] text-[13px] font-bold hover:bg-[#FF5555]/8 transition"
                     style={{ border: '1px solid rgba(255,85,85,0.15)', fontFamily: 'Caviar Dreams' }}>
                     ÇIKIŞ YAP
                 </button>

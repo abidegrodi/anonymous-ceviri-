@@ -72,7 +72,7 @@ export default function Footer() {
               className="hidden sm:block w-[1px] h-8 shrink-0"
               style={{ background: "rgba(123, 94, 167, 0.2)" }}
             />
-            <p className="hidden sm:block font-caviar text-[12px] leading-[18px] text-white/25 max-w-[240px]">
+            <p className="hidden sm:block font-caviar text-[13px] leading-[18px] text-white/40 font-medium whitespace-nowrap" style={{ fontStyle: 'normal' }}>
               Türkiye&apos;nin en kapsamlı oyun çeviri platformu.
             </p>
           </div>
@@ -85,7 +85,7 @@ export default function Footer() {
                 <Link
                   key={link.href}
                   href={link.href}
-                  className="font-caviar text-[12px] text-white/30 hover:text-[#C99BFF] transition-colors duration-200"
+                  className="font-caviar text-[12px] text-white/45 font-medium hover:text-[#C99BFF] transition-colors duration-200"
                 >
                   {link.label}
                 </Link>
@@ -106,7 +106,7 @@ export default function Footer() {
                   href={item.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-9 h-9 rounded-full flex items-center justify-center text-white/30 hover:text-[#C99BFF] hover:border-[#C99BFF]/30 transition-all duration-200"
+                  className="w-9 h-9 rounded-full flex items-center justify-center text-white/40 hover:text-[#C99BFF] hover:border-[#C99BFF]/30 transition-all duration-200"
                   style={{
                     background: "rgba(123, 94, 167, 0.06)",
                     border: "1px solid rgba(123, 94, 167, 0.12)",
@@ -125,10 +125,10 @@ export default function Footer() {
           className="py-5 flex flex-col sm:flex-row justify-between items-center gap-2"
           style={{ borderTop: "1px solid rgba(123, 94, 167, 0.08)" }}
         >
-          <p className="font-caviar text-[11px] text-white/15">
+          <p className="font-caviar text-[11px] text-white/30 font-medium">
             © 2026 Anonymous Çeviri. Tüm hakları saklıdır.
           </p>
-          <p className="font-caviar text-[11px] text-white/10">
+          <p className="font-caviar text-[11px] text-white/20 font-medium">
             made with love in izmir by &quot;grodi.co&quot;
           </p>
         </div>

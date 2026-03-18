@@ -87,19 +87,19 @@ export default function Duyurular() {
       <div className="pt-[100px] pb-16 px-4 md:px-8 lg:px-12 max-w-[1280px] mx-auto">
         {/* Breadcrumb */}
         <div className="flex items-center gap-3 text-sm mb-6">
-          <Link href="/" className="text-white/50 hover:text-[#C99BFF] transition-colors uppercase" style={{ fontFamily: "Caviar Dreams" }}>ANA SAYFA</Link>
+          <Link href="/" className="text-white/50 hover:text-[#C99BFF] transition-colors" style={{ fontFamily: "Caviar Dreams" }}>Ana Sayfa</Link>
           <Image src="/icons/arrowr.svg" alt=">" width={20} height={20} className="opacity-50" />
-          <span className="font-medium uppercase" style={{ fontFamily: "Caviar Dreams", background: "linear-gradient(180deg, rgba(255,255,255,0.90) 0%, rgba(121,93,153,0.90) 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>
-            DUYURULAR
+          <span className="font-medium" style={{ fontFamily: "Caviar Dreams", background: "linear-gradient(180deg, rgba(255,255,255,0.90) 0%, rgba(121,93,153,0.90) 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>
+            Duyurular
           </span>
         </div>
 
         {/* Title */}
         <div className="mb-8">
-          <h1 className="mb-3 uppercase" style={{ fontFamily: "Trajan Pro, serif", fontSize: "clamp(28px, 5vw, 47.8px)", fontWeight: 700, lineHeight: "clamp(32px, 5.5vw, 48px)", letterSpacing: "-0.96px" }}>
+          <h1 className="mb-3" style={{ fontFamily: "Trajan Pro, serif", fontSize: "clamp(28px, 5vw, 47.8px)", fontWeight: 700, lineHeight: "clamp(32px, 5.5vw, 48px)", letterSpacing: "-0.96px" }}>
             <span className="text-[#C99BFF]">| </span>
             <span style={{ background: "linear-gradient(180deg, rgba(255,255,255,0.90) 0%, rgba(121,93,153,0.90) 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>
-              DUYURULAR
+              Duyurular
             </span>
           </h1>
           <p style={{ fontFamily: "Caviar Dreams", fontSize: "18px", fontWeight: 400, lineHeight: "28px", color: "#FAF8FF" }}>

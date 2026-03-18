@@ -40,7 +40,7 @@ export default function EditorsChoice() {
     >
       <div className="mx-auto w-full" style={{ maxWidth: "1280px" }}>
       <div
-        className="relative w-full min-h-[220px] sm:min-h-[260px] md:h-[300px] overflow-hidden rounded-[16px] sm:rounded-[24px] flex items-center border border-white/[0.06]"
+        className="relative w-full overflow-hidden rounded-[16px] sm:rounded-[24px] flex items-end sm:items-center border border-white/[0.06] aspect-[1080/1350] sm:aspect-auto sm:min-h-[260px] md:h-[300px]"
         style={{
           boxShadow:
             "0 0 80px rgba(201, 155, 255, 0.15), 0 0 160px rgba(79, 87, 187, 0.08), 0 4px 60px rgba(121, 93, 153, 0.12), 0 8px 32px rgba(0, 0, 0, 0.5)",
@@ -68,12 +68,19 @@ export default function EditorsChoice() {
           }}
         ></div>
 
-        {/* Gradient Overlay */}
+        {/* Gradient Overlay - soldan sağa (desktop), alttan yukarı (mobile) */}
         <div
-          className="absolute left-0 top-0 w-full h-full"
+          className="absolute left-0 top-0 w-full h-full hidden sm:block"
           style={{
             background:
               "linear-gradient(90deg, black 0%, rgba(0, 0, 0, 0.80) 50%, rgba(0, 0, 0, 0) 100%)",
+          }}
+        ></div>
+        <div
+          className="absolute left-0 top-0 w-full h-full sm:hidden"
+          style={{
+            background:
+              "linear-gradient(0deg, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.75) 40%, rgba(0,0,0,0.3) 70%, transparent 100%)",
           }}
         ></div>
 

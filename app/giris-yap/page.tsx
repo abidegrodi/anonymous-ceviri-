@@ -72,8 +72,8 @@ export default function GirisYapPage() {
 
     const inputStyles = (field: string) => ({
         fontFamily: 'Caviar Dreams',
-        background: focusedField === field ? 'rgba(201,155,255,0.06)' : 'rgba(255,255,255,0.025)',
-        border: focusedField === field ? '1px solid rgba(201,155,255,0.30)' : '1px solid rgba(255,255,255,0.07)',
+        background: focusedField === field ? 'rgba(201,155,255,0.08)' : 'rgba(255,255,255,0.05)',
+        border: focusedField === field ? '1px solid rgba(201,155,255,0.35)' : '1px solid rgba(255,255,255,0.12)',
         boxShadow: focusedField === field
             ? '0 0 0 3px rgba(201,155,255,0.06), 0 4px 16px rgba(201,155,255,0.08)'
             : 'none',
@@ -97,7 +97,7 @@ export default function GirisYapPage() {
                     sizes="100vw"
                 />
                 <div className="absolute inset-0" style={{
-                    background: 'linear-gradient(180deg, rgba(10,10,10,0.55) 0%, rgba(10,10,10,0.80) 35%, rgba(10,10,10,0.96) 65%, #0A0A0A 100%)',
+                    background: 'linear-gradient(180deg, rgba(10,10,10,0.75) 0%, rgba(10,10,10,0.90) 30%, rgba(10,10,10,0.98) 55%, #0A0A0A 100%)',
                 }} />
                 <div className="absolute inset-0" style={{
                     background: 'radial-gradient(ellipse 90% 50% at 50% 20%, rgba(201,155,255,0.06) 0%, transparent 70%)',
@@ -159,7 +159,7 @@ export default function GirisYapPage() {
                     }}>
                         GELECEĞİ KENDİ<br />DİLİNDE OYNA
                     </h1>
-                    <p className="text-white/40 text-[15px] xl:text-[16px] leading-[26px]" style={{ fontFamily: 'Caviar Dreams' }}>
+                    <p className="text-white/50 text-[15px] xl:text-[16px] leading-[26px]" style={{ fontFamily: 'Caviar Dreams' }}>
                         Türkiye&apos;nin en kapsamlı oyun yerelleştirme platformuna hoş geldiniz.
                     </p>
                 </div>
@@ -208,7 +208,7 @@ export default function GirisYapPage() {
                         <header>
                             <div className="flex items-center gap-3 mb-4">
                                 <span className="w-6 h-[2px] rounded-full" style={{ background: 'linear-gradient(90deg, #C99BFF, transparent)' }} />
-                                <span className="text-[9px] uppercase tracking-[3px] text-[#C99BFF]/40" style={{ fontFamily: 'Caviar Dreams' }}>Hesap</span>
+                                <span className="text-[9px] uppercase tracking-[3px] text-[#C99BFF]/60" style={{ fontFamily: 'Caviar Dreams' }}>Hesap</span>
                             </div>
                             <h2 className="font-bold uppercase mb-2" style={{
                                 fontFamily: 'Trajan Pro, serif',
@@ -221,7 +221,7 @@ export default function GirisYapPage() {
                             }}>
                                 Giriş Yap
                             </h2>
-                            <p className="text-white/30 text-[13px] sm:text-[14px]" style={{ fontFamily: 'Caviar Dreams' }}>
+                            <p className="text-white/80 text-[14px] sm:text-[15px] font-medium" style={{ fontFamily: 'Caviar Dreams' }}>
                                 Hesabınıza giriş yaparak tüm çevirilere erişin.
                             </p>
                         </header>
@@ -234,7 +234,7 @@ export default function GirisYapPage() {
                                 <div className="flex flex-col gap-2">
                                     <label
                                         htmlFor={emailId}
-                                        className="text-white/45 text-[11px] font-bold uppercase tracking-[1.5px]"
+                                        className="text-white text-[13px] font-bold tracking-[1px]"
                                         style={{ fontFamily: 'Caviar Dreams' }}
                                     >
                                         E-Posta
@@ -256,7 +256,7 @@ export default function GirisYapPage() {
                                             placeholder="ornek@email.com"
                                             autoComplete="email"
                                             required
-                                            className="w-full h-[52px] pl-11 pr-4 rounded-[14px] text-[14px] text-white placeholder:text-white/15 outline-none transition-all duration-300"
+                                            className="w-full h-[52px] pl-11 pr-4 rounded-[14px] text-[14px] text-white placeholder:text-white/40 outline-none transition-all duration-300"
                                             style={inputStyles('email')}
                                         />
                                     </div>
@@ -267,7 +267,7 @@ export default function GirisYapPage() {
                                     <div className="flex justify-between items-center">
                                         <label
                                             htmlFor={passwordId}
-                                            className="text-white/45 text-[11px] font-bold uppercase tracking-[1.5px]"
+                                            className="text-white text-[13px] font-bold tracking-[1px]"
                                             style={{ fontFamily: 'Caviar Dreams' }}
                                         >
                                             Şifre
@@ -275,7 +275,7 @@ export default function GirisYapPage() {
                                         <button
                                             type="button"
                                             onClick={() => setShowForgotPassword(true)}
-                                            className="text-[#C99BFF]/25 text-[11px] hover:text-[#C99BFF]/60 transition-colors duration-200"
+                                            className="text-[#C99BFF]/80 text-[12px] font-medium hover:text-[#C99BFF] transition-colors duration-200"
                                             style={{ fontFamily: 'Caviar Dreams' }}
                                         >
                                             Şifremi Unuttum
@@ -298,7 +298,7 @@ export default function GirisYapPage() {
                                             placeholder="••••••••"
                                             autoComplete="current-password"
                                             required
-                                            className="w-full h-[52px] pl-11 pr-12 rounded-[14px] text-[14px] text-white placeholder:text-white/15 outline-none transition-all duration-300"
+                                            className="w-full h-[52px] pl-11 pr-12 rounded-[14px] text-[14px] text-white placeholder:text-white/40 outline-none transition-all duration-300"
                                             style={inputStyles('password')}
                                         />
                                         <button
@@ -363,18 +363,18 @@ export default function GirisYapPage() {
 
                                 {/* Divider */}
                                 <div className="flex items-center gap-4" role="separator">
-                                    <span className="flex-1 h-px" style={{ background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.05))' }} />
-                                    <span className="text-[9px] text-white/10 uppercase tracking-[2px]" style={{ fontFamily: 'Caviar Dreams' }}>veya</span>
-                                    <span className="flex-1 h-px" style={{ background: 'linear-gradient(90deg, rgba(255,255,255,0.05), transparent)' }} />
+                                    <span className="flex-1 h-px" style={{ background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.08))' }} />
+                                    <span className="text-[10px] text-white/40 font-bold uppercase tracking-[2px]" style={{ fontFamily: 'Caviar Dreams' }}>veya</span>
+                                    <span className="flex-1 h-px" style={{ background: 'linear-gradient(90deg, rgba(255,255,255,0.08), transparent)' }} />
                                 </div>
 
                                 {/* Register CTA */}
                                 <Link
                                     href="/kayit-ol"
-                                    className="w-full h-[48px] rounded-[14px] flex items-center justify-center gap-2 text-[12px] font-bold no-underline transition-all duration-300 hover:bg-white/[0.03] hover:border-white/10 active:scale-[0.98]"
+                                    className="w-full h-[48px] rounded-[14px] flex items-center justify-center gap-2 text-[13px] font-bold no-underline transition-all duration-300 hover:bg-white/[0.03] hover:border-white/10 active:scale-[0.98]"
                                     style={{
                                         fontFamily: 'Caviar Dreams',
-                                        color: 'rgba(255,255,255,0.25)',
+                                        color: 'rgba(255,255,255,0.70)',
                                         border: '1px solid rgba(255,255,255,0.04)',
                                     }}
                                 >
@@ -387,7 +387,7 @@ export default function GirisYapPage() {
                                     <button
                                         type="button"
                                         onClick={handleResendVerification}
-                                        className="text-white/10 text-[11px] hover:text-[#C99BFF]/40 transition-colors duration-200"
+                                        className="text-white/50 text-[12px] font-medium hover:text-[#C99BFF]/80 transition-colors duration-200"
                                         style={{ fontFamily: 'Caviar Dreams' }}
                                     >
                                         Doğrulama e-postasını tekrar gönder
@@ -415,7 +415,7 @@ export default function GirisYapPage() {
                                         <span className="text-white/60 text-[12px] font-bold block mb-0.5" style={{ fontFamily: 'Caviar Dreams' }}>
                                             Şifre Sıfırlama
                                         </span>
-                                        <span id={forgotDescId} className="text-white/25 text-[12px] leading-relaxed" style={{ fontFamily: 'Caviar Dreams' }}>
+                                        <span id={forgotDescId} className="text-white/40 text-[12px] leading-relaxed" style={{ fontFamily: 'Caviar Dreams' }}>
                                             Kayıtlı e-posta adresinize şifre sıfırlama bağlantısı gönderilecektir.
                                         </span>
                                     </div>
@@ -425,7 +425,7 @@ export default function GirisYapPage() {
                                 <div className="flex flex-col gap-2">
                                     <label
                                         htmlFor={forgotEmailId}
-                                        className="text-white/45 text-[11px] font-bold uppercase tracking-[1.5px]"
+                                        className="text-white text-[13px] font-bold tracking-[1px]"
                                         style={{ fontFamily: 'Caviar Dreams' }}
                                     >
                                         E-Posta
@@ -445,7 +445,7 @@ export default function GirisYapPage() {
                                             autoComplete="email"
                                             aria-describedby={forgotDescId}
                                             required
-                                            className="w-full h-[52px] pl-11 pr-4 rounded-[14px] text-[14px] text-white placeholder:text-white/15 outline-none transition-all duration-300"
+                                            className="w-full h-[52px] pl-11 pr-4 rounded-[14px] text-[14px] text-white placeholder:text-white/40 outline-none transition-all duration-300"
                                             style={inputStyles('forgotEmail')}
                                         />
                                     </div>
@@ -466,7 +466,7 @@ export default function GirisYapPage() {
                                     <button
                                         type="button"
                                         onClick={() => setShowForgotPassword(false)}
-                                        className="h-[48px] px-6 rounded-[14px] text-white/25 text-[12px] font-bold hover:bg-white/[0.03] hover:text-white/40 transition-all duration-200 active:scale-[0.98]"
+                                        className="h-[48px] px-6 rounded-[14px] text-white/40 text-[12px] font-bold hover:bg-white/[0.03] hover:text-white/40 transition-all duration-200 active:scale-[0.98]"
                                         style={{ fontFamily: 'Caviar Dreams', border: '1px solid rgba(255,255,255,0.04)' }}
                                     >
                                         GERİ
@@ -492,12 +492,12 @@ export default function GirisYapPage() {
                                     </div>
                                     <div>
                                         <span className="text-[12px] text-white/55 font-bold block leading-tight" style={{ fontFamily: 'Caviar Dreams' }}>Anonymous Abonelik</span>
-                                        <span className="text-[11px] text-white/20" style={{ fontFamily: 'Caviar Dreams' }}>Tüm çevirilere sınırsız erişim</span>
+                                        <span className="text-[11px] text-white/35" style={{ fontFamily: 'Caviar Dreams' }}>Tüm çevirilere sınırsız erişim</span>
                                     </div>
                                 </div>
                                 <div className="text-right shrink-0 pl-4">
                                     <span className="text-[20px] font-bold" style={{ fontFamily: 'Trajan Pro', color: '#F2B90D' }}>₺150</span>
-                                    <span className="text-[11px] text-white/20" style={{ fontFamily: 'Caviar Dreams' }}>/ay</span>
+                                    <span className="text-[11px] text-white/35" style={{ fontFamily: 'Caviar Dreams' }}>/ay</span>
                                 </div>
                             </div>
                         </section>
@@ -507,7 +507,7 @@ export default function GirisYapPage() {
 
                 {/* Footer — mobile & tablet only */}
                 <footer className="lg:hidden text-center pb-6 pt-2">
-                    <small className="text-[10px] text-white/10" style={{ fontFamily: 'Caviar Dreams' }}>
+                    <small className="text-[10px] text-white/25" style={{ fontFamily: 'Caviar Dreams' }}>
                         © 2026 Anonymous Çeviri. Tüm hakları saklıdır.
                     </small>
                 </footer>

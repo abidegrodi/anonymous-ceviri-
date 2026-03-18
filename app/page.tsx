@@ -91,6 +91,14 @@ export default function Home() {
     return allGames.slice(0, 8).map(mapGameToCard);
   }, [allGames]);
 
+  // Çok Yakında: devam eden çeviriler (completeRate < 100)
+  const comingSoonGames = useMemo<GameCardData[]>(() => {
+    return allGames
+      .filter((g) => g.completeRate < 100)
+      .slice(0, 8)
+      .map(mapGameToCard);
+  }, [allGames]);
+
   // Seçili kategoriye göre filtrelenmiş oyunlar
   const filteredByCategory = useMemo<GameCardData[]>(() => {
     if (activeCategory === "all") return [];
@@ -168,14 +176,24 @@ export default function Home() {
           </div>
         ) : activeCategory === "all" ? (
           <>
-            {/* En Yeni Türkçe Çeviriler */}
+            {/* Çok Yakında (devam eden çeviriler) */}
+            {comingSoonGames.length > 0 && (
+              <GameSection
+                title="| Çok Yakında"
+                games={comingSoonGames}
+                showViewAll={false}
+                onNotify={handleNotify}
+              />
+            )}
+
+            <EditorsChoice />
+
+            {/* En Yeni Türkçe Çeviriler (kategori bölümlerinin üstünde) */}
             <GameSection
               title="| En Yeni Türkçe Çeviriler"
               games={newestGames}
               onNotify={handleNotify}
             />
-
-            <EditorsChoice />
 
             {/* Kategorilere göre bölümler */}
             {categorySections.map((section, idx) => (

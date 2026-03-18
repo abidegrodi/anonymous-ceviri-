@@ -62,7 +62,7 @@ function AccordionItem({
         />
 
         <span
-          className={`flex-1 text-[14px] transition-colors duration-300 ${isOpen ? "text-white" : "text-white/50 group-hover/item:text-white/70"}`}
+          className={`flex-1 text-[14px] transition-colors duration-300 ${isOpen ? "text-white" : "text-white/60 group-hover/item:text-white/80"}`}
           style={{ fontFamily: "Caviar Dreams" }}
         >
           {item.question}
@@ -99,7 +99,7 @@ function AccordionItem({
               className="absolute left-0 top-0 bottom-0 w-[2px] rounded-full"
               style={{ background: "linear-gradient(180deg, rgba(201,155,255,0.3) 0%, transparent 100%)" }}
             />
-            <p className="text-[13px] text-white/40 leading-[22px]" style={{ fontFamily: "Caviar Dreams" }}>
+            <p className="text-[13px] text-white/55 leading-[22px]" style={{ fontFamily: "Caviar Dreams" }}>
               {item.answer}
             </p>
           </div>
@@ -181,7 +181,7 @@ export default function FAQPage() {
           </div>
 
           <h1
-            className="font-bold uppercase mb-4"
+            className="font-bold mb-4"
             style={{
               fontSize: "clamp(28px, 5vw, 48px)",
               fontFamily: "Trajan Pro, serif",
@@ -195,7 +195,7 @@ export default function FAQPage() {
           >
             Sıkça Sorulan Sorular
           </h1>
-          <p className="text-white/35 text-sm max-w-[420px] mx-auto leading-relaxed" style={{ fontFamily: "Caviar Dreams" }}>
+          <p className="text-white/50 text-sm max-w-[420px] mx-auto leading-relaxed" style={{ fontFamily: "Caviar Dreams" }}>
             Platform, üyelikler ve teknik konular hakkında merak ettiğiniz her şey.
           </p>
         </div>
@@ -232,7 +232,7 @@ export default function FAQPage() {
               placeholder="Sorunuzu arayın..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full h-13 rounded-2xl pl-13 pr-5 text-sm text-white placeholder:text-white/20 focus:outline-none transition-all"
+              className="w-full h-13 rounded-2xl pl-13 pr-5 text-sm text-white placeholder:text-white/35 focus:outline-none transition-all"
               style={{
                 fontFamily: "Caviar Dreams",
                 background: "rgba(201,155,255,0.03)",
@@ -261,7 +261,7 @@ export default function FAQPage() {
                     ? "linear-gradient(135deg, rgba(201,155,255,0.15) 0%, rgba(120,80,200,0.08) 100%)"
                     : "rgba(255,255,255,0.02)",
                   border: `1px solid ${isActive ? "rgba(201,155,255,0.3)" : "rgba(255,255,255,0.05)"}`,
-                  color: isActive ? "#C99BFF" : "rgba(255,255,255,0.3)",
+                  color: isActive ? "#C99BFF" : "rgba(255,255,255,0.45)",
                   boxShadow: isActive
                     ? "0 2px 12px rgba(201,155,255,0.1), inset 0 1px 0 rgba(201,155,255,0.15)"
                     : "none",
@@ -366,7 +366,7 @@ export default function FAQPage() {
               >
                 Aradığınız cevabı bulamadınız mı?
               </h4>
-              <p className="text-[13px] text-white/30" style={{ fontFamily: "Caviar Dreams" }}>
+              <p className="text-[13px] text-white/45" style={{ fontFamily: "Caviar Dreams" }}>
                 Destek ekibimiz size yardımcı olmaktan memnuniyet duyar.
               </p>
             </div>
