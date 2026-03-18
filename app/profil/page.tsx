@@ -117,7 +117,7 @@ function ProfileContent() {
             {showUsernameModal && (
                 <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/70 backdrop-blur-sm px-4">
                     <div className="w-full max-w-[440px] p-6 sm:p-8 rounded-[20px]" style={{ background: 'linear-gradient(145deg, rgba(30,28,22,0.95) 0%, rgba(18,17,14,0.98) 100%)', border: '1px solid rgba(201,155,255,0.10)' }}>
-                        <h2 className="text-white text-lg font-bold mb-2" style={{ fontFamily: 'Caviar Dreams' }}>Kullanıcı Adı Belirle</h2>
+                        <h2 className="text-white text-lg font-bold mb-2" style={{ fontFamily: 'Trajan Pro, serif' }}>Kullanıcı Adı Belirle</h2>
                         <p className="text-white/40 text-sm mb-6" style={{ fontFamily: 'Caviar Dreams' }}>
                             {user.Username ? 'Kullanıcı adınızı güncelleyebilirsiniz.' : 'Yorum yapabilmek için bir kullanıcı adı belirlemeniz gerekmektedir.'}
                         </p>
@@ -335,7 +335,7 @@ function UyelikTab() {
                 <div className="w-16 h-16 mx-auto mb-5 rounded-2xl flex items-center justify-center" style={{ background: 'rgba(201,155,255,0.06)', border: '1px solid rgba(201,155,255,0.12)' }}>
                     <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="rgba(201,155,255,0.40)" strokeWidth="1.5"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" strokeLinecap="round" strokeLinejoin="round" /></svg>
                 </div>
-                <h3 className="text-white/60 text-base font-bold mb-2" style={{ fontFamily: 'Caviar Dreams', fontSize: '14px' }}>Aktif Üyeliğiniz Bulunmamaktadır</h3>
+                <h3 className="text-white/60 text-base font-bold mb-2" style={{ fontFamily: 'Trajan Pro, serif', fontSize: '14px' }}>Aktif Üyeliğiniz Bulunmamaktadır</h3>
                 <p className="text-white/25 text-sm max-w-md mx-auto mb-7" style={{ fontFamily: 'Caviar Dreams' }}>
                     Anonymous Çeviri üyeliği ile tüm Türkçe çevirilere erişim sağlayabilirsiniz.
                 </p>

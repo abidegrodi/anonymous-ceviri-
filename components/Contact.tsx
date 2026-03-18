@@ -21,7 +21,7 @@ export default function Contact() {
     <section id="contact" className="py-20 px-4 bg-white">
       <div className="container mx-auto max-w-4xl">
         <div className="text-center mb-12">
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4 font-trajan">
             İletişime Geçin
           </h2>
           <p className="text-xl text-gray-600">
@@ -31,26 +31,26 @@ export default function Contact() {
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
           <div>
-            <h3 className="text-2xl font-bold text-gray-900 mb-6">İletişim Bilgileri</h3>
+            <h3 className="text-2xl font-bold text-gray-900 mb-6 font-trajan">İletişim Bilgileri</h3>
             <div className="space-y-6">
               <div className="flex items-start">
                 <div className="text-blue-600 text-2xl mr-4">📧</div>
                 <div>
-                  <h4 className="font-semibold text-gray-900 mb-1">E-posta</h4>
+                  <h4 className="font-semibold text-gray-900 mb-1 font-trajan">E-posta</h4>
                   <p className="text-gray-600">info@gametranslate.com</p>
                 </div>
               </div>
               <div className="flex items-start">
                 <div className="text-blue-600 text-2xl mr-4">📞</div>
                 <div>
-                  <h4 className="font-semibold text-gray-900 mb-1">Telefon</h4>
+                  <h4 className="font-semibold text-gray-900 mb-1 font-trajan">Telefon</h4>
                   <p className="text-gray-600">+90 (XXX) XXX XX XX</p>
                 </div>
               </div>
               <div className="flex items-start">
                 <div className="text-blue-600 text-2xl mr-4">📍</div>
                 <div>
-                  <h4 className="font-semibold text-gray-900 mb-1">Adres</h4>
+                  <h4 className="font-semibold text-gray-900 mb-1 font-trajan">Adres</h4>
                   <p className="text-gray-600">İstanbul, Türkiye</p>
                 </div>
               </div>

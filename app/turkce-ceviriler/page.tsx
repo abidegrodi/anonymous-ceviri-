@@ -285,7 +285,7 @@ export default function TurkceYamalar() {
           <div className="flex items-center justify-center py-24">
             <div className="flex flex-col items-center gap-3 text-center">
               <span className="text-white/15 text-5xl">🎮</span>
-              <h3 className="text-white/50 text-base font-bold font-caviar">Çeviri bulunamadı</h3>
+              <h3 className="text-white/50 text-base font-bold font-trajan">Çeviri bulunamadı</h3>
               <p className="text-white/25 text-sm font-caviar">Farklı filtreler deneyebilirsiniz.</p>
             </div>
           </div>
@@ -394,7 +394,7 @@ function GameCard({ game, onNotify }: { game: GameListItem; onNotify?: (gameId: 
         </div>
       </div>
       <div className="mt-2 px-0.5">
-        <h3 className="font-caviar font-semibold text-xs sm:text-sm leading-[1.3] text-white/90 group-hover:text-[#C99BFF] transition-colors duration-300 line-clamp-2">{game.name}</h3>
+        <h3 className="font-trajan font-semibold text-xs sm:text-sm leading-[1.3] text-white/90 group-hover:text-[#C99BFF] transition-colors duration-300 line-clamp-2">{game.name}</h3>
       </div>
     </Link>
   );

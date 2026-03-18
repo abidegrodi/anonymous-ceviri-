@@ -31,9 +31,16 @@ export default function EditorsChoice() {
     data?.backgroundImage?.data?.attributes?.url || FALLBACK.backgroundImage;
 
   return (
-    <section className="py-8 sm:py-12 px-4 flex justify-center">
+    <section
+      className="py-8 sm:py-12"
+      style={{
+        paddingLeft: "clamp(16px, 5vw, 344px)",
+        paddingRight: "clamp(16px, 5vw, 344px)",
+      }}
+    >
+      <div className="mx-auto w-full" style={{ maxWidth: "1280px" }}>
       <div
-        className="relative w-full max-w-[1189px] min-h-[220px] sm:min-h-[260px] md:h-[300px] overflow-hidden rounded-[16px] sm:rounded-[24px] flex items-center border border-white/[0.06]"
+        className="relative w-full min-h-[220px] sm:min-h-[260px] md:h-[300px] overflow-hidden rounded-[16px] sm:rounded-[24px] flex items-center border border-white/[0.06]"
         style={{
           boxShadow:
             "0 0 80px rgba(201, 155, 255, 0.15), 0 0 160px rgba(79, 87, 187, 0.08), 0 4px 60px rgba(121, 93, 153, 0.12), 0 8px 32px rgba(0, 0, 0, 0.5)",
@@ -107,6 +114,7 @@ export default function EditorsChoice() {
             </span>
           </Link>
         </div>
+      </div>
       </div>
     </section>
   );

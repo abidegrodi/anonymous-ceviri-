@@ -211,7 +211,7 @@ export default function RegisterPage() {
                                         boxShadow: '0 2px 16px rgba(201,155,255,0.15)',
                                     }}
                                 >
-                                    {isSubmitting ? <div className="w-5 h-5 border-2 border-black/20 border-t-black/60 rounded-full animate-spin" /> : 'KAYIT OL'}
+                                    {isSubmitting ? <div className="w-5 h-5 border-2 border-black/20 border-t-black/60 rounded-full animate-spin" /> : 'Kayıt Ol'}
                                 </button>
 
                                 {/* Login link */}

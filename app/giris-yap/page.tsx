@@ -219,7 +219,7 @@ export default function GirisYapPage() {
                                 WebkitTextFillColor: 'transparent',
                                 backgroundClip: 'text',
                             }}>
-                                GİRİŞ YAP
+                                Giriş Yap
                             </h2>
                             <p className="text-white/30 text-[13px] sm:text-[14px]" style={{ fontFamily: 'Caviar Dreams' }}>
                                 Hesabınıza giriş yaparak tüm çevirilere erişin.
@@ -352,7 +352,7 @@ export default function GirisYapPage() {
                                             <span className="w-5 h-5 border-2 border-black/20 border-t-black/60 rounded-full animate-spin" role="status" aria-label="Giriş yapılıyor" />
                                         ) : (
                                             <>
-                                                GİRİŞ YAP
+                                                Giriş Yap
                                                 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden="true">
                                                     <path d="M5 12h14m-7-7l7 7-7 7" strokeLinecap="round" strokeLinejoin="round" />
                                                 </svg>
@@ -378,8 +378,8 @@ export default function GirisYapPage() {
                                         border: '1px solid rgba(255,255,255,0.04)',
                                     }}
                                 >
-                                    HESABIN YOK MU?
-                                    <span style={{ color: '#C99BFF' }}>KAYIT OL</span>
+                                    Hesabın yok mu?
+                                    <span style={{ color: '#C99BFF' }}>Kayıt Ol</span>
                                 </Link>
 
                                 {/* Resend verification */}

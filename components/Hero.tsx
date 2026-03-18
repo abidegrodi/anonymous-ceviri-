@@ -50,15 +50,16 @@ export default function Hero() {
 
       {/* Content */}
       <div
-        className="relative mx-auto flex flex-1 flex-col justify-end px-4 sm:px-6 md:px-8"
+        className="relative flex flex-1 flex-col justify-end w-full"
         style={{
           zIndex: 10,
-          width: '100%',
-          maxWidth: '1280px',
           paddingTop: '80px',
           paddingBottom: 'clamp(24px, 6vw, 80px)',
+          paddingLeft: 'clamp(16px, 5vw, 344px)',
+          paddingRight: 'clamp(16px, 5vw, 344px)',
         }}
       >
+        <div className="mx-auto w-full" style={{ maxWidth: "1280px" }}>
         <div
           className="w-full max-w-[672px] flex flex-col justify-start items-start gap-4 sm:gap-6"
         >
@@ -120,7 +121,7 @@ export default function Hero() {
                 />
               </div>
               <div
-                className="text-white text-sm sm:text-base font-normal font-caviar uppercase whitespace-nowrap"
+                className="text-white text-sm sm:text-base font-normal font-caviar whitespace-nowrap"
                 style={{
                   lineHeight: '24px',
                   textShadow: '0px 0px 0px rgba(255, 255, 255, 1.00)',
@@ -138,7 +139,7 @@ export default function Hero() {
                 }}
               >
                 <div
-                  className="text-white text-sm sm:text-base font-normal font-caviar uppercase"
+                  className="text-white text-sm sm:text-base font-normal font-caviar"
                   style={{
                     lineHeight: '24px',
                     textShadow: '0px 0px 0px rgba(255, 255, 255, 1.00)',
@@ -149,6 +150,7 @@ export default function Hero() {
               </Link>
             )}
           </div>
+        </div>
         </div>
       </div>
     </section>

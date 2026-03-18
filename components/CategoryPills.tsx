@@ -148,18 +148,18 @@ export default function CategoryPills({ categories, activeCategory, onCategoryCh
 
   return (
     <section
-      className="mt-16 z-40 overflow-hidden"
+      className="mt-16 z-40"
       style={{
         background: "#050505",
         boxShadow: "0px 25px 50px -12px black",
         borderBottom: "1px solid rgba(255, 255, 255, 0.05)",
         paddingTop: "16px",
         paddingBottom: "16px",
-        paddingLeft: "clamp(12px, 5vw, 344px)",
-        paddingRight: "clamp(12px, 5vw, 344px)",
+        paddingLeft: "clamp(16px, 5vw, 344px)",
+        paddingRight: "clamp(16px, 5vw, 344px)",
       }}
     >
-      <div className="relative flex items-center mx-auto w-full" style={{ maxWidth: "1280px" }}>
+      <div className="relative flex items-center mx-auto w-full overflow-hidden" style={{ maxWidth: "1280px" }}>
         {/* Sol ok - scroll alanının üstünde, solda */}
         <button
           onClick={() => scroll("left")}
@@ -179,7 +179,7 @@ export default function CategoryPills({ categories, activeCategory, onCategoryCh
         {/* Kaydırılabilir pill'ler - mask ile kenarlarda fade */}
         <div
           ref={scrollRef}
-          className="flex items-center gap-3 overflow-x-auto scrollbar-hide w-full px-1"
+          className="flex items-center gap-3 overflow-x-auto scrollbar-hide w-full"
           style={{
             scrollbarWidth: "none",
             msOverflowStyle: "none",

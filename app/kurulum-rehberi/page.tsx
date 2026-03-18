@@ -116,7 +116,7 @@ export default function KurulumRehberiPage() {
                     <span className="text-[14px] sm:text-[16px] font-bold" style={{ fontFamily: "Caviar Dreams", color: "#C99BFF" }}>{step.number}</span>
                   </div>
                   <div className="flex-1 min-w-0">
-                    <h3 className="text-white/90 text-[14px] sm:text-[16px] font-bold mb-1.5" style={{ fontFamily: "Caviar Dreams" }}>{step.title}</h3>
+                    <h3 className="text-white/90 text-[14px] sm:text-[16px] font-bold mb-1.5" style={{ fontFamily: "Trajan Pro, serif" }}>{step.title}</h3>
                     <p className="text-[13px] sm:text-[14px] leading-relaxed" style={{ fontFamily: "Caviar Dreams", color: "rgba(255,255,255,0.55)" }}>{step.description}</p>
                     {step.tip && (
                       <div className="mt-3 p-3 rounded-xl flex items-start gap-2.5" style={{ background: "rgba(201,155,255,0.05)", border: "1px solid rgba(201,155,255,0.10)" }}>
@@ -133,7 +133,7 @@ export default function KurulumRehberiPage() {
 
           {/* FAQ */}
           <div className="mb-10">
-            <h2 className="text-[14px] uppercase tracking-wider mb-5" style={{ fontFamily: "Caviar Dreams", color: "rgba(255,255,255,0.70)" }}>Sık Sorulan Sorular</h2>
+            <h2 className="text-[14px] uppercase tracking-wider mb-5" style={{ fontFamily: "Trajan Pro, serif", color: "rgba(255,255,255,0.70)" }}>Sık Sorulan Sorular</h2>
             <div className="flex flex-col gap-2">
               {faqs.map((faq, i) => (
                 <div key={i} className="rounded-[16px] overflow-hidden" style={{ background: "rgba(24,22,17,0.65)", border: "1px solid rgba(255,255,255,0.06)" }}>

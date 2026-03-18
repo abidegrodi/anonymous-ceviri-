@@ -130,7 +130,7 @@ export default function SupportPage() {
               <h3
                 className="text-[17px] font-bold mb-2 transition-colors duration-300"
                 style={{
-                  fontFamily: "Caviar Dreams",
+                  fontFamily: "Trajan Pro, serif",
                   background: "linear-gradient(180deg, #FFFFFF 0%, #C99BFF 100%)",
                   WebkitBackgroundClip: "text",
                   WebkitTextFillColor: "transparent",
@@ -196,7 +196,7 @@ export default function SupportPage() {
                   <div className="w-[1px] h-5 shrink-0" style={{ background: "rgba(255,255,255,0.06)" }} />
 
                   <div className="flex-1 min-w-0">
-                    <h4 className="text-[15px] text-white/60 group-hover/a:text-white/90 truncate transition-colors duration-200" style={{ fontFamily: "Caviar Dreams" }}>
+                    <h4 className="text-[15px] text-white/60 group-hover/a:text-white/90 truncate transition-colors duration-200" style={{ fontFamily: "Trajan Pro, serif" }}>
                       {item.title}
                     </h4>
                   </div>
@@ -249,7 +249,7 @@ export default function SupportPage() {
               <h3
                 className="text-[17px] font-bold mb-1"
                 style={{
-                  fontFamily: "Caviar Dreams",
+                  fontFamily: "Trajan Pro, serif",
                   background: "linear-gradient(180deg, #FFFFFF 0%, #C99BFF 100%)",
                   WebkitBackgroundClip: "text",
                   WebkitTextFillColor: "transparent",

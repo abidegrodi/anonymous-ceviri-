@@ -172,7 +172,7 @@ export default function Duyurular() {
                       )}
                       <span className="text-[10px] text-white/20 hidden sm:inline" style={{ fontFamily: "Caviar Dreams" }}>{announcement.category}</span>
                     </div>
-                    <h3 className="text-white/85 text-[14px] sm:text-[16px] font-bold group-hover:text-[#C99BFF] transition-colors truncate" style={{ fontFamily: "Caviar Dreams" }}>
+                    <h3 className="text-white/85 text-[14px] sm:text-[16px] font-bold group-hover:text-[#C99BFF] transition-colors truncate" style={{ fontFamily: "Trajan Pro, serif" }}>
                       {announcement.title}
                     </h3>
                     <p className="text-white/35 text-[12px] sm:text-[13px] truncate" style={{ fontFamily: "Caviar Dreams" }}>

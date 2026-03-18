@@ -28,11 +28,10 @@ export default function GameCard({ title, progress, image, href, gameId, onNotif
 
   const cardContent = (
     <div
-      className="flex-shrink-0 inline-flex flex-col cursor-pointer group"
-      style={{ width: "170px" }}
+      className="inline-flex flex-col cursor-pointer group w-full min-w-0"
     >
       <div className="relative overflow-hidden rounded-xl bg-[#111] transition-all duration-300 group-hover:shadow-[0_0_40px_rgba(201,155,255,0.12)]">
-        <div className="relative w-[170px] h-[225px]">
+        <div className="relative w-full" style={{ aspectRatio: "170 / 225" }}>
           <img
             src={image || "https://placehold.co/225x339"}
             alt={title}

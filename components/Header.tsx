@@ -99,7 +99,7 @@ export default function Header() {
                       border: '1px solid rgba(168, 133, 209, 0.45)',
                     }}
                   >
-                    <span style={authButtonStyle}>GİRİŞ YAP</span>
+                    <span style={authButtonStyle}>Giriş Yap</span>
                   </Link>
                   <Link
                     href="/kayit-ol"
@@ -109,7 +109,7 @@ export default function Header() {
                       border: '1px solid rgba(168, 133, 209, 0.45)',
                     }}
                   >
-                    <span style={authButtonStyle}>KAYIT OL</span>
+                    <span style={authButtonStyle}>Kayıt Ol</span>
                   </Link>
                 </>
               )}
@@ -197,7 +197,7 @@ export default function Header() {
                 >
                   <Image src="/icons/human.svg" alt="Profil" width={20} height={20} />
                   <span style={{ color: 'white', fontSize: '14px', fontFamily: 'Caviar Dreams', fontWeight: 400 }}>
-                    PROFİLİM
+                    Profilim
                   </span>
                 </Link>
               ) : (
@@ -212,7 +212,7 @@ export default function Header() {
                     }}
                   >
                     <span style={{ color: 'white', fontSize: '14px', fontFamily: 'Caviar Dreams', fontWeight: 400 }}>
-                      GİRİŞ YAP
+                      Giriş Yap
                     </span>
                   </Link>
                   <Link
@@ -225,7 +225,7 @@ export default function Header() {
                     }}
                   >
                     <span style={{ color: 'white', fontSize: '14px', fontFamily: 'Caviar Dreams', fontWeight: 400 }}>
-                      KAYIT OL
+                      Kayıt Ol
                     </span>
                   </Link>
                 </>

@@ -5,29 +5,39 @@
 /* Font Face Declarations */
 @font-face {
   font-family: 'Trajan Pro';
-  src: local('Trajan Pro'), local('TrajanPro-Regular');
-  font-weight: 400;
+  src: local('Trajan Pro'), local('TrajanPro-Regular'), local('Trajan Pro Regular'),
+       url('/fonts/Cinzel-Regular-latin-ext.woff2') format('woff2'),
+       url('/fonts/Cinzel-Regular-latin.woff2') format('woff2');
+  font-weight: 100 499;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'Trajan Pro';
-  src: local('Trajan Pro Bold'), local('TrajanPro-Bold');
-  font-weight: 700;
+  src: local('Trajan Pro Bold'), local('TrajanPro-Bold'), local('Trajan Pro 3'),
+       url('/fonts/Cinzel-Regular-latin-ext.woff2') format('woff2'),
+       url('/fonts/Cinzel-Regular-latin.woff2') format('woff2');
+  font-weight: 500 900;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'Caviar Dreams';
-  src: local('Caviar Dreams'), local('CaviarDreams');
-  font-weight: 400;
+  src: local('Caviar Dreams'), local('CaviarDreams'),
+       url('/fonts/CaviarDreams.woff2') format('woff2'),
+       url('/fonts/CaviarDreams.woff') format('woff'),
+       url('/fonts/CaviarDreams.ttf') format('truetype');
+  font-weight: 100 499;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'Caviar Dreams';
-  src: local('Caviar Dreams Bold'), local('CaviarDreams-Bold');
-  font-weight: 700;
+  src: local('Caviar Dreams Bold'), local('CaviarDreams-Bold'),
+       url('/fonts/CaviarDreams-Bold.woff2') format('woff2'),
+       url('/fonts/CaviarDreams-Bold.woff') format('woff'),
+       url('/fonts/CaviarDreams-Bold.ttf') format('truetype');
+  font-weight: 500 900;
   font-style: normal;
 }
 
@@ -70,6 +80,17 @@ body {
   color: var(--foreground);
   background: var(--background);
   font-family: 'Caviar Dreams', sans-serif;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 1000px #111111 inset !important;
+  -webkit-text-fill-color: #ffffff !important;
+  caret-color: #ffffff !important;
+  transition: background-color 5000s ease-in-out 0s;
+  border: 1px solid rgba(201, 155, 255, 0.20) !important;
 }
 
 @layer utilities {

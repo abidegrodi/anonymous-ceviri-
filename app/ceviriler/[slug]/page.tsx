@@ -271,7 +271,7 @@ export default function GameDetailPage() {
         <div className="flex items-center justify-center min-h-screen">
           <div className="flex flex-col items-center gap-4 text-center">
             <span className="text-white/30 text-6xl">🎮</span>
-            <h3 className="text-white/70 text-lg font-bold">Oyun bulunamadı</h3>
+            <h3 className="text-white/70 text-lg font-bold" style={{ fontFamily: "Trajan Pro, serif" }}>Oyun bulunamadı</h3>
             <Link href="/turkce-ceviriler" className="text-[#C99BFF] hover:underline">Tüm çevirilere dön</Link>
           </div>
         </div>
@@ -503,7 +503,7 @@ export default function GameDetailPage() {
                       <div className="relative z-10 flex flex-col gap-5">
                         <div className="flex items-center gap-3 pl-4" style={{ borderLeft: "4px solid #C99BFF" }}>
                           <Image src="/icons/info.svg" alt="Info" width={24} height={28} className="shrink-0" />
-                          <span className="uppercase" style={{ fontFamily: "Caviar Dreams, sans-serif", fontSize: "clamp(18px, 3vw, 24px)", fontWeight: 400, lineHeight: "32px", letterSpacing: "0.6px", color: "rgba(255, 255, 255, 0.90)" }}>
+                          <span className="uppercase" style={{ fontFamily: "Trajan Pro, serif", fontSize: "clamp(18px, 3vw, 24px)", fontWeight: 400, lineHeight: "32px", letterSpacing: "0.6px", color: "rgba(255, 255, 255, 0.90)" }}>
                             Çeviri Hakkında
                           </span>
                         </div>
@@ -535,7 +535,7 @@ export default function GameDetailPage() {
                     <div className="p-5 sm:p-8 rounded-[24px] sm:rounded-[32px]" style={{ background: "rgba(24, 22, 17, 0.65)", boxShadow: "0px 4px 30px rgba(0, 0, 0, 0.50)", outline: "1px solid rgba(255, 255, 255, 0.08)", backdropFilter: "blur(8px)" }}>
                       <div className="flex items-center gap-3 pl-4 mb-5" style={{ borderLeft: "4px solid #C99BFF" }}>
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 4L2 20H22L12 4Z" stroke="#C99BFF" strokeWidth="1.5" strokeLinejoin="round" /><path d="M12 10V14" stroke="#C99BFF" strokeWidth="1.5" strokeLinecap="round" /><circle cx="12" cy="17" r="1" fill="#C99BFF" /></svg>
-                        <span className="uppercase" style={{ fontFamily: "Caviar Dreams", fontSize: "clamp(14px, 2.5vw, 18px)", fontWeight: 400, lineHeight: "28px", color: "rgba(255, 255, 255, 0.90)" }}>
+                        <span className="uppercase" style={{ fontFamily: "Trajan Pro, serif", fontSize: "clamp(14px, 2.5vw, 18px)", fontWeight: 400, lineHeight: "28px", color: "rgba(255, 255, 255, 0.90)" }}>
                           Özel Kurulum Talimatları
                         </span>
                       </div>
@@ -571,19 +571,19 @@ export default function GameDetailPage() {
                 {activeTab === 'notes' && (
                   <div className="p-8 rounded-[32px]" style={{ background: "rgba(24, 22, 17, 0.65)", boxShadow: "0px 4px 30px rgba(0, 0, 0, 0.50)", outline: "1px solid rgba(255, 255, 255, 0.08)", backdropFilter: "blur(8px)" }}>
                     <div className="flex items-center gap-3 pl-4 mb-6" style={{ borderLeft: "4px solid #C99BFF" }}>
-                      <span className="uppercase" style={{ fontFamily: "Caviar Dreams, sans-serif", fontSize: "20px", fontWeight: 400, lineHeight: "28px", color: "rgba(255, 255, 255, 0.90)" }}>
+                      <span className="uppercase" style={{ fontFamily: "Trajan Pro, serif", fontSize: "20px", fontWeight: 400, lineHeight: "28px", color: "rgba(255, 255, 255, 0.90)" }}>
                         Çeviri Notları
                       </span>
                     </div>
                     {game.dlcs && (
                       <div className="mb-4">
-                        <h4 className="text-white/70 text-sm font-bold mb-2" style={{ fontFamily: "Caviar Dreams" }}>DLC&apos;ler:</h4>
+                        <h4 className="text-white/70 text-sm font-bold mb-2" style={{ fontFamily: "Trajan Pro, serif" }}>DLC&apos;ler:</h4>
                         <p className="text-white/50 text-sm" style={{ fontFamily: "Caviar Dreams" }}>{game.dlcs}</p>
                       </div>
                     )}
                     {game.compatibleVersions && (
                       <div>
-                        <h4 className="text-white/70 text-sm font-bold mb-2" style={{ fontFamily: "Caviar Dreams" }}>Uyumlu Sürümler:</h4>
+                        <h4 className="text-white/70 text-sm font-bold mb-2" style={{ fontFamily: "Trajan Pro, serif" }}>Uyumlu Sürümler:</h4>
                         <p className="text-white/50 text-sm" style={{ fontFamily: "Caviar Dreams" }}>{game.compatibleVersions}</p>
                       </div>
                     )}
@@ -595,7 +595,7 @@ export default function GameDetailPage() {
                     <div className="flex items-center justify-between mb-6">
                       <div className="flex items-center gap-3 pl-4" style={{ borderLeft: "4px solid #C99BFF" }}>
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#C99BFF" strokeWidth="1.5"><path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" strokeLinecap="round" /></svg>
-                        <span className="uppercase" style={{ fontFamily: "Caviar Dreams, sans-serif", fontSize: "clamp(14px, 2.5vw, 20px)", fontWeight: 400, lineHeight: "28px", color: "rgba(255, 255, 255, 0.90)" }}>
+                        <span className="uppercase" style={{ fontFamily: "Trajan Pro, serif", fontSize: "clamp(14px, 2.5vw, 20px)", fontWeight: 400, lineHeight: "28px", color: "rgba(255, 255, 255, 0.90)" }}>
                           Sürüm Geçmişi
                         </span>
                       </div>
@@ -655,7 +655,7 @@ export default function GameDetailPage() {
                   <div className="flex flex-col gap-6">
                     {/* Comment Form */}
                     <div className="p-6 rounded-[32px]" style={{ background: "rgba(24, 22, 17, 0.65)", outline: "1px solid rgba(255, 255, 255, 0.08)", backdropFilter: "blur(8px)" }}>
-                      <h3 className="text-white/90 text-sm font-bold mb-4 uppercase" style={{ fontFamily: "Caviar Dreams, sans-serif", letterSpacing: "0.5px" }}>
+                      <h3 className="text-white/90 text-sm font-bold mb-4 uppercase" style={{ fontFamily: "Trajan Pro, serif", letterSpacing: "0.5px" }}>
                         Yorum Yaz
                       </h3>
                       <textarea

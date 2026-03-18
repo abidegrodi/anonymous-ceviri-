@@ -36,7 +36,7 @@ export default function Services() {
     <section id="services" className="py-20 px-4 bg-white">
       <div className="container mx-auto max-w-6xl">
         <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4 font-trajan">
             Hizmetlerimiz
           </h2>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
@@ -51,7 +51,7 @@ export default function Services() {
               className="bg-gradient-to-br from-blue-50 to-indigo-50 p-8 rounded-xl hover:shadow-xl transition-shadow border border-blue-100"
             >
               <div className="text-5xl mb-4">{service.icon}</div>
-              <h3 className="text-2xl font-bold text-gray-900 mb-3">
+              <h3 className="text-2xl font-bold text-gray-900 mb-3 font-trajan">
                 {service.title}
               </h3>
               <p className="text-gray-600 leading-relaxed">

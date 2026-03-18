@@ -4,7 +4,7 @@ export default function About() {
       <div className="container mx-auto max-w-6xl">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <div>
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6 font-trajan">
               Neden Bizi Seçmelisiniz?
             </h2>
             <p className="text-lg text-gray-600 mb-6 leading-relaxed">
@@ -16,21 +16,21 @@ export default function About() {
               <div className="flex items-start">
                 <div className="text-green-500 text-xl mr-3">✓</div>
                 <div>
-                  <h3 className="font-semibold text-gray-900 mb-1">500+ Başarılı Proje</h3>
+                  <h3 className="font-semibold text-gray-900 mb-1 font-trajan">500+ Başarılı Proje</h3>
                   <p className="text-gray-600">Farklı türlerde oyun çevirisi deneyimi</p>
                 </div>
               </div>
               <div className="flex items-start">
                 <div className="text-green-500 text-xl mr-3">✓</div>
                 <div>
-                  <h3 className="font-semibold text-gray-900 mb-1">50+ Dil Desteği</h3>
+                  <h3 className="font-semibold text-gray-900 mb-1 font-trajan">50+ Dil Desteği</h3>
                   <p className="text-gray-600">Geniş dil yelpazesi ve yerel uzmanlar</p>
                 </div>
               </div>
               <div className="flex items-start">
                 <div className="text-green-500 text-xl mr-3">✓</div>
                 <div>
-                  <h3 className="font-semibold text-gray-900 mb-1">Hızlı Teslimat</h3>
+                  <h3 className="font-semibold text-gray-900 mb-1 font-trajan">Hızlı Teslimat</h3>
                   <p className="text-gray-600">Acil projeler için hızlı çözümler</p>
                 </div>
               </div>

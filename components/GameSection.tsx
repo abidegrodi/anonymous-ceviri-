@@ -39,7 +39,7 @@ export default function GameSection({ title, games, showViewAll = true, onNotify
 
   return (
     <section
-      className="py-8 sm:py-12 bg-[#0a0a0a] px-4 sm:px-6 md:px-8"
+      className="py-8 sm:py-12 bg-[#0a0a0a]"
       style={{
         paddingLeft: "clamp(16px, 5vw, 344px)",
         paddingRight: "clamp(16px, 5vw, 344px)",
@@ -51,7 +51,7 @@ export default function GameSection({ title, games, showViewAll = true, onNotify
           className="flex items-center justify-between w-full mb-6 sm:mb-8 gap-4"
           style={{ minHeight: "56px" }}
         >
-          <div className="flex items-center flex-shrink-0 min-w-0 pl-0 sm:pl-4 md:pl-[72px]" style={{ minHeight: "56px" }}>
+          <div className="flex items-center flex-shrink-0 min-w-0" style={{ minHeight: "56px" }}>
             {/* Dikey çubuk */}
             <div
               className="flex-shrink-0 rounded-full w-1 h-6 sm:h-8 bg-gradient-to-t from-black/20 to-[#C99BFF]"
@@ -126,15 +126,21 @@ export default function GameSection({ title, games, showViewAll = true, onNotify
         {/* Oyun kartları */}
         <div
           id={`game-section-${title}`}
-          className="flex overflow-x-auto scrollbar-hide pb-4 pl-0 sm:pl-4 md:pl-[88px]"
-          style={{
-            scrollBehavior: "smooth",
-            gap: "11px",
-          }}
+          className="overflow-x-auto scrollbar-hide pb-4"
+          style={{ scrollBehavior: "smooth" }}
         >
-          {games.map((game, index) => (
-            <GameCard key={index} {...game} onNotify={onNotify} />
-          ))}
+          <div
+            className="grid"
+            style={{
+              gridTemplateColumns: `repeat(${games.length}, 1fr)`,
+              gap: "16px",
+              width: games.length > 5 ? `${(games.length / 5) * 100}%` : "100%",
+            }}
+          >
+            {games.map((game, index) => (
+              <GameCard key={index} {...game} onNotify={onNotify} />
+            ))}
+          </div>
         </div>
       </div>
     </section>

@@ -315,7 +315,7 @@ export default function BlogDetail() {
           style={{ background: "rgba(201,155,255,0.03)", border: "1px solid rgba(255,255,255,0.06)" }}
         >
           <div>
-            <h3 className="font-caviar text-sm text-white/80 mb-1">Kuruluma Hazır mısın?</h3>
+            <h3 className="font-trajan text-sm text-white/80 mb-1">Kuruluma Hazır mısın?</h3>
             <p className="font-caviar text-xs text-white/30">Üyeliğinle giriş yap ve çeviriyi hemen indir.</p>
           </div>
           <button
@@ -385,7 +385,7 @@ export default function BlogDetail() {
                     <img src={item.image} alt={item.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
                   </div>
                   <div className="flex-1 min-w-0">
-                    <h4 className="font-caviar text-sm text-white/60 group-hover:text-[#C99BFF] transition-colors truncate">{item.title}</h4>
+                    <h4 className="font-trajan text-sm text-white/60 group-hover:text-[#C99BFF] transition-colors truncate">{item.title}</h4>
                     <span className="font-caviar text-[11px] text-white/20">{item.date}</span>
                   </div>
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(201,155,255,0.2)" strokeWidth="2" className="shrink-0 group-hover:stroke-[#C99BFF]/50 transition-colors">
