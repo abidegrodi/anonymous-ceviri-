@@ -33,3 +33,10 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# audit scripts
+/audit-scripts/
+
+# nested repos
+/anonymous/
+/anonymous_proje/
