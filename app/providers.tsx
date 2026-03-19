@@ -9,6 +9,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
       {children}
       <Toaster
         position="top-right"
+        containerAriaLabel="Bildirimler"
         toastOptions={{
           duration: 4000,
           style: {

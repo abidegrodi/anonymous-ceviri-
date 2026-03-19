@@ -43,6 +43,7 @@ export default function Header() {
         }}
       >
         <nav
+          aria-label="Ana menü"
           className="h-full flex items-center w-full"
           style={{
             paddingLeft: 'clamp(16px, 5vw, 344px)',
@@ -163,7 +164,7 @@ export default function Header() {
 
             {/* Mobile Menu Button */}
             <button
-              className="lg:hidden text-white p-2"
+              className="lg:hidden text-white p-2 min-w-[44px] min-h-[44px] flex items-center justify-center"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               aria-label="Menü"
             >

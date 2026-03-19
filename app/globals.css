@@ -87,6 +87,32 @@ input:-webkit-autofill:active {
   border: 1px solid rgba(201, 155, 255, 0.20) !important;
 }
 
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+a:not([class*="no-underline"]):not([class*="rounded"]):not(nav a) {
+  text-decoration-line: underline;
+  text-underline-offset: 2px;
+  text-decoration-color: rgba(255, 255, 255, 0.2);
+}
+
+a:not([class*="no-underline"]):not([class*="rounded"]):not(nav a):hover {
+  text-decoration-color: currentColor;
+}
+
+:focus-visible {
+  outline: 2px solid #C99BFF;
+  outline-offset: 2px;
+}
+
 @layer utilities {
   .text-balance {
     text-wrap: balance;

@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useState } from "react";
 
 interface GameCardProps {
@@ -32,10 +33,12 @@ export default function GameCard({ title, progress, image, href, gameId, onNotif
     >
       <div className="relative overflow-hidden rounded-xl bg-[#111] transition-all duration-300 group-hover:shadow-[0_0_40px_rgba(201,155,255,0.12)]">
         <div className="relative w-full" style={{ aspectRatio: "170 / 225" }}>
-          <img
+          <Image
             src={image || "https://placehold.co/225x339"}
             alt={title}
-            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.06]"
+            fill
+            sizes="(max-width: 640px) 45vw, (max-width: 1024px) 25vw, 180px"
+            className="object-cover transition-transform duration-500 group-hover:scale-[1.06]"
           />
 
           {/* Hover gradient overlay */}
@@ -61,7 +64,7 @@ export default function GameCard({ title, progress, image, href, gameId, onNotif
               onClick={handleBellClick}
               onMouseEnter={() => setBellHover(true)}
               onMouseLeave={() => setBellHover(false)}
-              className="absolute top-2 right-2 w-7 h-7 rounded-lg flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 z-10"
+              className="absolute top-2 right-2 w-9 h-9 rounded-lg flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 z-10"
               style={{
                 background: isSubscribed ? "rgba(201,155,255,0.20)" : "rgba(0,0,0,0.50)",
                 border: isSubscribed ? "1px solid rgba(201,155,255,0.40)" : "1px solid rgba(255,255,255,0.15)",

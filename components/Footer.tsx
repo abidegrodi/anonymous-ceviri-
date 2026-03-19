@@ -71,7 +71,7 @@ export default function Footer() {
           {/* Right: Links + Social */}
           <div className="flex flex-col sm:flex-row items-start sm:items-center gap-6 sm:gap-8">
             {/* Navigation links - inline */}
-            <nav className="flex flex-wrap items-center gap-x-5 gap-y-2">
+            <nav aria-label="Alt menü" className="flex flex-wrap items-center gap-x-5 gap-y-2">
               {links.map((link) => (
                 <Link
                   key={link.href}
@@ -98,7 +98,7 @@ export default function Footer() {
                   href={item.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-9 h-9 rounded-full flex items-center justify-center text-white/40 hover:text-[#C99BFF] hover:border-[#C99BFF]/30 transition-all duration-200"
+                  className="w-11 h-11 rounded-full flex items-center justify-center text-white/40 hover:text-[#C99BFF] hover:border-[#C99BFF]/30 transition-all duration-200"
                   style={{
                     background: "rgba(123, 94, 167, 0.06)",
                     border: "1px solid rgba(123, 94, 167, 0.12)",
@@ -117,10 +117,10 @@ export default function Footer() {
           className="py-5 flex flex-col sm:flex-row justify-between items-center gap-2"
           style={{ borderTop: "1px solid rgba(123, 94, 167, 0.08)" }}
         >
-          <p className="font-caviar text-[11px] text-white/30 font-medium">
+          <p className="font-caviar text-xs text-white/30 font-medium">
             © 2026 Anonymous Çeviri. Tüm hakları saklıdır.
           </p>
-          <p className="font-caviar text-[11px] text-white/20 font-medium">
+          <p className="font-caviar text-xs text-white/20 font-medium">
             made with love in izmir by &quot;grodi.co&quot;
           </p>
         </div>
