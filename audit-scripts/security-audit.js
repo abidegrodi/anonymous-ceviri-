@@ -241,7 +241,7 @@
     { name: 'Firebase Config', pattern: /firebase[A-Za-z]*\s*[:=]\s*['"][A-Za-z0-9:._/-]{20,}['"]/gi },
     { name: 'Hardcoded Password', pattern: /(?:password|passwd|pwd)\s*[:=]\s*['"][^'"]{6,}['"]/gi },
     { name: 'JWT Hardcoded', pattern: /eyJ[A-Za-z0-9_-]{10,}\.eyJ[A-Za-z0-9_-]{10,}\.[A-Za-z0-9_-]{10,}/g },
-    { name: 'Turnstile/reCAPTCHA Key', pattern: /(?:0x|6L)[A-Za-z0-9_-]{20,}/g },
+    { name: 'Turnstile/reCAPTCHA Key', pattern: /(?:0x4[A-Za-z0-9_-]{38,}|6L[a-zA-Z0-9_-]{38,})/g },
     { name: 'Generic API Key', pattern: /(?:api[_-]?key|apikey)\s*[:=]\s*['"][A-Za-z0-9]{16,}['"]/gi },
   ];
 

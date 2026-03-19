@@ -81,9 +81,10 @@ export default function Hero() {
           </div>
 
           <div className="w-full max-w-[637px]">
+            <h1 className="sr-only">Hikayeyi Kendi Dilinde Yaşa - Anonymous Çeviri</h1>
             <Image
               src="/hero-title-figma.png"
-              alt="Hikayeyi kendi dilinde yasa"
+              alt="Hikayeyi kendi dilinde yaşa"
               width={637}
               height={259}
               priority
