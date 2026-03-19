@@ -3,7 +3,7 @@
  * Panel çalışırken: http://localhost:1337
  */
 
-const STRAPI_URL = "https://satisfying-heart-f6617a9476.strapiapp.com";
+const STRAPI_URL = "https://kind-whisper-f3bb47fbc2.strapiapp.com";
 
 export interface StrapiDuyuru {
   id: number;
