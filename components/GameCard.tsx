@@ -64,7 +64,7 @@ export default function GameCard({ title, progress, image, href, gameId, onNotif
               onClick={handleBellClick}
               onMouseEnter={() => setBellHover(true)}
               onMouseLeave={() => setBellHover(false)}
-              className="absolute top-2 right-2 w-9 h-9 rounded-lg flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 z-10"
+              className="absolute top-2 right-2 w-11 h-11 rounded-lg flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 z-10"
               style={{
                 background: isSubscribed ? "rgba(201,155,255,0.20)" : "rgba(0,0,0,0.50)",
                 border: isSubscribed ? "1px solid rgba(201,155,255,0.40)" : "1px solid rgba(255,255,255,0.15)",
@@ -84,8 +84,8 @@ export default function GameCard({ title, progress, image, href, gameId, onNotif
           <div className="absolute bottom-0 left-0 right-0 p-3 translate-y-full group-hover:translate-y-0 transition-transform duration-400 ease-out">
             <div className="flex items-center gap-2.5">
               {/* Circular progress ring */}
-              <div className="relative flex-shrink-0 w-9 h-9">
-                <svg className="w-9 h-9 -rotate-90" viewBox="0 0 36 36">
+              <div className="relative flex-shrink-0 w-10 h-10">
+                <svg className="w-10 h-10 -rotate-90" viewBox="0 0 36 36">
                   <circle
                     cx="18" cy="18" r="16"
                     fill="none"
@@ -112,17 +112,17 @@ export default function GameCard({ title, progress, image, href, gameId, onNotif
                     </linearGradient>
                   </defs>
                 </svg>
-                <span className="absolute inset-0 flex items-center justify-center font-caviar font-bold text-[9px] text-white/90">
+                <span className="absolute inset-0 flex items-center justify-center font-caviar font-bold text-xs text-white/90">
                   %{clampedProgress}
                 </span>
               </div>
 
               {/* Status text */}
               <div className="flex flex-col min-w-0">
-                <span className="font-caviar font-medium text-[11px] leading-tight text-white/90 truncate">
+                <span className="font-caviar font-medium text-xs leading-tight text-white/90 truncate">
                   {isComplete ? "Tamamlandı" : "Devam Ediyor"}
                 </span>
-                <span className="font-caviar text-[9px] leading-tight text-white/40 mt-0.5">
+                <span className="font-caviar text-xs leading-tight text-white/40 mt-0.5">
                   Çeviri Durumu
                 </span>
               </div>

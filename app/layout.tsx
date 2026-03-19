@@ -26,6 +26,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="tr">
+      <head>
+        <link rel="preload" href="/fonts/CaviarDreams.woff2" as="font" type="font/woff2" crossOrigin="anonymous" />
+        <link rel="preload" href="/fonts/CaviarDreams-Bold.woff2" as="font" type="font/woff2" crossOrigin="anonymous" />
+        <link rel="preload" href="/fonts/Cinzel-Regular-latin.woff2" as="font" type="font/woff2" crossOrigin="anonymous" />
+        <link rel="preconnect" href="https://cdn.anonymousceviri.com" />
+        <link rel="preconnect" href="https://api.anonymousceviri.com" />
+        <link rel="dns-prefetch" href="https://shared.fastly.steamstatic.com" />
+      </head>
       <body className="font-sans">
         <a
           href="#main-content"

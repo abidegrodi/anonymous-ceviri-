@@ -35,7 +35,7 @@ const socials = [
 
 export default function Footer() {
   return (
-    <footer className="relative z-20 w-full" style={{ background: "#060606" }}>
+    <footer className="relative z-20 w-full" style={{ background: "#0a0a0a" }}>
       {/* Top gradient line */}
       <div
         className="h-[2px] w-full"

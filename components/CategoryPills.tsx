@@ -150,7 +150,7 @@ export default function CategoryPills({ categories, activeCategory, onCategoryCh
     <section
       className="mt-16 z-40"
       style={{
-        background: "#050505",
+        background: "#0a0a0a",
         boxShadow: "0px 25px 50px -12px black",
         borderBottom: "1px solid rgba(255, 255, 255, 0.05)",
         paddingTop: "16px",
@@ -163,11 +163,11 @@ export default function CategoryPills({ categories, activeCategory, onCategoryCh
         {/* Sol ok - scroll alanının üstünde, solda */}
         <button
           onClick={() => scroll("left")}
-          className="absolute left-0 z-20 shrink-0 w-9 h-9 flex items-center justify-center rounded-full transition-all duration-300"
+          className="absolute left-0 z-20 shrink-0 w-11 h-11 flex items-center justify-center rounded-full transition-all duration-300"
           style={{
             opacity: canScrollLeft ? 1 : 0,
             pointerEvents: canScrollLeft ? "auto" : "none",
-            background: "rgba(5, 5, 5, 0.85)",
+            background: "rgba(10, 10, 10, 0.85)",
             border: "1px solid rgba(201, 155, 255, 0.2)",
             boxShadow: canScrollLeft ? "0 0 16px rgba(0,0,0,0.6), 0 0 8px rgba(201,155,255,0.08)" : "none",
           }}
@@ -227,7 +227,7 @@ export default function CategoryPills({ categories, activeCategory, onCategoryCh
               </>
             );
 
-            const baseButtonStyle = "flex items-center shrink-0 whitespace-nowrap h-[42px] px-6 rounded-full gap-2 text-sm font-caviar transition-all";
+            const baseButtonStyle = "flex items-center shrink-0 whitespace-nowrap h-[44px] px-6 rounded-full gap-2 text-sm font-caviar transition-all";
             const activeStyle = "bg-[rgba(20,20,20,0.60)] text-white/90 font-bold";
             const inactiveStyle = "bg-[rgba(20,20,20,0.60)] text-[#9CA3AF] font-medium border border-[#ffffff0d]";
 
@@ -266,11 +266,11 @@ export default function CategoryPills({ categories, activeCategory, onCategoryCh
         {/* Sağ ok - scroll alanının üstünde, sağda */}
         <button
           onClick={() => scroll("right")}
-          className="absolute right-0 z-20 shrink-0 w-9 h-9 flex items-center justify-center rounded-full transition-all duration-300"
+          className="absolute right-0 z-20 shrink-0 w-11 h-11 flex items-center justify-center rounded-full transition-all duration-300"
           style={{
             opacity: canScrollRight ? 1 : 0,
             pointerEvents: canScrollRight ? "auto" : "none",
-            background: "rgba(5, 5, 5, 0.85)",
+            background: "rgba(10, 10, 10, 0.85)",
             border: "1px solid rgba(201, 155, 255, 0.2)",
             boxShadow: canScrollRight ? "0 0 16px rgba(0,0,0,0.6), 0 0 8px rgba(201,155,255,0.08)" : "none",
           }}

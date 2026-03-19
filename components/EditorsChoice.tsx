@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { fetchEditorPick, type StrapiEditorPick } from "@/lib/strapi";
 
 const FALLBACK = {
@@ -47,10 +48,12 @@ export default function EditorsChoice() {
         }}
       >
         {/* Background Image */}
-        <img
+        <Image
           src={bgImage}
           alt={title}
-          className="absolute left-0 top-0 w-full h-full object-cover"
+          fill
+          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 90vw, 1280px"
+          className="object-cover"
         />
 
         {/* Magenta Overlay */}
@@ -88,7 +91,7 @@ export default function EditorsChoice() {
         <div className="relative z-10 flex flex-col items-start gap-2 px-6 sm:px-10 md:px-16 py-6 max-w-[672px]">
           {/* Editor's Choice Label */}
           <div className="flex flex-col justify-center items-start">
-            <span className="text-[#EEEEEE] text-xs sm:text-sm font-caviar font-bold uppercase tracking-[1.40px] leading-5">
+            <span className="text-[#ededed] text-xs sm:text-sm font-caviar font-bold uppercase tracking-[1.40px] leading-5">
               {label}
             </span>
           </div>

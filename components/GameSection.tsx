@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import GameCard from "./GameCard";
 
 export interface GameCardData {
@@ -64,7 +65,7 @@ export default function GameSection({ title, games, showViewAll = true, onNotify
             />
             {/* Başlık */}
             <h2
-              className="capitalize flex items-center ml-3 font-trajan font-bold text-xl sm:text-2xl md:text-[30px] leading-tight sm:leading-[36px] tracking-[-0.5px] md:tracking-[-0.75px]"
+              className="capitalize flex items-center ml-3 font-trajan font-bold text-xl sm:text-2xl md:text-[30px] leading-tight sm:leading-[36px] tracking-[-0.5px] md:tracking-[-0.75px] text-white"
               style={{
                 background: "linear-gradient(180deg, #FFFFFF 0%, #795D99 100%)",
                 WebkitBackgroundClip: "text",
@@ -82,7 +83,7 @@ export default function GameSection({ title, games, showViewAll = true, onNotify
               className="inline-flex items-center gap-1.5 flex-shrink-0 hover:opacity-90 transition no-underline"
             >
               <span
-                className="font-caviar font-normal text-xs sm:text-sm leading-[22.75px] whitespace-nowrap"
+                className="font-caviar font-normal text-xs sm:text-sm leading-[22.75px] whitespace-nowrap text-white"
                 style={{
                   background: "linear-gradient(90deg, #FFFFFF 0%, #C99BFF 100%)",
                   WebkitBackgroundClip: "text",
@@ -93,6 +94,7 @@ export default function GameSection({ title, games, showViewAll = true, onNotify
                 Tümünü Gör
               </span>
               <span
+                className="text-white"
                 style={{
                   fontSize: "14px",
                   lineHeight: "22.75px",
@@ -109,17 +111,17 @@ export default function GameSection({ title, games, showViewAll = true, onNotify
             <div className="flex gap-2">
               <button
                 onClick={() => scroll("left")}
-                className="w-9 h-9 sm:w-11 sm:h-11 rounded-full bg-white/[0.06] flex items-center justify-center hover:bg-white/[0.12] transition-all duration-200 border border-white/[0.08] hover:border-[#C99BFF]/30 hover:shadow-[0_0_16px_rgba(201,155,255,0.1)]"
+                className="w-11 h-11 rounded-full bg-white/[0.06] flex items-center justify-center hover:bg-white/[0.12] transition-all duration-200 border border-white/[0.08] hover:border-[#C99BFF]/30 hover:shadow-[0_0_16px_rgba(201,155,255,0.1)]"
                 aria-label="Scroll left"
               >
-                <img src="/icons/vectorleft.svg" alt="" className="w-5 h-5 sm:w-6 sm:h-6" />
+                <Image src="/icons/vectorleft.svg" alt="" width={24} height={24} />
               </button>
               <button
                 onClick={() => scroll("right")}
-                className="w-9 h-9 sm:w-11 sm:h-11 rounded-full bg-white/[0.06] flex items-center justify-center hover:bg-white/[0.12] transition-all duration-200 border border-white/[0.08] hover:border-[#C99BFF]/30 hover:shadow-[0_0_16px_rgba(201,155,255,0.1)]"
+                className="w-11 h-11 rounded-full bg-white/[0.06] flex items-center justify-center hover:bg-white/[0.12] transition-all duration-200 border border-white/[0.08] hover:border-[#C99BFF]/30 hover:shadow-[0_0_16px_rgba(201,155,255,0.1)]"
                 aria-label="Scroll right"
               >
-                <img src="/icons/vectorright.svg" alt="" className="w-5 h-5 sm:w-6 sm:h-6" />
+                <Image src="/icons/vectorright.svg" alt="" width={24} height={24} />
               </button>
             </div>
           )}

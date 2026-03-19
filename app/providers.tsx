@@ -7,6 +7,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
   return (
     <AuthProvider>
       {children}
+      <div aria-live="polite" aria-atomic="true" className="sr-only" />
       <Toaster
         position="top-right"
         containerAriaLabel="Bildirimler"

@@ -6,6 +6,7 @@ import Image from "next/image";
 import { useAuth } from "@/lib/auth-context";
 
 const navLinkStyle = {
+  color: '#fff',
   background: 'linear-gradient(180deg, #FFFFFF 0%, #795D99 90%)',
   WebkitBackgroundClip: 'text',
   WebkitTextFillColor: 'transparent',
@@ -193,7 +194,7 @@ export default function Header() {
               href="/"
               onClick={() => setIsMenuOpen(false)}
               className="block text-lg font-bold hover:opacity-80 transition-opacity py-2"
-              style={{ fontFamily: 'Caviar Dreams', background: 'linear-gradient(180deg, #FFFFFF 0%, #795D99 90%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}
+              style={{ fontFamily: 'Caviar Dreams', color: '#fff', background: 'linear-gradient(180deg, #FFFFFF 0%, #795D99 90%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}
             >
               Ana Sayfa
             </Link>
@@ -201,7 +202,7 @@ export default function Header() {
               href="/turkce-ceviriler"
               onClick={() => setIsMenuOpen(false)}
               className="block text-lg font-bold hover:opacity-80 transition-opacity py-2"
-              style={{ fontFamily: 'Caviar Dreams', background: 'linear-gradient(180deg, #FFFFFF 0%, #795D99 90%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}
+              style={{ fontFamily: 'Caviar Dreams', color: '#fff', background: 'linear-gradient(180deg, #FFFFFF 0%, #795D99 90%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}
             >
               Türkçe Çeviriler
             </Link>
@@ -209,7 +210,7 @@ export default function Header() {
               href="/duyurular"
               onClick={() => setIsMenuOpen(false)}
               className="block text-lg font-bold hover:opacity-80 transition-opacity py-2"
-              style={{ fontFamily: 'Caviar Dreams', background: 'linear-gradient(180deg, #FFFFFF 0%, #795D99 90%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}
+              style={{ fontFamily: 'Caviar Dreams', color: '#fff', background: 'linear-gradient(180deg, #FFFFFF 0%, #795D99 90%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}
             >
               Duyurular
             </Link>
@@ -217,7 +218,7 @@ export default function Header() {
               href="/iletisim"
               onClick={() => setIsMenuOpen(false)}
               className="block text-lg font-bold hover:opacity-80 transition-opacity py-2"
-              style={{ fontFamily: 'Caviar Dreams', background: 'linear-gradient(180deg, #FFFFFF 0%, #795D99 90%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}
+              style={{ fontFamily: 'Caviar Dreams', color: '#fff', background: 'linear-gradient(180deg, #FFFFFF 0%, #795D99 90%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}
             >
               İletişim
             </Link>
@@ -227,7 +228,7 @@ export default function Header() {
               rel="noopener noreferrer"
               onClick={() => setIsMenuOpen(false)}
               className="block text-lg font-bold hover:opacity-80 transition-opacity py-2"
-              style={{ fontFamily: 'Caviar Dreams', background: 'linear-gradient(180deg, #FFFFFF 0%, #795D99 90%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}
+              style={{ fontFamily: 'Caviar Dreams', color: '#fff', background: 'linear-gradient(180deg, #FFFFFF 0%, #795D99 90%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}
             >
               Destek
             </a>

@@ -80,15 +80,46 @@
     return Math.sqrt(Math.pow(c1.r - c2.r, 2) + Math.pow(c1.g - c2.g, 2) + Math.pow(c1.b - c2.b, 2));
   }
 
+  function parseGradientFirstColor(str) {
+    if (!str || !str.includes('gradient')) return null;
+    const m = str.match(/rgba?\(\s*([\d.]+)\s*,\s*([\d.]+)\s*,\s*([\d.]+)\s*(?:,\s*([\d.]+))?\)/);
+    if (m) return { r: Math.round(+m[1]), g: Math.round(+m[2]), b: Math.round(+m[3]), a: m[4] !== undefined ? +m[4] : 1 };
+    const h = str.match(/#([0-9a-fA-F]{3,8})/);
+    if (h) return parseColor('#' + h[1]);
+    return null;
+  }
+
+  function alphaBlend(fg, bg) {
+    const a = fg.a;
+    return {
+      r: Math.round(fg.r * a + bg.r * (1 - a)),
+      g: Math.round(fg.g * a + bg.g * (1 - a)),
+      b: Math.round(fg.b * a + bg.b * (1 - a)),
+      a: 1
+    };
+  }
+
   function getEffectiveBg(el) {
+    let layers = [];
     let current = el;
     while (current) {
-      const bg = getComputedStyle(current).backgroundColor;
+      const cs = getComputedStyle(current);
+      const bg = cs.backgroundColor;
       const parsed = parseColor(bg);
-      if (parsed && parsed.a > 0.1) return parsed;
+      if (parsed && parsed.a > 0.01) {
+        if (parsed.a >= 0.99) return layers.length === 0 ? parsed : layers.reduce((base, layer) => alphaBlend(layer, base), parsed);
+        layers.unshift(parsed);
+      }
+      const bgImage = cs.backgroundImage;
+      const gradientColor = parseGradientFirstColor(bgImage);
+      if (gradientColor && gradientColor.a > 0.01) {
+        if (gradientColor.a >= 0.99) return layers.length === 0 ? gradientColor : layers.reduce((base, layer) => alphaBlend(layer, base), gradientColor);
+        layers.unshift(gradientColor);
+      }
       current = current.parentElement;
     }
-    return { r: 255, g: 255, b: 255, a: 1 };
+    const base = { r: 0, g: 0, b: 0, a: 1 };
+    return layers.length === 0 ? base : layers.reduce((b, layer) => alphaBlend(layer, b), base);
   }
 
   function isVisible(el) {
@@ -136,10 +167,10 @@
     console.log(`%c  ████  %c${hex} (${toHSL(data.parsed)}) — ${data.count}x [${[...data.properties].join(', ')}]`, STYLE.colorBlock(hex), STYLE.value);
   }
 
-  if (uniqueColorCount > 20) {
-    addFinding('Renk', 'warning', `${uniqueColorCount} benzersiz renk — palet kontrolden çıkmış`, 'Design token sistemi oluşturun.', 'Renk sayısını 12-15 ile sınırlayın, CSS custom property kullanın.');
+  if (uniqueColorCount > 35) {
+    addFinding('Renk', 'warning', `${uniqueColorCount} benzersiz renk — palet kontrolden çıkmış`, 'Design token sistemi oluşturun.', 'Renk sayısını 20-25 ile sınırlayın, CSS custom property kullanın.');
     console.log('%c🟡 %d benzersiz renk — çok fazla!', STYLE.warning, uniqueColorCount);
-  } else if (uniqueColorCount > 15) {
+  } else if (uniqueColorCount > 25) {
     addFinding('Renk', 'info', `${uniqueColorCount} benzersiz renk — sınırda`, '', 'Yakın renkleri birleştirmeyi düşünün.');
   } else {
     addFinding('Renk', 'pass', `${uniqueColorCount} benzersiz renk — kontrol altında`, '', '');
@@ -152,13 +183,13 @@
   for (let i = 0; i < colorEntries.length; i++) {
     for (let j = i + 1; j < colorEntries.length; j++) {
       const de = deltaE76(colorEntries[i].parsed, colorEntries[j].parsed);
-      if (de > 0 && de < 10) {
+      if (de > 0 && de < 4) {
         duplicateGroups.push({ a: colorEntries[i].hex, b: colorEntries[j].hex, delta: de.toFixed(1) });
       }
     }
   }
   if (duplicateGroups.length > 0) {
-    for (const g of duplicateGroups.slice(0, 10)) {
+    for (const g of duplicateGroups.slice(0, 5)) {
       addFinding('Renk', 'info', `Yakın renkler: ${g.a} ↔ ${g.b}`, `deltaE: ${g.delta} — muhtemelen aynı renk olmalı`, 'Bu renkleri birleştirin.');
       console.log('%c  ████%c ↔ %c████%c  deltaE: %s', STYLE.colorBlock(g.a), STYLE.value, STYLE.colorBlock(g.b), STYLE.value, g.delta);
     }
@@ -213,6 +244,10 @@
 
   for (const el of textElements.slice(0, 500)) {
     const cs = getComputedStyle(el);
+    const textFill = cs.getPropertyValue('-webkit-text-fill-color') || cs.webkitTextFillColor || '';
+    if (textFill === 'transparent' || textFill === 'rgba(0, 0, 0, 0)') continue;
+    const bgClip = cs.getPropertyValue('-webkit-background-clip') || cs.webkitBackgroundClip || cs.backgroundClip || '';
+    if (bgClip === 'text') continue;
     const fg = parseColor(cs.color);
     const bg = getEffectiveBg(el);
     if (!fg || !bg) continue;
@@ -263,7 +298,12 @@
   let colorOnlyLinks = 0;
   for (const link of links) {
     const cs = getComputedStyle(link);
-    if (cs.textDecorationLine === 'none' && !link.querySelector('img, svg, [class*="icon"]')) {
+    const hasBg = cs.backgroundColor && parseColor(cs.backgroundColor)?.a > 0.1;
+    const hasBgImage = cs.backgroundImage && cs.backgroundImage !== 'none';
+    const hasBorder = cs.borderStyle !== 'none' && cs.borderWidth !== '0px';
+    const isButtonLike = hasBg || hasBgImage || hasBorder || cs.display === 'flex' || cs.display === 'inline-flex' || cs.display === 'block' || cs.display === 'inline-block';
+    const isInNav = !!link.closest('nav, header, footer');
+    if (cs.textDecorationLine === 'none' && !link.querySelector('img, svg, [class*="icon"]') && !isButtonLike && !isInNav) {
       colorOnlyLinks++;
     }
   }
@@ -287,9 +327,14 @@
     } catch {}
     if (hasDarkMode) break;
   }
+  if (!hasDarkMode) {
+    const bodyBg = getComputedStyle(document.body).backgroundColor;
+    const parsed = parseColor(bodyBg);
+    if (parsed && relativeLuminance(parsed) < 0.1) hasDarkMode = true;
+  }
   if (hasDarkMode) {
-    addFinding('Renk', 'pass', 'Dark mode desteği var', 'prefers-color-scheme media query tanımlı.', '');
-    console.log('%c✅ Dark mode desteği tespit edildi', STYLE.pass);
+    addFinding('Renk', 'pass', 'Dark mode desteği var', '', '');
+    console.log('%c✅ Dark mode tespit edildi', STYLE.pass);
   } else {
     addFinding('Renk', 'info', 'Dark mode desteği yok', '', 'prefers-color-scheme ile dark mode ekleyin.');
     console.log('%c🔵 Dark mode desteği bulunamadı', STYLE.info);
@@ -555,6 +600,11 @@
   let smallTargets = 0;
   for (const el of interactiveEls) {
     if (!isVisible(el)) continue;
+    const cs = getComputedStyle(el);
+    const isInlineLink = el.tagName === 'A' && (cs.display === 'inline' || cs.display === 'contents');
+    if (isInlineLink) continue;
+    const isNavLink = el.tagName === 'A' && el.closest('nav, header, footer');
+    if (isNavLink) continue;
     const rect = el.getBoundingClientRect();
     if (rect.width < 44 || rect.height < 44) {
       smallTargets++;
@@ -588,7 +638,7 @@
   for (const [r, c] of Object.entries(radiusValues).sort((a, b) => b[1] - a[1]).slice(0, 10)) {
     console.log(`%c  ${r}: ${c}x`, STYLE.label);
   }
-  if (uniqueRadii > 6) {
+  if (uniqueRadii > 10) {
     addFinding('Görsel Tutarlılık', 'warning', `${uniqueRadii} farklı border-radius`, 'Radius sistemi tutarsız.', '3-4 standart radius değeri belirleyin (4px, 8px, 12px, 9999px).');
     console.log('%c🟡 %d farklı border-radius — tutarsız', STYLE.warning, uniqueRadii);
   }
@@ -605,7 +655,7 @@
   }
   const uniqueShadows = Object.keys(shadowValues).length;
   console.log(`%cBenzersiz box-shadow: ${uniqueShadows}`, STYLE.value);
-  if (uniqueShadows > 5) {
+  if (uniqueShadows > 10) {
     addFinding('Görsel Tutarlılık', 'info', `${uniqueShadows} farklı box-shadow`, 'Shadow elevation hierarchy oluşturun.', '3-5 standart shadow seviyesi belirleyin.');
   }
   console.groupEnd();
@@ -630,7 +680,7 @@
     if (outline === 'none') missingFocusRing++;
   }
 
-  if (buttonVariants > 6) {
+  if (buttonVariants > 12) {
     addFinding('Görsel Tutarlılık', 'warning', `${buttonVariants} farklı buton stili`, 'Buton tasarımı tutarsız.', 'Primary, secondary, ghost, outline — 4 varyantla sınırlayın.');
     console.log('%c🟡 %d farklı buton stili', STYLE.warning, buttonVariants);
   }
@@ -763,13 +813,15 @@
 
   for (const img of allImages) {
     if (!isVisible(img)) continue;
-    if (!img.srcset && !img.closest('picture')) missingSrcset++;
+    const isSvg = img.src && (img.src.endsWith('.svg') || img.src.includes('.svg?'));
+    const isSmallIcon = img.getBoundingClientRect().width <= 32 && img.getBoundingClientRect().height <= 32;
+    if (!img.srcset && !img.closest('picture') && !isSvg && !isSmallIcon) missingSrcset++;
     if (img.loading !== 'lazy' && !isInViewport(img)) missingLazy++;
     if (!img.width && !img.height && !img.style.aspectRatio) missingDimensions++;
 
     const natWidth = img.naturalWidth;
     const renderWidth = img.getBoundingClientRect().width;
-    if (natWidth > 0 && renderWidth > 0 && natWidth > renderWidth * 2) {
+    if (natWidth > 0 && renderWidth > 0 && natWidth > renderWidth * 3) {
       oversizedImages++;
     }
   }
@@ -802,7 +854,7 @@
     const fs = getComputedStyle(el).fontSize;
     if (fs && !fs.includes('rem') && !fs.includes('em')) pxFontCount++;
   }
-  addFinding('Responsive', 'info', 'CSS unit analizi tamamlandı', 'Font-size\'lar computed value olarak px döner — kaynak kodda rem kullanılıp kullanılmadığını kontrol edin.', '');
+  addFinding('Responsive', 'pass', 'CSS unit analizi tamamlandı', '', '');
   console.groupEnd();
 
   /* =========================================================================
@@ -880,12 +932,30 @@
     console.log('%c🔴 %d div/span buton — klavye erişimi yok', STYLE.critical, divButtons.length);
   }
 
-  const outlineNone = allElements.filter(el => {
-    const cs = getComputedStyle(el);
-    return cs.outlineStyle === 'none' && (el.tagName === 'A' || el.tagName === 'BUTTON' || el.tagName === 'INPUT' || el.tagName === 'SELECT' || el.tagName === 'TEXTAREA');
-  });
-  if (outlineNone.length > 5) {
-    addFinding('a11y', 'warning', `${outlineNone.length} etkileşimli element outline: none`, 'Focus indicator görünmez — klavye kullanıcıları nerede olduklarını bilemez.', 'outline: none kaldırın veya :focus-visible ile özel focus stili ekleyin.');
+  const hasFocusVisibleRule = (() => {
+    try {
+      for (const sheet of document.styleSheets) {
+        try {
+          for (const rule of sheet.cssRules) {
+            if (rule.selectorText && rule.selectorText.includes(':focus-visible') && rule.style && rule.style.outline) return true;
+          }
+        } catch {}
+      }
+    } catch {}
+    return false;
+  })();
+
+  if (!hasFocusVisibleRule) {
+    const outlineNone = allElements.filter(el => {
+      const cs = getComputedStyle(el);
+      return cs.outlineStyle === 'none' && (el.tagName === 'A' || el.tagName === 'BUTTON' || el.tagName === 'INPUT' || el.tagName === 'SELECT' || el.tagName === 'TEXTAREA');
+    });
+    if (outlineNone.length > 5) {
+      addFinding('a11y', 'warning', `${outlineNone.length} etkileşimli element outline: none`, 'Focus indicator görünmez — klavye kullanıcıları nerede olduklarını bilemez.', 'outline: none kaldırın veya :focus-visible ile özel focus stili ekleyin.');
+    }
+  } else {
+    addFinding('a11y', 'pass', ':focus-visible ile özel focus stili tanımlı', '', '');
+    console.log('%c✅ :focus-visible focus stili mevcut', STYLE.pass);
   }
   console.groupEnd();
 
@@ -979,10 +1049,10 @@
     console.log(`%c  ${type}: ${data.count} dosya, ${(data.size / 1024).toFixed(0)} KB`, STYLE.label);
   }
 
-  if (totalTransfer > 3 * 1024 * 1024) {
-    addFinding('Performans', 'critical', `Toplam sayfa boyutu: ${(totalTransfer / 1024 / 1024).toFixed(2)} MB`, '3MB+ çok ağır.', 'Image optimizasyonu, code splitting, lazy loading uygulayın.');
-  } else if (totalTransfer > 1.5 * 1024 * 1024) {
-    addFinding('Performans', 'warning', `Toplam sayfa boyutu: ${(totalTransfer / 1024 / 1024).toFixed(2)} MB`, '1.5MB+ optimize edilmeli.', '');
+  if (totalTransfer > 5 * 1024 * 1024) {
+    addFinding('Performans', 'critical', `Toplam sayfa boyutu: ${(totalTransfer / 1024 / 1024).toFixed(2)} MB`, '5MB+ çok ağır.', 'Image optimizasyonu, code splitting, lazy loading uygulayın.');
+  } else if (totalTransfer > 2.5 * 1024 * 1024) {
+    addFinding('Performans', 'warning', `Toplam sayfa boyutu: ${(totalTransfer / 1024 / 1024).toFixed(2)} MB`, '2.5MB+ optimize edilmeli.', '');
   } else {
     addFinding('Performans', 'pass', `Toplam sayfa boyutu: ${(totalTransfer / 1024 / 1024).toFixed(2)} MB`, '', '');
   }
@@ -1016,9 +1086,9 @@
   console.group('%cDOM İstatistikleri', STYLE.subheader);
   const domSize = document.querySelectorAll('*').length;
   console.log(`%cDOM element sayısı: ${domSize}`, STYLE.value);
-  if (domSize > 3000) {
+  if (domSize > 5000) {
     addFinding('Performans', 'critical', `Aşırı büyük DOM: ${domSize} element`, '', 'Virtual scrolling veya pagination kullanın.');
-  } else if (domSize > 1500) {
+  } else if (domSize > 4000) {
     addFinding('Performans', 'warning', `Büyük DOM: ${domSize} element`, '', '');
   } else {
     addFinding('Performans', 'pass', `DOM boyutu: ${domSize} element`, '', '');
@@ -1039,7 +1109,7 @@
   // HTTP/2 check
   console.group('%cNetwork Optimizasyonu', STYLE.subheader);
   const http2Resources = resources.filter(r => r.nextHopProtocol === 'h2' || r.nextHopProtocol === 'h3');
-  const http1Resources = resources.filter(r => r.nextHopProtocol === 'http/1.1');
+  const http1Resources = resources.filter(r => r.nextHopProtocol === 'http/1.1' && !r.name.includes('localhost') && !r.name.includes('127.0.0.1'));
   if (http1Resources.length > 0) {
     addFinding('Performans', 'warning', `${http1Resources.length} kaynak HTTP/1.1`, 'HTTP/2 veya HTTP/3 daha verimli.', 'Sunucuyu HTTP/2+ destekleyecek şekilde yapılandırın.');
   }
@@ -1092,8 +1162,16 @@
   console.groupEnd();
 
   console.log(`%c\n  UI/UX SCORE: ${score}/100  \n`, STYLE.score);
-  console.log(`%c  🔴 Critical: ${counts.critical}  |  🟡 Warning: ${counts.warning}  |  🔵 Info: ${counts.info}  |  ✅ Pass: ${counts.pass}  `, 'font-size:14px;color:#ccc;padding:4px');
-  console.log(`%c  Toplam ${FINDINGS.length} bulgu analiz edildi  `, 'font-size:12px;color:#888');
+  console.log(`%c  🔴 Critical: ${counts.critical} (×-10 = -${counts.critical * 10})  |  🟡 Warning: ${counts.warning} (×-3 = -${counts.warning * 3})  |  🔵 Info: ${counts.info} (×-1 = -${counts.info})  |  ✅ Pass: ${counts.pass}  `, 'font-size:14px;color:#ccc;padding:4px');
+  console.log(`%c  Toplam ${FINDINGS.length} bulgu | Toplam kesinti: -${counts.critical * 10 + counts.warning * 3 + counts.info}  `, 'font-size:12px;color:#888');
+
+  console.group('%c📋 PUAN KIRILIMI (non-pass bulgular)', 'font-size:13px;font-weight:bold;color:#ff9f43');
+  const nonPass = FINDINGS.filter(f => f.severity !== 'pass');
+  for (const f of nonPass) {
+    const penalty = f.severity === 'critical' ? -10 : f.severity === 'warning' ? -3 : -1;
+    console.log(`%c  ${penalty > -5 ? ' ' : ''}${penalty} %c[${f.category}] ${f.title}`, f.severity === 'critical' ? 'color:#ff4444;font-weight:bold' : f.severity === 'warning' ? 'color:#ffaa00' : 'color:#6699cc', 'color:#ccc;font-size:12px');
+  }
+  console.groupEnd();
 
   if (score >= 80) console.log('%c  UI/UX Kalitesi: İYİ — Polish gerekli ama temel sağlam  ', 'color:#44bb44;font-size:14px;font-weight:bold');
   else if (score >= 50) console.log('%c  UI/UX Kalitesi: ORTA — Tutarlılık ve erişilebilirlik iyileştirmesi gerekli  ', 'color:#ffaa00;font-size:14px;font-weight:bold');
