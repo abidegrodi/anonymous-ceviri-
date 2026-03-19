@@ -45,7 +45,7 @@ export default function Footer() {
         }}
       />
 
-      <div className="max-w-[1280px] mx-auto px-6 md:px-8">
+      <div className="max-w-[1280px] mx-auto px-4 md:px-8 lg:px-12">
         {/* Main content - compact single row */}
         <div className="py-10 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-8">
           {/* Left: Logo + tagline */}
