@@ -42,8 +42,14 @@ export default function Header() {
           height: "80px",
         }}
       >
-        <nav className="h-full max-w-[1280px] mx-auto px-4 md:px-8 lg:px-12">
-          <div className="w-full h-[80px] flex items-center justify-between">
+        <nav
+          className="h-full flex items-center w-full"
+          style={{
+            paddingLeft: 'clamp(16px, 5vw, 344px)',
+            paddingRight: 'clamp(16px, 5vw, 344px)',
+          }}
+        >
+          <div className="mx-auto w-full flex items-center justify-between" style={{ maxWidth: '1280px' }}>
             {/* Logo */}
             <div className="flex items-center shrink-0">
               <Link href="/">

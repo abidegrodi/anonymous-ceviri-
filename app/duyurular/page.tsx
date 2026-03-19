@@ -81,10 +81,11 @@ export default function Duyurular() {
   };
 
   return (
-    <main className="min-h-screen bg-[#0a0a0a]">
+    <main className="min-h-screen bg-[#0a0a0a] flex flex-col">
       <Header />
 
-      <div className="pt-[100px] pb-16 px-4 md:px-8 lg:px-12 max-w-[1280px] mx-auto">
+      <div className="pt-[100px] pb-16 flex-1" style={{ paddingLeft: 'clamp(16px, 5vw, 344px)', paddingRight: 'clamp(16px, 5vw, 344px)' }}>
+       <div className="mx-auto w-full" style={{ maxWidth: '1280px' }}>
         {/* Breadcrumb */}
         <div className="flex items-center gap-3 text-sm mb-6">
           <Link href="/" className="text-white/50 hover:text-[#C99BFF] transition-colors" style={{ fontFamily: "Caviar Dreams" }}>Ana Sayfa</Link>
@@ -239,6 +240,7 @@ export default function Duyurular() {
             </div>
           </div>
         )}
+      </div>
       </div>
 
       <Footer />

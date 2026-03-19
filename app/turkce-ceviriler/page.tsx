@@ -99,7 +99,8 @@ export default function TurkceYamalar() {
     <main className="min-h-screen bg-[#0a0a0a]">
       <Header />
 
-      <div className="pt-[100px] pb-16 px-4 md:px-8 lg:px-12 max-w-[1280px] mx-auto">
+      <div className="pt-[100px] pb-16" style={{ paddingLeft: 'clamp(16px, 5vw, 344px)', paddingRight: 'clamp(16px, 5vw, 344px)' }}>
+       <div className="mx-auto w-full" style={{ maxWidth: '1280px' }}>
         {/* Breadcrumb */}
         <div className="flex items-center gap-3 text-sm mb-6">
           <Link href="/" className="text-white/50 hover:text-[#C99BFF] transition-colors" style={{ fontFamily: "Caviar Dreams" }}>Ana Sayfa</Link>
@@ -317,6 +318,7 @@ export default function TurkceYamalar() {
           </div>
         )}
         {pagination && !isLoading && <p className="mt-3 text-center font-caviar text-[11px] text-white/15">Sayfa {pagination.page}/{pagination.totalPages}</p>}
+      </div>
       </div>
 
       <Footer />
