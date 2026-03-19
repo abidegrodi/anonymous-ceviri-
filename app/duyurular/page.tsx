@@ -60,7 +60,7 @@ export default function Duyurular() {
         }
       })
       .catch(() => {
-        if (!cancelled) setError("Duyurular yüklenemedi. Strapi panelinin çalıştığından emin olun (http://localhost:1337).");
+        if (!cancelled) setError("Duyurular yüklenemedi. Strapi panelinizi kontrol ediniz.");
       })
       .finally(() => {
         if (!cancelled) setLoading(false);

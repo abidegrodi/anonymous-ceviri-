@@ -126,7 +126,7 @@ export default function FAQPage() {
         if (!cancelled) setFaqItems(data);
       })
       .catch(() => {
-        if (!cancelled) setError("SSS yüklenemedi. Strapi panelinin çalıştığından emin olun.");
+        if (!cancelled) setError("SSS yüklenemedi. Strapi panelinizi kontrol ediniz.");
       })
       .finally(() => {
         if (!cancelled) setLoading(false);
