@@ -10,7 +10,6 @@ export function Providers({ children }: { children: React.ReactNode }) {
       <div aria-live="polite" aria-atomic="true" className="sr-only" />
       <Toaster
         position="top-right"
-        containerAriaLabel="Bildirimler"
         toastOptions={{
           duration: 4000,
           style: {
