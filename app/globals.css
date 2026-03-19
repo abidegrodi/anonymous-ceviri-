@@ -5,20 +5,12 @@
 /* Font Face Declarations */
 @font-face {
   font-family: 'Trajan Pro';
-  src: local('Trajan Pro'), local('TrajanPro-Regular'), local('Trajan Pro Regular'),
-       url('/fonts/Cinzel-Regular-latin-ext.woff2') format('woff2'),
-       url('/fonts/Cinzel-Regular-latin.woff2') format('woff2');
-  font-weight: 100 499;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'Trajan Pro';
   src: local('Trajan Pro Bold'), local('TrajanPro-Bold'), local('Trajan Pro 3'),
        url('/fonts/Cinzel-Regular-latin-ext.woff2') format('woff2'),
        url('/fonts/Cinzel-Regular-latin.woff2') format('woff2');
-  font-weight: 500 900;
+  font-weight: 400 900;
   font-style: normal;
+  font-display: swap;
 }
 
 @font-face {
@@ -29,6 +21,7 @@
        url('/fonts/CaviarDreams.ttf') format('truetype');
   font-weight: 100 499;
   font-style: normal;
+  font-display: swap;
 }
 
 @font-face {
@@ -39,6 +32,7 @@
        url('/fonts/CaviarDreams-Bold.ttf') format('truetype');
   font-weight: 500 900;
   font-style: normal;
+  font-display: swap;
 }
 
 :root {
