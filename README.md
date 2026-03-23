@@ -1,4 +1,4 @@
-# Oyun Çeviri Firması Website
+# Oyun Çeviri 
 
 Modern ve profesyonel bir oyun çeviri firması websitesi. Next.js 14, TypeScript ve Tailwind CSS ile geliştirilmiştir.
 
@@ -48,14 +48,6 @@ anonymous/
 - ✅ Mobil uyumlu navigasyon
 - ✅ İletişim formu
 - ✅ SEO dostu yapı
-
-## 📝 Sonraki Adımlar
-
-1. Figma tasarımına göre renkleri ve stilleri özelleştirin
-2. İletişim formunu backend'e bağlayın
-3. İçerikleri güncelleyin
-4. Görselleri ekleyin
-5. Analytics ekleyin
 
 ## 🛠️ Teknolojiler
 
